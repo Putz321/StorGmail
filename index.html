@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Store Gmail Fresh</title>
+    <!-- Favicon: Logo Gmail Fresh (sama dengan logo website di loading screen) -->
+    <link rel="icon" type="image/png" href="https://files.catbox.moe/6odo2c.jpg">
     <!-- Google Fonts + Tailwind + Font Awesome -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-      <link rel="icon" type="image/jpeg" href="https://files.catbox.moe/89ke7i.jpg">
     <style>
         * {
             font-family: 'Inter', sans-serif;
@@ -185,6 +186,44 @@
             visibility: visible;
             transform: translateX(-50%) scale(1);
         }
+        
+        /* Modal Rules (styling berbeda, tampil di tengah layar) */
+        .rules-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(8px);
+            z-index: 10050;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0.2s, opacity 0.2s;
+        }
+        .rules-modal.active {
+            visibility: visible;
+            opacity: 1;
+        }
+        .rules-modal-content {
+            background: #0f172ae6;
+            backdrop-filter: blur(16px);
+            border: 1px solid #38bdf8;
+            border-radius: 2rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 1.5rem;
+            box-shadow: 0 25px 40px rgba(0,0,0,0.5);
+        }
+        .rules-modal-content::-webkit-scrollbar { width: 4px; }
+        .rules-modal-content::-webkit-scrollbar-track { background: #1e293b; border-radius: 10px; }
+        .rules-modal-content::-webkit-scrollbar-thumb { background: #38bdf8; border-radius: 10px; }
+        
         .toast-notif {
             position: fixed;
             bottom: 20px;
@@ -230,6 +269,16 @@
         .rule-normal {
             color: #cbd5e1;
         }
+        .btn-rules {
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            transition: all 0.2s;
+        }
+        .btn-rules:hover {
+            background: rgba(56, 189, 248, 0.2);
+            border-color: #38bdf8;
+            transform: translateY(-1px);
+        }
     </style>
 </head>
 <body>
@@ -262,11 +311,52 @@
         </div>
     </div>
 
+    <!-- Modal Rules (popup aturan) -->
+    <div id="rulesModal" class="rules-modal">
+        <div class="rules-modal-content">
+            <div class="flex justify-between items-center border-b border-cyan-500/30 pb-2 mb-3">
+                <h2 class="text-xl font-bold text-cyan-100 flex items-center gap-2"><i class="fas fa-scroll"></i> Aturan Store Gmail Fresh</h2>
+                <button id="closeRulesModalBtn" class="text-cyan-300 hover:text-white text-2xl leading-5">&times;</button>
+            </div>
+            <ul class="text-sm space-y-2 list-disc pl-4 mt-2">
+                <li class="rule-normal">Gmail Fresh/Baru Dibuat</li>
+                <li class="rule-normal">Wajib Menambahkan Kata <span class="text-bright-blue">[ carmen ]</span> Di Awal/Akhir Nama Gmail</li>
+                <li class="rule-normal">Contoh 1: namagmailcarmen@gmail.com</li>
+                <li class="rule-normal">Contoh 2: carmennamamu@gmail.com</li>
+                <li class="rule-normal">Tahun Lahir 1990-2006 [ WAJIB ]</li>
+                <li class="rule-normal">Nama Wajib Manusia Indonesia + Kata "carmen"</li>
+                <li class="rule-normal">Angka Di Gmail Maksimal 3</li>
+                <li class="rule-normal">Dilarang Tanda Titik Dan Angka Di Tengah Alamat Gmail</li>
+                <li class="rule-normal">Gmail Tidak Boleh Terferivikasi Nomor HP</li>
+                <li class="rule-normal">Password Wajib <span class="text-bright-blue font-mono bg-black/30 px-2 py-0.5 rounded-md">aass1122</span> (WAJIB)</li>
+                <li class="rule-normal">Minimal 1, No Limit Gmail Per Transaksi</li>
+                <li class="text-danger-red mt-2">Jika Tidak Sesuai Rules, Admin Tidak Akan Mentransfer Dana Anda</li>
+                <li class="rule-normal text-xs mt-2">Transfer Ke DANA Dalam 27 Jam Jika Semua Ketentuan Terpenuhi</li>
+            </ul>
+            <div class="mt-5 flex justify-end">
+                <button id="closeRulesBtnInner" class="bg-cyan-800/50 hover:bg-cyan-700/70 px-5 py-2 rounded-xl text-sm text-white transition">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Popup Konfirmasi Hapus Riwayat di Tengah Atas -->
+    <div id="confirmModal" class="modal-popup-top">
+        <div class="flex items-center gap-2 justify-center">
+            <i class="fas fa-trash-alt text-rose-400 text-lg"></i>
+            <h3 class="text-white font-bold text-md">Hapus Riwayat?</h3>
+        </div>
+        <p class="text-gray-300 text-xs mt-2">Semua Data Stor Akan Hilang Permanen.</p>
+        <div class="flex gap-3 mt-3 justify-center">
+            <button id="modalConfirmYes" class="bg-rose-600 hover:bg-rose-700 px-4 py-1.5 rounded-xl text-white text-xs">Ya, Hapus</button>
+            <button id="modalConfirmNo" class="bg-gray-700 hover:bg-gray-600 px-4 py-1.5 rounded-xl text-white text-xs">Batal</button>
+        </div>
+    </div>
+
     <div class="max-w-4xl mx-auto px-4 py-5 relative">
         <!-- Header: Foto Custom + Nama + Menu -->
         <div class="flex justify-between items-center mb-6">
             <div class="flex items-center gap-3">
-                <!-- Foto Custom JPG 1:1 - Ganti URL di bawah -->
+                <!-- Foto Custom JPG 1:1 -->
                 <img src="https://files.catbox.moe/89ke7i.jpg" alt="Admin Ganteng" class="avatar-custom" id="profilePhoto">
                 <div>
                     <h1 class="text-2xl font-bold bg-gradient-to-r from-cyan-300 to-blue-400 bg-clip-text text-transparent">Store Gmail Fresh</h1>
@@ -281,35 +371,24 @@
 
         <!-- 2 Kolom -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <!-- Left Panel Rules -->
+            <!-- Left Panel: Tombol Rules + Harga & Support -->
             <div class="lg:col-span-1 space-y-5">
-                <div class="card-mini p-5">
-                    <div class="flex items-center gap-2 border-b border-cyan-500/20 pb-2 mb-3">
-                        <i class="fas fa-shield-alt text-cyan-400"></i>
-                        <h2 class="font-semibold text-cyan-100">Rules Store Gmail Fresh</h2>
-                    </div>
-                    <ul class="text-sm space-y-2 list-disc pl-4">
-                        <li class="rule-normal">Gmail Fresh/Baru Dibuat</li>
-                        <li class="rule-normal">Wajib Menambahkan Kata [ carmen ] Di Awal/Akhir Nama Gmail</li>
-                        <li class="rule-normal">Contoh 1: namagmailcarmen@gmail.com</li>
-                        <li class="rule-normal">Contoh 2: carmennamamu@gmail.com</li>
-                        <li class="rule-normal">Tahun Lahir 1990-2006 [ WAJIB ]</li>
-                        <li class="rule-normal">Nama Wajib Manusia Indonesia + Kata "carmen"</li>
-                        <li class="rule-normal">Angka Di Gmail Maksimal 3</li>
-                        <li class="rule-normal">Dilarang Tanda Titik Dan Angka Di Tengah Alamat Gmail</li>
-                        <li class="rule-normal">Gmail Tidak Boleh Terferivikasi Nomor HP</li>
-                        <li class="rule-normal">Password Wajib <span class="text-bright-blue font-mono bg-black/30 px-2 py-0.5 rounded-md">aass1122</span> (WAJIB)</li>
-                        <li class="rule-normal">Minimal 1, No Limit Gmail Per Transaksi</li>
-                        <li class="text-danger-red mt-2">Jika Tidak Sesuai Rules, Admin Tidak Akan Mentransfer Dana Anda</li>
-                        <li class="rule-normal text-xs mt-2">Transfer Ke DANA Dalam 27 Jam Jika Semua Ketentuan Terpenuhi</li>
-                    </ul>
+                <!-- Tombol Rules yang stylish -->
+                <div class="card-mini p-5 text-center">
+                    <button id="openRulesBtn" class="btn-rules w-full py-3 rounded-xl flex items-center justify-center gap-3 text-cyan-200 font-semibold transition">
+                        <i class="fas fa-list-ul text-cyan-300 text-lg"></i> Lihat Aturan & Syarat
+                        <i class="fas fa-chevron-right text-xs opacity-70"></i>
+                    </button>
+                    <p class="text-[10px] text-cyan-300/40 mt-3">Klik untuk melihat semua peraturan sebelum stor</p>
                 </div>
+                
+                <!-- Harga & Informasi tambahan -->
                 <div class="card-mini p-5 flex justify-between items-center">
                     <span class="font-medium text-cyan-200">Harga per Gmail</span>
                     <span class="text-2xl font-bold text-cyan-300">Rp2.000</span>
                 </div>
                 <div class="card-mini p-3 text-center text-[11px] text-cyan-300/40">
-                    Support By Nanda Saputra.py
+                    <i class="fas fa-shield-alt mr-1"></i> Support By Nanda Saputra.py
                 </div>
             </div>
 
@@ -334,7 +413,7 @@
                     
                     <!-- Password dengan teks biru mencolok -->
                     <div class="mb-4">
-                        <label class="block text-cyan-200 text-sm font-medium mb-1">Password Gmail <span class="text-bright-blue">[ WAJIB: aass1122 ]</span></label>
+                        <label class="block text-cyan-200 text-sm font-medium mb-1">Password Gmail <span class="text-bright-blue">[ Wajib: aass1122 ]</span></label>
                         <input type="password" id="passwordGmail" class="input-clean w-full" placeholder="aass1122">
                         <div class="text-[11px] text-bright-blue mt-1">Password Harus Sesuai Dengan Aturan</div>
                     </div>
@@ -353,7 +432,7 @@
                     
                     <!-- Total Harga -->
                     <div class="bg-cyan-950/30 rounded-xl p-3 mb-4 flex justify-between items-center border border-cyan-500/20">
-                        <span class="text-cyan-200 text-sm font-medium">Total Harga Diterima</span>
+                        <span class="text-cyan-200 text-sm font-medium">Total Harga</span>
                         <span id="totalHargaDisplay" class="text-2xl font-bold text-cyan-300">Rp0</span>
                     </div>
                     
@@ -369,26 +448,13 @@
         <div class="text-center text-[10px] text-cyan-300/30 mt-8">Sistem Verifikasi & Transfer Dalam 27 Jam | Terima kasih</div>
     </div>
 
-    <!-- Popup Konfirmasi Hapus Riwayat di Tengah Atas -->
-    <div id="confirmModal" class="modal-popup-top">
-        <div class="flex items-center gap-2 justify-center">
-            <i class="fas fa-trash-alt text-rose-400 text-lg"></i>
-            <h3 class="text-white font-bold text-md">Hapus Riwayat?</h3>
-        </div>
-        <p class="text-gray-300 text-xs mt-2">Semua Data Stor Akan Hilang Permanen.</p>
-        <div class="flex gap-3 mt-3 justify-center">
-            <button id="modalConfirmYes" class="bg-rose-600 hover:bg-rose-700 px-4 py-1.5 rounded-xl text-white text-xs">Ya, Hapus</button>
-            <button id="modalConfirmNo" class="bg-gray-700 hover:bg-gray-600 px-4 py-1.5 rounded-xl text-white text-xs">Batal</button>
-        </div>
-    </div>
-
     <script>
         // ======================== KONFIGURASI TELEGRAM (ADMIN) ========================
-        const TELEGRAM_BOT_TOKEN = "8871982955:AAEa-5lABmvJi6rdVKjhKyVouBbduO6JHG0";   // GANTI dengan token bot asli
-        const TELEGRAM_CHAT_ID = "8874242457";       // GANTI dengan chat ID admin
+        const TELEGRAM_BOT_TOKEN = "8871982955:AAEa-5lABmvJi6rdVKjhKyVouBbduO6JHG0";   // Token bot asli
+        const TELEGRAM_CHAT_ID = "8874242457";       // Chat ID admin
         // ===================================================================================
         
-        // ========== CUSTOM FOTO PROFIL : GANTI URL JPG DI SINI (1:1) ==========
+        // ========== CUSTOM FOTO PROFIL ==========
         const CUSTOM_PHOTO_URL = "https://files.catbox.moe/89ke7i.jpg";
         document.getElementById('profilePhoto').src = CUSTOM_PHOTO_URL;
         // ========================================================================
@@ -412,10 +478,16 @@
         const sidebarList = document.getElementById('sidebarRiwayatList');
         const clearSidebarBtn = document.getElementById('clearHistorySidebar');
         
-        // Modal Top
+        // Modal Konfirmasi Hapus
         const modal = document.getElementById('confirmModal');
         const modalYes = document.getElementById('modalConfirmYes');
         const modalNo = document.getElementById('modalConfirmNo');
+        
+        // Modal Rules
+        const rulesModal = document.getElementById('rulesModal');
+        const openRulesBtn = document.getElementById('openRulesBtn');
+        const closeRulesModalBtn = document.getElementById('closeRulesModalBtn');
+        const closeRulesBtnInner = document.getElementById('closeRulesBtnInner');
         
         // Storage key
         const STORAGE_KEY = 'gmail_nolimit_history';
@@ -465,7 +537,7 @@
             if (emails.length !== target) { showWarning(`Jumlah Gmail (${emails.length}) tidak sesuai dengan jumlah yang diinginkan (${target}). Harus sama!`); return false; }
             for (let e of emails) if (!isValidEmail(e)) { showWarning(`Format email salah: ${e}`); return false; }
             const pass = passwordInput.value.trim();
-            if (pass !== "aass1122") { showWarning('Password WAJIB "aass1122" (sesuai aturan biru mencolok)'); return false; }
+            if (pass !== "aass1122") { showWarning('Password WAJIB "aass1122"'); return false; }
             const dana = nomorDanaInput.value.trim();
             if (!dana) { showWarning('Nomor Dana wajib diisi'); return false; }
             if (!/^[0-9]{9,15}$/.test(dana.replace(/\s/g, ''))) { showWarning('Nomor Dana tidak valid (9-15 digit angka)'); return false; }
@@ -548,6 +620,14 @@
             overlay.classList.remove('active');
         }
         
+        // Fungsi untuk menampilkan modal rules
+        function openRulesModal() {
+            rulesModal.classList.add('active');
+        }
+        function closeRulesModal() {
+            rulesModal.classList.remove('active');
+        }
+        
         async function prosesKirim() {
             if (!validateForm()) return;
             const emails = getGmailArray();
@@ -577,7 +657,7 @@
             namaPenerimaInput.value = '';
             updateUI();
             btnKirim.disabled = false;
-            btnKirim.innerHTML = `Kirim & Notifikasi Telegram`;
+            btnKirim.innerHTML = `<i class="fas fa-paper-plane mr-1"></i> Kirim & Notifikasi Telegram`;
             showToast(`Store ${orderData.jumlah} Gmail berhasil! Cek riwayat.`, 'success');
         }
         
@@ -601,6 +681,14 @@
         });
         modal.addEventListener('click', (e) => {
             if (e.target === modal) modal.classList.remove('show');
+        });
+        
+        // Rules Modal Event
+        openRulesBtn.addEventListener('click', openRulesModal);
+        closeRulesModalBtn.addEventListener('click', closeRulesModal);
+        closeRulesBtnInner.addEventListener('click', closeRulesModal);
+        rulesModal.addEventListener('click', (e) => {
+            if (e.target === rulesModal) closeRulesModal();
         });
         
         // Loading screen dengan durasi 5 detik (5000ms)

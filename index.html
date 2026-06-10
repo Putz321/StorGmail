@@ -41,6 +41,10 @@
             box-shadow: 0 0 0 3px rgba(10, 132, 255, 0.3);
             background: rgba(28, 30, 40, 0.95);
         }
+        .ios-input:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
         .ios-btn {
             background: linear-gradient(95deg, #0a84ff, #0063dc);
             border-radius: 1.75rem;
@@ -50,6 +54,11 @@
             transition: all 0.18s cubic-bezier(0.23, 1, 0.32, 1);
         }
         .ios-btn:active { transform: scale(0.97); opacity: 0.9; }
+        .ios-btn:disabled {
+            opacity: 0.5;
+            transform: none;
+            cursor: not-allowed;
+        }
         .ios-chip {
             background: rgba(120, 120, 128, 0.2);
             backdrop-filter: blur(20px);
@@ -119,14 +128,14 @@
             border-radius: 1.25rem; padding: 0.9rem; margin-bottom: 0.8rem;
             border: 0.5px solid rgba(255,255,255,0.08);
         }
-        .rules-modal-ios {
+        .rules-modal-ios, .closed-modal-ios {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.8); backdrop-filter: blur(24px);
             z-index: 10060; display: flex; align-items: center; justify-content: center;
             visibility: hidden; opacity: 0; transition: 0.2s;
         }
-        .rules-modal-ios.active { visibility: visible; opacity: 1; }
-        .rules-card-ios {
+        .rules-modal-ios.active, .closed-modal-ios.active { visibility: visible; opacity: 1; }
+        .rules-card-ios, .closed-card-ios {
             background: rgba(28, 30, 38, 0.96); backdrop-filter: blur(40px);
             border-radius: 2rem; width: 90%; max-width: 480px; padding: 1.5rem;
             border: 0.5px solid rgba(255,255,255,0.2);
@@ -163,6 +172,23 @@
             background: rgba(10,132,255,0.1);
             transform: translateX(4px);
         }
+        .disabled-form-overlay {
+            pointer-events: none;
+            opacity: 0.65;
+        }
+        .closed-badge {
+            background: rgba(255, 69, 58, 0.2);
+            border: 1px solid #ff453a;
+            color: #ff9f0a;
+            font-weight: 700;
+            border-radius: 2rem;
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+        }
+        .countdown-number {
+            font-family: 'Fira Code', monospace;
+            letter-spacing: 2px;
+        }
     </style>
 </head>
 <body>
@@ -174,6 +200,19 @@
             <i class="fab fa-gmail text-white text-sm"></i> <span>Secure Vault  •  Gmail Fresh 2026</span>
         </div>
         <p class="text-white/40 text-xs mt-4 font-mono">100% Aman Dan Terpercaya  ·  2026 Stor Gmail</p>
+    </div>
+
+    <!-- MODAL TUTUP KARENA JAM ATAU HARI LIBUR (dengan countdown timer) -->
+    <div id="closedModal" class="closed-modal-ios">
+        <div class="closed-card-ios text-center">
+            <div class="flex justify-center mb-3">
+                <i class="fas fa-store-slash text-5xl text-[#ff453a]"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-white mb-2">Toko Sedang Tutup</h3>
+            <p id="closedModalMessage" class="text-white/80 text-sm leading-relaxed">Mohon Maaf Stor Gmail Tutup, Kembali Besok!!</p>
+            <div id="countdownTimer" class="text-3xl font-mono font-bold text-[#0a84ff] my-4 bg-black/30 py-2 px-3 rounded-2xl inline-block countdown-number">--:--:--</div>
+            <button id="closeClosedModalBtn" class="mt-2 w-full bg-white/10 py-2.5 rounded-full font-semibold text-white">Mengerti</button>
+        </div>
     </div>
 
     <!-- SHEET RIWAYAT -->
@@ -203,14 +242,14 @@
             </div>
             <ul class="text-sm space-y-2.5 text-white/80 pl-1 list-disc pl-4 font-medium">
                 <li>Gmail Fresh / Baru Dibuat</li>
-                <li>Wajib Kata <span class="text-[#0a84ff] font-bold">[carmen]</span> Di Awal Atau Akhir Nama</li>
+                <li>Wajib Tapi Opsional <span class="text-[#0a84ff] font-bold">[ciella]</span> Di Awal Atau Akhir Nama</li>
                 <li>Tahun Lahir 1990-2006 (Wajib)</li>
-                <li>Nama Harus Nama Orang Indonesia + Mengandung "carmen"</li>
+                <li>Nama Harus Nama Orang Indonesia + Mengandung "ciella"</li>
                 <li>Maksimal 3 Angka Dalam Alamat Gmail</li>
                 <li>Dilarang Titik Dan Angka Di Tengah Alamat</li>
                 <li>Gmail Tidak Boleh Terverifikasi Nomor HP</li>
                 <li>Gmail Dilarang Di Hapus Jika Belum Di Payment</li>
-                <li>Open Di Jam ±7 Close Di Jam ±3 Sore</li>
+                <li>Open Di Jam ± 07:00 WIB Close Di Jam ± 19:00 WIB</li>
                 <li>Password Wajib <span class="bg-black/40 px-2 py-0.5 rounded-full font-mono font-bold">aass1122</span></li>
                 <li>Minimal 1 Gmail, Tanpa Batas Transaksi</li>
                 <li class="text-[#ff9f0a] mt-2">Peringatan: Jika Tidak Sesuai Aturan, Dana Tidak Akan Ditransfer</li>
@@ -247,7 +286,7 @@
             <!-- Sisi Kiri -->
             <div class="space-y-5">
                 <button id="openRulesBtnMain" class="ios-card w-full py-4 px-5 flex items-center justify-between text-white font-bold text-md transition active:scale-95">
-                    <span class="flex items-center gap-2"><i class="fas fa-scroll text-[#0a84ff] text-lg"></i> Klik Untuk Melihat Aturan & Syarat</span>
+                    <span class="flex items-center gap-2"><i class="fas fa-scroll text-[#0a84ff] text-lg"></i>Klik Untuk Melihat Aturan & Syarat</span>
                     <i class="fas fa-chevron-right text-white/50 text-sm"></i>
                 </button>
                 
@@ -267,7 +306,7 @@
                     <p class="text-[11px] text-white/40 font-semibold mt-3 text-center">Ketuk Untuk Detail Lengkap</p>
                 </div>
 
-                <!-- LAPORAN PENJUALAN LANGSUNG (tanpa tombol klik, langsung tampil) -->
+                <!-- LAPORAN PENJUALAN LANGSUNG -->
                 <div class="ios-card p-5">
                     <div class="flex items-center gap-2 mb-3">
                         <i class="fas fa-chart-line text-[#0a84ff] text-lg"></i>
@@ -296,7 +335,10 @@
             <!-- Sisi Kanan Form -->
             <div class="lg:col-span-2">
                 <div class="ios-card p-6">
-                    <h2 class="text-2xl font-extrabold text-white mb-5 flex items-center gap-2"><i class="fas fa-envelope text-[#0a84ff]"></i> Form Store Gmail</h2>
+                    <div class="flex justify-between items-center mb-5">
+                        <h2 class="text-2xl font-extrabold text-white flex items-center gap-2"><i class="fas fa-envelope text-[#0a84ff]"></i> Form Store Gmail</h2>
+                        <div id="statusBadge" class="closed-badge hidden">CLOSED</div>
+                    </div>
                     
                     <div class="mb-4">
                         <label class="label-ios block mb-1">Jumlah Gmail</label>
@@ -321,6 +363,7 @@
                     </div>
                     <div id="warningText" class="mb-4 text-xs bg-red-500/20 text-red-300 p-2 rounded-xl hidden font-semibold"></div>
                     <button id="btnKirim" class="ios-btn w-full text-white py-3.5 flex items-center justify-center gap-2 text-base font-bold">Stor Gmail Sekarang</button>
+                    <div id="closedInfoText" class="text-center text-xs text-amber-400 mt-3 hidden font-semibold">Toko Sedang Tutup, Silakan Kembali Saat Jam Operasional (07.00 - 19.00 WIB, Senin-Jumat).</div>
                 </div>
             </div>
         </div>
@@ -343,6 +386,10 @@
         const totalSpan = document.getElementById('totalHargaDisplay');
         const gmailCounter = document.getElementById('gmailCounter');
         const btnKirim = document.getElementById('btnKirim');
+        const closedInfoText = document.getElementById('closedInfoText');
+        const statusBadge = document.getElementById('statusBadge');
+        
+        const allInputs = [jumlahInput, gmailTextarea, passwordInput, nomorDana, namaPenerima];
         
         const summaryTotalTrans = document.getElementById('summaryTotalTrans');
         const summaryTotalIncome = document.getElementById('summaryTotalIncome');
@@ -361,10 +408,160 @@
         const closeRulesBtn = document.getElementById('closeRulesBtn');
         const closeRulesInternal = document.getElementById('closeRulesInternal');
         
-        // Elemen laporan langsung
+        const closedModal = document.getElementById('closedModal');
+        const closedModalMessage = document.getElementById('closedModalMessage');
+        const closeClosedModalBtn = document.getElementById('closeClosedModalBtn');
+        const countdownTimerEl = document.getElementById('countdownTimer');
+        
         const statsContainer = document.getElementById('statsContainer');
         const periodBtns = document.querySelectorAll('.period-langsung-btn');
         let currentPeriod = 'weekly';
+        let countdownInterval = null;
+        
+        // ==================== CEK JAM OPERASIONAL & HARI ====================
+        function getNextOpenTime() {
+            const now = new Date();
+            const day = now.getDay(); // 0 Minggu, 6 Sabtu
+            const currentHour = now.getHours();
+            const currentMinute = now.getMinutes();
+            
+            // Jika weekend (Sabtu/Minggu), target buka Senin jam 07:00
+            if (day === 0 || day === 6) {
+                let daysToMonday = (day === 0 ? 1 : 2); // Minggu -> Senin (1 hari), Sabtu -> Senin (2 hari)
+                let target = new Date(now);
+                target.setDate(now.getDate() + daysToMonday);
+                target.setHours(7, 0, 0, 0);
+                return target;
+            }
+            
+            // Weekday (Senin-Jumat)
+            let target = new Date(now);
+            if (currentHour < 7) {
+                // Buka hari ini jam 7 pagi
+                target.setHours(7, 0, 0, 0);
+            } else if (currentHour >= 19) {
+                // Buka besok jam 7 pagi
+                target.setDate(now.getDate() + 1);
+                target.setHours(7, 0, 0, 0);
+            } else {
+                // Sedang jam buka, tidak perlu countdown
+                return null;
+            }
+            return target;
+        }
+        
+        function updateCountdownDisplay() {
+            const targetTime = getNextOpenTime();
+            if (!targetTime) {
+                // Toko buka, tutup modal dan enable form
+                if (closedModal.classList.contains('active')) {
+                    closedModal.classList.remove('active');
+                }
+                if (countdownInterval) {
+                    clearInterval(countdownInterval);
+                    countdownInterval = null;
+                }
+                disableForm(false);
+                return;
+            }
+            
+            const now = new Date();
+            const diffMs = targetTime - now;
+            if (diffMs <= 0) {
+                // Sudah waktunya buka
+                if (countdownInterval) clearInterval(countdownInterval);
+                countdownInterval = null;
+                disableForm(false);
+                closedModal.classList.remove('active');
+                showToastMessage("Toko sudah buka! Silakan lanjutkan transaksi.", false);
+                return;
+            }
+            
+            const totalSeconds = Math.floor(diffMs / 1000);
+            const hours = Math.floor(totalSeconds / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = totalSeconds % 60;
+            countdownTimerEl.innerText = `${hours.toString().padStart(2,'0')}:${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}`;
+        }
+        
+        function startCountdown() {
+            if (countdownInterval) clearInterval(countdownInterval);
+            updateCountdownDisplay();
+            countdownInterval = setInterval(() => {
+                updateCountdownDisplay();
+                // Re-check status agar jika sudah buka, modal tertutup otomatis
+                const status = isStoreOpen();
+                if (status.open) {
+                    if (countdownInterval) clearInterval(countdownInterval);
+                    countdownInterval = null;
+                    closedModal.classList.remove('active');
+                    disableForm(false);
+                }
+            }, 1000);
+        }
+        
+        function isStoreOpen() {
+            const now = new Date();
+            const day = now.getDay();
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
+            const currentTimeInHours = hours + minutes / 60;
+            
+            if (day === 0 || day === 6) {
+                return { open: false, reason: 'weekend', message: 'Mohon Maaf Stor Gmail Setiap Hari Sabtu Dan Minggu Tutup, Open Hari Senin Pagi, Terimakasih.' };
+            }
+            if (currentTimeInHours >= 7 && currentTimeInHours < 19) {
+                return { open: true, reason: null, message: '' };
+            } else {
+                return { open: false, reason: 'hour', message: 'Mohon Maaf Stor Gmail Tutup Buka Di Jam 07:00 Pagi Dan Tutup Di Jam 19:00, Terimakasih.' };
+            }
+        }
+        
+        function disableForm(disabled) {
+            if (disabled) {
+                allInputs.forEach(input => { if(input) input.disabled = true; });
+                if(btnKirim) btnKirim.disabled = true;
+                if(closedInfoText) closedInfoText.classList.remove('hidden');
+                if(statusBadge) statusBadge.classList.remove('hidden');
+            } else {
+                allInputs.forEach(input => { if(input) input.disabled = false; });
+                if(btnKirim) btnKirim.disabled = false;
+                if(closedInfoText) closedInfoText.classList.add('hidden');
+                if(statusBadge) statusBadge.classList.add('hidden');
+            }
+        }
+        
+        function showClosedModalWithCountdown(message) {
+            closedModalMessage.innerText = message;
+            closedModal.classList.add('active');
+            startCountdown();
+        }
+        
+        function applyStoreStatus() {
+            const status = isStoreOpen();
+            if (!status.open) {
+                disableForm(true);
+                showClosedModalWithCountdown(status.message);
+            } else {
+                disableForm(false);
+                if (closedModal.classList.contains('active')) {
+                    closedModal.classList.remove('active');
+                }
+                if (countdownInterval) {
+                    clearInterval(countdownInterval);
+                    countdownInterval = null;
+                }
+            }
+        }
+        
+        function canSubmit() {
+            const status = isStoreOpen();
+            if (!status.open) {
+                showToastMessage(status.message, true);
+                return false;
+            }
+            return true;
+        }
         
         // Helper functions
         function showToastMessage(msg, isError = false) {
@@ -441,7 +638,6 @@
                 historyListIOS.innerHTML = html;
                 totalPendapatanIos.innerText = `Rp${totalIncome.toLocaleString('id-ID')}`;
             }
-            // Update laporan langsung setelah ada perubahan data
             renderStats(currentPeriod);
         }
         
@@ -473,7 +669,7 @@
         function closeHistorySheet() { historySheet.classList.remove('active'); }
         function openHistorySheet() { historySheet.classList.add('active'); updateSummaryAndHistory(); }
         
-        // ========== FUNGSI STATISTIK UNTUK LAPORAN LANGSUNG ==========
+        // ========== FUNGSI STATISTIK ==========
         function getValidHistory() {
             let history = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
             return history.filter(item => item.timestampMs && typeof item.timestampMs === 'number');
@@ -605,6 +801,7 @@
         }
         
         async function prosesStor() {
+            if(!canSubmit()) return;
             if(!validateForm()) return;
             const emails = getGmailArray();
             const totalPrice = emails.length * 2000;
@@ -660,7 +857,11 @@
         closeRulesInternal.addEventListener('click', closeRules);
         rulesModal.addEventListener('click', (e) => { if(e.target === rulesModal) closeRules(); });
         
-        // Event untuk tombol periode laporan langsung
+        closeClosedModalBtn.addEventListener('click', () => {
+            closedModal.classList.remove('active');
+            // Countdown interval tetap berjalan di background, nanti otomatis cek ulang
+        });
+        
         periodBtns.forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const period = btn.getAttribute('data-period');
@@ -673,10 +874,28 @@
                 const loading = document.getElementById('loadingScreen');
                 loading.classList.add('fade-out');
                 setTimeout(() => { loading.style.display = 'none'; }, 600);
+                applyStoreStatus();
+                // Cek ulang status setiap menit untuk mengaktifkan form jika jam buka
+                setInterval(() => {
+                    const status = isStoreOpen();
+                    if (status.open) {
+                        if (closedModal.classList.contains('active')) closedModal.classList.remove('active');
+                        disableForm(false);
+                        if (countdownInterval) clearInterval(countdownInterval);
+                    } else {
+                        // Jika tutup dan form tidak disabled, disable
+                        if (!allInputs[0].disabled) {
+                            disableForm(true);
+                            if (!closedModal.classList.contains('active')) {
+                                showClosedModalWithCountdown(status.message);
+                            }
+                        }
+                    }
+                }, 30000);
             }, 3800);
             updateUI();
             updateSummaryAndHistory();
-            setActivePeriod('weekly'); // tampilkan mingguan default
+            setActivePeriod('weekly');
             if(!TELEGRAM_BOT_TOKEN || TELEGRAM_BOT_TOKEN === "YOUR_BOT_TOKEN_HERE") {
                 setTimeout(() => showToastMessage("Peringatan: Ada Kesalahan Token", true), 2000);
             }

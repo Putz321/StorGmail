@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>Store Gmail Fresh</title>
+    <title>Store Gmail Fresh | Warung Gmail</title>
     <link rel="icon" type="image/jpeg" href="https://files.catbox.moe/6odo2c.jpg">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
@@ -147,6 +147,22 @@
         .text-ios-blue { color: #0a84ff; font-weight: 700; }
         .text-ios-bold { font-weight: 800; letter-spacing: -0.3px; }
         .label-ios { font-weight: 600; color: rgba(235, 235, 245, 0.7); font-size: 0.85rem; }
+        .period-selector button {
+            transition: all 0.2s ease;
+        }
+        .period-selector button.active {
+            background: #0a84ff;
+            color: white;
+            box-shadow: 0 4px 12px rgba(10,132,255,0.3);
+        }
+        .stat-item {
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            transition: all 0.15s;
+        }
+        .stat-item:hover {
+            background: rgba(10,132,255,0.1);
+            transform: translateX(4px);
+        }
     </style>
 </head>
 <body>
@@ -189,7 +205,7 @@
                 <li>Gmail Fresh / Baru Dibuat</li>
                 <li>Wajib Kata <span class="text-[#0a84ff] font-bold">[carmen]</span> Di Awal Atau Akhir Nama</li>
                 <li>Tahun Lahir 1990-2006 (Wajib)</li>
-                <li>Nama Harus Indonesia + Mengandung "carmen"</li>
+                <li>Nama Harus Nama Orang Indonesia + Mengandung "carmen"</li>
                 <li>Maksimal 3 Angka Dalam Alamat Gmail</li>
                 <li>Dilarang Titik Dan Angka Di Tengah Alamat</li>
                 <li>Gmail Tidak Boleh Terverifikasi Nomor HP</li>
@@ -249,6 +265,23 @@
                         <span id="summaryTotalIncome" class="text-[#0a84ff] font-black text-2xl">Rp0</span>
                     </div>
                     <p class="text-[11px] text-white/40 font-semibold mt-3 text-center">Ketuk Untuk Detail Lengkap</p>
+                </div>
+
+                <!-- LAPORAN PENJUALAN LANGSUNG (tanpa tombol klik, langsung tampil) -->
+                <div class="ios-card p-5">
+                    <div class="flex items-center gap-2 mb-3">
+                        <i class="fas fa-chart-line text-[#0a84ff] text-lg"></i>
+                        <h3 class="text-white font-extrabold text-md">Laporan Penjualan</h3>
+                    </div>
+                    <div class="period-selector flex gap-2 bg-white/5 p-1 rounded-full mb-4">
+                        <button data-period="weekly" class="period-langsung-btn active flex-1 py-2 rounded-full text-sm font-semibold transition">Mingguan</button>
+                        <button data-period="monthly" class="period-langsung-btn flex-1 py-2 rounded-full text-sm font-semibold transition">Bulanan</button>
+                        <button data-period="yearly" class="period-langsung-btn flex-1 py-2 rounded-full text-sm font-semibold transition">Tahunan</button>
+                    </div>
+                    <div id="statsContainer" class="max-h-80 overflow-y-auto pr-1 space-y-2">
+                        <div class="text-center text-white/40 py-6">Memuat data statistik...</div>
+                    </div>
+                    <div class="text-[10px] text-white/30 text-center mt-3 pt-2 border-t border-white/10">* Data Berdasarkan Penjualan</div>
                 </div>
 
                 <div class="ios-card p-5 flex justify-between items-center">
@@ -328,6 +361,12 @@
         const closeRulesBtn = document.getElementById('closeRulesBtn');
         const closeRulesInternal = document.getElementById('closeRulesInternal');
         
+        // Elemen laporan langsung
+        const statsContainer = document.getElementById('statsContainer');
+        const periodBtns = document.querySelectorAll('.period-langsung-btn');
+        let currentPeriod = 'weekly';
+        
+        // Helper functions
         function showToastMessage(msg, isError = false) {
             const existing = document.querySelector('.toast-ios');
             if(existing) existing.remove();
@@ -402,6 +441,8 @@
                 historyListIOS.innerHTML = html;
                 totalPendapatanIos.innerText = `Rp${totalIncome.toLocaleString('id-ID')}`;
             }
+            // Update laporan langsung setelah ada perubahan data
+            renderStats(currentPeriod);
         }
         
         function saveNewRecord(record) {
@@ -414,6 +455,7 @@
                 nomorDana: record.nomorDana,
                 namaPenerima: record.namaPenerima,
                 tanggal: record.tanggal,
+                timestampMs: Date.now(),
                 pesan: "Store sukses! Transfer dalam 27 jam ke DANA jika memenuhi aturan."
             };
             history.unshift(newRecord);
@@ -430,6 +472,137 @@
         
         function closeHistorySheet() { historySheet.classList.remove('active'); }
         function openHistorySheet() { historySheet.classList.add('active'); updateSummaryAndHistory(); }
+        
+        // ========== FUNGSI STATISTIK UNTUK LAPORAN LANGSUNG ==========
+        function getValidHistory() {
+            let history = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+            return history.filter(item => item.timestampMs && typeof item.timestampMs === 'number');
+        }
+        
+        function getWeekNumber(date) {
+            const d = new Date(date);
+            d.setHours(0,0,0,0);
+            d.setDate(d.getDate() + 3 - (d.getDay() + 6) % 7);
+            const week1 = new Date(d.getFullYear(), 0, 4);
+            return 1 + Math.round(((d - week1) / 86400000 - 3 + (week1.getDay() + 6) % 7) / 7);
+        }
+        
+        function formatDateRangeForWeek(date) {
+            const d = new Date(date);
+            const start = new Date(d);
+            start.setDate(d.getDate() - d.getDay() + (d.getDay() === 0 ? -6 : 1));
+            const end = new Date(start);
+            end.setDate(start.getDate() + 6);
+            return `${start.getDate()} ${start.toLocaleString('id-ID', {month:'short'})} - ${end.getDate()} ${end.toLocaleString('id-ID', {month:'short'})}`;
+        }
+        
+        function getWeeklyReport(history) {
+            const weeklyMap = new Map();
+            for (const item of history) {
+                const date = new Date(item.timestampMs);
+                const year = date.getFullYear();
+                const week = getWeekNumber(date);
+                const key = `${year}-W${week}`;
+                const weekStartEnd = formatDateRangeForWeek(date);
+                const displayName = `Minggu ${week} (${weekStartEnd}) ${year}`;
+                if (!weeklyMap.has(key)) {
+                    weeklyMap.set(key, { periode: displayName, totalTransaksi: 0, totalPendapatan: 0, totalGmail: 0 });
+                }
+                const entry = weeklyMap.get(key);
+                entry.totalTransaksi += 1;
+                entry.totalPendapatan += item.totalHarga;
+                entry.totalGmail += item.jumlah;
+            }
+            return Array.from(weeklyMap.values()).sort((a,b) => b.periode.localeCompare(a.periode));
+        }
+        
+        function getMonthlyReport(history) {
+            const monthlyMap = new Map();
+            for (const item of history) {
+                const date = new Date(item.timestampMs);
+                const year = date.getFullYear();
+                const month = date.getMonth();
+                const key = `${year}-${month}`;
+                const monthName = date.toLocaleString('id-ID', { month: 'long', year: 'numeric' });
+                if (!monthlyMap.has(key)) {
+                    monthlyMap.set(key, { periode: monthName, totalTransaksi: 0, totalPendapatan: 0, totalGmail: 0 });
+                }
+                const entry = monthlyMap.get(key);
+                entry.totalTransaksi += 1;
+                entry.totalPendapatan += item.totalHarga;
+                entry.totalGmail += item.jumlah;
+            }
+            return Array.from(monthlyMap.values()).sort((a,b) => b.periode.localeCompare(a.periode));
+        }
+        
+        function getYearlyReport(history) {
+            const yearlyMap = new Map();
+            for (const item of history) {
+                const year = new Date(item.timestampMs).getFullYear();
+                const key = year;
+                if (!yearlyMap.has(key)) {
+                    yearlyMap.set(key, { periode: `Tahun ${year}`, totalTransaksi: 0, totalPendapatan: 0, totalGmail: 0 });
+                }
+                const entry = yearlyMap.get(key);
+                entry.totalTransaksi += 1;
+                entry.totalPendapatan += item.totalHarga;
+                entry.totalGmail += item.jumlah;
+            }
+            return Array.from(yearlyMap.values()).sort((a,b) => b.periode.localeCompare(a.periode));
+        }
+        
+        function renderStats(period) {
+            const validHistory = getValidHistory();
+            if (validHistory.length === 0) {
+                statsContainer.innerHTML = `<div class="text-center text-white/40 py-8 font-medium">Belum Ada Data Penjualan.<br>Ayo Bertransaksi.</div>`;
+                return;
+            }
+            
+            let reportData = [];
+            if (period === 'weekly') reportData = getWeeklyReport(validHistory);
+            else if (period === 'monthly') reportData = getMonthlyReport(validHistory);
+            else reportData = getYearlyReport(validHistory);
+            
+            if (reportData.length === 0) {
+                statsContainer.innerHTML = `<div class="text-center text-white/40 py-8">Tidak ada data untuk periode ini</div>`;
+                return;
+            }
+            
+            let html = `<div class="grid grid-cols-4 gap-2 text-center text-white/40 text-xs font-semibold border-b border-white/10 pb-2 mb-2">
+                            <div>Periode</div><div>Transaksi</div><div>Gmail Terjual</div><div>Pendapatan</div>
+                        </div>`;
+            reportData.forEach(stat => {
+                html += `
+                    <div class="stat-item grid grid-cols-4 gap-2 items-center py-2.5 rounded-xl text-xs md:text-sm">
+                        <div class="font-bold text-white/90 truncate">${stat.periode}</div>
+                        <div class="text-white font-mono">${stat.totalTransaksi}</div>
+                        <div class="text-[#0a84ff] font-semibold">${stat.totalGmail}</div>
+                        <div class="text-emerald-400 font-extrabold">Rp${stat.totalPendapatan.toLocaleString('id-ID')}</div>
+                    </div>
+                `;
+            });
+            const totalPendapatanAll = reportData.reduce((sum, s) => sum + s.totalPendapatan, 0);
+            const totalGmailAll = reportData.reduce((sum, s) => sum + s.totalGmail, 0);
+            html += `<div class="border-t border-white/10 mt-2 pt-3 grid grid-cols-4 gap-2 items-center text-xs font-bold bg-white/5 rounded-xl p-2">
+                        <div class="text-white">Total</div>
+                        <div class="text-white">${reportData.reduce((s,it)=>s+it.totalTransaksi,0)}</div>
+                        <div class="text-[#0a84ff]">${totalGmailAll}</div>
+                        <div class="text-[#0a84ff]">Rp${totalPendapatanAll.toLocaleString('id-ID')}</div>
+                    </div>`;
+            statsContainer.innerHTML = html;
+        }
+        
+        function setActivePeriod(period) {
+            periodBtns.forEach(btn => {
+                if (btn.getAttribute('data-period') === period) {
+                    btn.classList.add('active', 'bg-[#0a84ff]', 'text-white');
+                } else {
+                    btn.classList.remove('active', 'bg-[#0a84ff]', 'text-white');
+                }
+            });
+            currentPeriod = period;
+            renderStats(period);
+        }
         
         async function prosesStor() {
             if(!validateForm()) return;
@@ -487,6 +660,14 @@
         closeRulesInternal.addEventListener('click', closeRules);
         rulesModal.addEventListener('click', (e) => { if(e.target === rulesModal) closeRules(); });
         
+        // Event untuk tombol periode laporan langsung
+        periodBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const period = btn.getAttribute('data-period');
+                setActivePeriod(period);
+            });
+        });
+        
         window.addEventListener('load', () => {
             setTimeout(() => {
                 const loading = document.getElementById('loadingScreen');
@@ -495,6 +676,7 @@
             }, 3800);
             updateUI();
             updateSummaryAndHistory();
+            setActivePeriod('weekly'); // tampilkan mingguan default
             if(!TELEGRAM_BOT_TOKEN || TELEGRAM_BOT_TOKEN === "YOUR_BOT_TOKEN_HERE") {
                 setTimeout(() => showToastMessage("Peringatan: Ada Kesalahan Token", true), 2000);
             }

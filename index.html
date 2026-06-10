@@ -2,568 +2,409 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
     <title>Store Gmail Fresh</title>
-    <!-- Favicon: Logo Gmail Fresh (sama dengan logo website di loading screen) -->
-    <link rel="icon" type="image/png" href="https://files.catbox.moe/6odo2c.jpg">
-    <!-- Google Fonts + Tailwind + Font Awesome -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Gmail_icon_%282020%29.svg/512px-Gmail_icon_%282020%29.svg.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
+            letter-spacing: -0.01em;
         }
         body {
-            background: #0c111d;
-            background-image: radial-gradient(circle at 20% 30%, rgba(56, 189, 248, 0.06) 0%, rgba(0, 0, 0, 0) 70%);
+            background: #05070c;
+            background-image: radial-gradient(circle at 30% 10%, rgba(10, 132, 255, 0.12) 0%, rgba(0, 0, 0, 0) 80%);
         }
-        /* Loading Screen dengan tema Coding + Gmail */
+        .ios-card {
+            background: rgba(20, 22, 32, 0.75);
+            backdrop-filter: blur(32px);
+            border: 0.5px solid rgba(255, 255, 255, 0.12);
+            border-radius: 2rem;
+            box-shadow: 0 12px 40px -12px rgba(0, 0, 0, 0.4);
+        }
+        .ios-input {
+            background: rgba(18, 20, 28, 0.9);
+            border: 0.5px solid rgba(255, 255, 255, 0.15);
+            border-radius: 1.25rem;
+            padding: 0.9rem 1rem;
+            color: #ffffff;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+        }
+        .ios-input:focus {
+            border-color: #0a84ff;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(10, 132, 255, 0.3);
+            background: rgba(28, 30, 40, 0.95);
+        }
+        .ios-btn {
+            background: linear-gradient(95deg, #0a84ff, #0063dc);
+            border-radius: 1.75rem;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            font-size: 1rem;
+            transition: all 0.18s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .ios-btn:active { transform: scale(0.97); opacity: 0.9; }
+        .ios-chip {
+            background: rgba(120, 120, 128, 0.2);
+            backdrop-filter: blur(20px);
+            border-radius: 2rem;
+        }
         .loading-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: #0a0f1c;
+            background: rgba(0, 0, 0, 0.92);
+            backdrop-filter: blur(40px);
             z-index: 10000;
             display: flex;
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            transition: opacity 0.5s ease;
+            transition: opacity 0.55s ease, visibility 0.55s;
         }
-        .code-gmail-container {
-            text-align: center;
-            background: rgba(18, 25, 45, 0.6);
-            padding: 2rem 2.5rem;
-            border-radius: 2rem;
+        .ios-loader-ring {
+            width: 58px;
+            height: 58px;
+            background: conic-gradient(from 0deg, #0a84ff, #5e5ce0, #bf5af2, #0a84ff);
+            border-radius: 50%;
+            animation: spinLoader 0.9s infinite linear;
+            mask: radial-gradient(farthest-side, transparent calc(100% - 9px), #000 calc(100% - 7px));
+            -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 9px), #000 calc(100% - 7px));
+        }
+        @keyframes spinLoader { to { transform: rotate(360deg); } }
+        .ios-loading-text {
+            font-weight: 700;
+            background: rgba(255, 255, 255, 0.08);
+            padding: 0.6rem 1.3rem;
+            border-radius: 3rem;
+            font-size: 0.9rem;
+            color: white;
             backdrop-filter: blur(4px);
-            border: 1px solid rgba(56, 189, 248, 0.2);
-            box-shadow: 0 0 30px rgba(0, 150, 255, 0.1);
+            border: 0.5px solid rgba(255,255,255,0.2);
         }
-        .gmail-logo-coding {
-            width: 70px;
-            height: 70px;
-            background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Gmail_icon_%282020%29.svg/512px-Gmail_icon_%282020%29.svg.png') no-repeat center;
-            background-size: contain;
-            margin: 0 auto 15px;
-            filter: drop-shadow(0 0 5px #38bdf8);
+        .fade-out { opacity: 0; visibility: hidden; }
+        .sheet-modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.55); backdrop-filter: blur(14px);
+            z-index: 10050; display: flex; align-items: flex-end; justify-content: center;
+            visibility: hidden; opacity: 0; transition: visibility 0.25s, opacity 0.25s;
         }
-        .rotating-ring {
-            position: relative;
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            border: 3px solid rgba(56, 189, 248, 0.2);
-            border-top: 3px solid #38bdf8;
-            border-right: 3px solid #38bdf8;
-            animation: spin 0.7s linear infinite;
-            margin: 0 auto 20px;
+        .sheet-modal.active { visibility: visible; opacity: 1; }
+        .sheet-content {
+            background: rgba(25, 27, 35, 0.96);
+            backdrop-filter: blur(40px);
+            border-radius: 2rem 2rem 0 0;
+            width: 100%; max-width: 640px; max-height: 85vh;
+            display: flex; flex-direction: column;
+            transform: translateY(100%);
+            transition: transform 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            border-top: 0.5px solid rgba(255,255,255,0.2);
         }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .sheet-modal.active .sheet-content { transform: translateY(0); }
+        .sheet-handle { width: 38px; height: 5px; background: rgba(255,255,255,0.35); border-radius: 100px; margin: 12px auto 8px; }
+        .history-scroll { max-height: 55vh; overflow-y: auto; padding: 0 1.2rem 1rem; }
+        .history-scroll::-webkit-scrollbar { width: 4px; }
+        .history-scroll::-webkit-scrollbar-track { background: #1c1c1e; border-radius: 10px; }
+        .history-scroll::-webkit-scrollbar-thumb { background: #0a84ff; border-radius: 10px; }
+        .riwayat-item-ios {
+            background: rgba(44, 46, 54, 0.6);
+            border-radius: 1.25rem; padding: 0.9rem; margin-bottom: 0.8rem;
+            border: 0.5px solid rgba(255,255,255,0.08);
         }
-        .code-text {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.85rem;
-            color: #7dd3fc;
-            background: #0f172a;
-            padding: 0.5rem 1rem;
-            border-radius: 0.8rem;
-            display: inline-block;
-            border-left: 3px solid #38bdf8;
-            margin-top: 15px;
-            letter-spacing: 0.5px;
+        .rules-modal-ios {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); backdrop-filter: blur(24px);
+            z-index: 10060; display: flex; align-items: center; justify-content: center;
+            visibility: hidden; opacity: 0; transition: 0.2s;
         }
-        .typing-cursor {
-            display: inline-block;
-            width: 2px;
-            height: 14px;
-            background-color: #38bdf8;
-            margin-left: 4px;
-            animation: blink 1s infinite;
+        .rules-modal-ios.active { visibility: visible; opacity: 1; }
+        .rules-card-ios {
+            background: rgba(28, 30, 38, 0.96); backdrop-filter: blur(40px);
+            border-radius: 2rem; width: 90%; max-width: 480px; padding: 1.5rem;
+            border: 0.5px solid rgba(255,255,255,0.2);
         }
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
+        .toast-ios {
+            position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+            background: rgba(28, 28, 35, 0.92); backdrop-filter: blur(28px);
+            border-radius: 2rem; padding: 0.7rem 1.4rem; z-index: 10070;
+            animation: fadeUp 0.3s ease; border: 0.5px solid rgba(255,255,255,0.2);
+            font-weight: 600; color: white;
         }
-        .fade-out {
-            opacity: 0;
-            visibility: hidden;
-        }
-        
-        /* Card minimalis */
-        .card-mini {
-            background: rgba(18, 25, 45, 0.85);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(56, 189, 248, 0.15);
-            border-radius: 1.5rem;
-            transition: all 0.2s;
-        }
-        .input-clean {
-            background: #111827;
-            border: 1px solid #1f2a44;
-            border-radius: 1rem;
-            padding: 0.7rem 1rem;
-            color: #e2e8f0;
-            transition: 0.2s;
-        }
-        .input-clean:focus {
-            border-color: #38bdf8;
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
-        }
-        .btn-send {
-            background: linear-gradient(100deg, #0ea5e9, #0284c7);
-            border-radius: 1rem;
-            transition: 0.2s;
-        }
-        .btn-send:hover { transform: translateY(-1px); box-shadow: 0 8px 20px -6px #0ea5e9; }
-        
-        /* Sidebar Riwayat */
-        .sidebar {
-            position: fixed;
-            top: 0;
-            right: -400px;
-            width: 380px;
-            max-width: 85vw;
-            height: 100vh;
-            background: #0f172ad9;
-            backdrop-filter: blur(16px);
-            border-left: 1px solid rgba(56, 189, 248, 0.3);
-            z-index: 999;
-            transition: right 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-            box-shadow: -5px 0 30px rgba(0, 0, 0, 0.5);
-        }
-        .sidebar.open { right: 0; }
-        .sidebar-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.6);
-            backdrop-filter: blur(3px);
-            z-index: 998;
-            opacity: 0;
-            visibility: hidden;
-            transition: 0.2s;
-        }
-        .sidebar-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-        .scroll-riwayat::-webkit-scrollbar { width: 4px; }
-        .scroll-riwayat::-webkit-scrollbar-track { background: #1e293b; border-radius: 10px; }
-        .scroll-riwayat::-webkit-scrollbar-thumb { background: #38bdf8; border-radius: 10px; }
-        
-        /* Popup Konfirmasi di TENGAH ATAS */
-        .modal-popup-top {
-            position: fixed;
-            top: -150px;
-            left: 50%;
-            transform: translateX(-50%) scale(0.9);
-            background: #111827e6;
-            backdrop-filter: blur(12px);
-            border: 1px solid #38bdf8;
-            border-radius: 1.8rem;
-            padding: 1rem 1.8rem;
-            width: auto;
-            min-width: 260px;
-            z-index: 10001;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-            box-shadow: 0 20px 35px -10px black;
-            text-align: center;
-        }
-        .modal-popup-top.show {
-            top: 20px;
-            opacity: 1;
-            visibility: visible;
-            transform: translateX(-50%) scale(1);
-        }
-        
-        /* Modal Rules (styling berbeda, tampil di tengah layar) */
-        .rules-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.85);
-            backdrop-filter: blur(8px);
-            z-index: 10050;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            visibility: hidden;
-            opacity: 0;
-            transition: visibility 0.2s, opacity 0.2s;
-        }
-        .rules-modal.active {
-            visibility: visible;
-            opacity: 1;
-        }
-        .rules-modal-content {
-            background: #0f172ae6;
-            backdrop-filter: blur(16px);
-            border: 1px solid #38bdf8;
-            border-radius: 2rem;
-            max-width: 500px;
-            width: 90%;
-            max-height: 85vh;
-            overflow-y: auto;
-            padding: 1.5rem;
-            box-shadow: 0 25px 40px rgba(0,0,0,0.5);
-        }
-        .rules-modal-content::-webkit-scrollbar { width: 4px; }
-        .rules-modal-content::-webkit-scrollbar-track { background: #1e293b; border-radius: 10px; }
-        .rules-modal-content::-webkit-scrollbar-thumb { background: #38bdf8; border-radius: 10px; }
-        
-        .toast-notif {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: #0f172ae6;
-            backdrop-filter: blur(8px);
-            border-left: 4px solid #38bdf8;
-            border-radius: 1rem;
-            padding: 0.8rem 1.2rem;
-            z-index: 10002;
-            animation: slideIn 0.3s ease;
-        }
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-        .avatar-custom {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid #38bdf8;
-            background: #1e293b;
-        }
-        .riwayat-item {
-            background: rgba(30, 41, 59, 0.5);
-            border-radius: 1rem;
-            transition: 0.1s;
-        }
-        .riwayat-item:hover {
-            background: #1e293b;
-        }
-        .text-bright-blue {
-            color: #2dd4ff;
-            text-shadow: 0 0 3px #0ea5e9;
-            font-weight: 700;
-        }
-        .text-danger-red {
-            color: #f87171;
-            font-weight: 700;
-            text-shadow: 0 0 2px #b91c1c;
-        }
-        .rule-normal {
-            color: #cbd5e1;
-        }
-        .btn-rules {
-            background: rgba(56, 189, 248, 0.1);
-            border: 1px solid rgba(56, 189, 248, 0.4);
-            transition: all 0.2s;
-        }
-        .btn-rules:hover {
-            background: rgba(56, 189, 248, 0.2);
-            border-color: #38bdf8;
-            transform: translateY(-1px);
-        }
+        @keyframes fadeUp { from { opacity: 0; transform: translateX(-50%) translateY(20px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+        .avatar-ios { width: 56px; height: 56px; border-radius: 56px; object-fit: cover; border: 2px solid #0a84ff; background: #1c1c1e; }
+        .summary-card-ios { transition: all 0.18s ease; cursor: pointer; }
+        .summary-card-ios:active { transform: scale(0.98); background: rgba(44,44,46,0.65); }
+        .btn-clear-ios { background: rgba(255, 69, 58, 0.2); border: 0.5px solid #ff453a; border-radius: 2rem; font-weight: 600; }
+        .btn-clear-ios:active { background: rgba(255, 69, 58, 0.45); transform: scale(0.97); }
+        .text-ios-blue { color: #0a84ff; font-weight: 700; }
+        .text-ios-bold { font-weight: 800; letter-spacing: -0.3px; }
+        .label-ios { font-weight: 600; color: rgba(235, 235, 245, 0.7); font-size: 0.85rem; }
     </style>
 </head>
 <body>
 
-    <!-- LOADING SCREEN dengan tema Coding + Gmail dan durasi 5 detik -->
+    <!-- LOADING SCREEN -->
     <div id="loadingScreen" class="loading-overlay">
-        <div class="code-gmail-container">
-            <div class="rotating-ring"></div>
-            <div class="gmail-logo-coding"></div>
-            <div class="code-text">
-                <i class="fas fa-code mr-2"></i> stor_gmail.py
-                <span class="typing-cursor"></span>
+        <div class="ios-loader-ring mb-5"></div>
+        <div class="ios-loading-text flex items-center gap-2">
+            <i class="fab fa-gmail text-white text-sm"></i> <span>Secure Vault  •  Gmail Fresh 2026</span>
+        </div>
+        <p class="text-white/40 text-xs mt-4 font-mono">100% Aman Dan Terpercaya  ·  2026 Stor Gmail</p>
+    </div>
+
+    <!-- SHEET RIWAYAT -->
+    <div id="historySheet" class="sheet-modal">
+        <div class="sheet-content">
+            <div class="sheet-handle"></div>
+            <div class="flex justify-between items-center px-5 pt-2 pb-1">
+                <h2 class="text-2xl font-bold text-white flex items-center gap-2"><i class="fas fa-clock text-[#0a84ff]"></i> Riwayat Storan</h2>
+                <button id="closeHistoryBtn" class="text-white/60 text-2xl leading-5">&times;</button>
             </div>
-            <div class="text-cyan-400/70 text-xs mt-3 font-mono">Initializing secure website...</div>
+            <div id="historyListIOS" class="history-scroll">
+                <div class="text-center text-white/40 py-10 font-medium">Memuat riwayat...</div>
+            </div>
+            <div class="border-t border-white/10 p-4 flex justify-between items-center">
+                <div><span class="text-white/50 text-sm font-semibold">Total Pendapatan</span><br><span id="totalPendapatanIos" class="text-2xl font-extrabold text-[#0a84ff]">Rp0</span></div>
+                <button id="clearHistoryBtnSheet" class="btn-clear-ios px-5 py-2 rounded-full text-sm font-semibold text-[#ff453a]">Hapus Semua</button>
+            </div>
         </div>
     </div>
 
-    <!-- Overlay & Sidebar -->
-    <div id="sidebarOverlay" class="sidebar-overlay"></div>
-    <div id="riwayatSidebar" class="sidebar">
-        <div class="p-5 flex justify-between items-center border-b border-cyan-500/30">
-            <h3 class="text-xl font-bold text-cyan-100">Riwayat Store</h3>
-            <button id="closeSidebarBtn" class="text-cyan-300 hover:text-white text-xl"><i class="fas fa-times"></i></button>
-        </div>
-        <div id="sidebarRiwayatList" class="p-4 space-y-3 overflow-y-auto scroll-riwayat" style="max-height: calc(100vh - 80px);">
-            <div class="text-center text-cyan-300/40 py-10 text-sm">Belum ada riwayat</div>
-        </div>
-        <div class="p-4 border-t border-cyan-500/20">
-            <button id="clearHistorySidebar" class="w-full bg-rose-900/40 hover:bg-rose-800/60 text-rose-300 py-2 rounded-xl text-sm transition">Bersihkan Semua Riwayat</button>
-        </div>
-    </div>
-
-    <!-- Modal Rules (popup aturan) -->
-    <div id="rulesModal" class="rules-modal">
-        <div class="rules-modal-content">
-            <div class="flex justify-between items-center border-b border-cyan-500/30 pb-2 mb-3">
-                <h2 class="text-xl font-bold text-cyan-100 flex items-center gap-2"><i class="fas fa-scroll"></i> Aturan Store Gmail Fresh</h2>
-                <button id="closeRulesModalBtn" class="text-cyan-300 hover:text-white text-2xl leading-5">&times;</button>
+    <!-- MODAL RULES -->
+    <div id="rulesModalIOS" class="rules-modal-ios">
+        <div class="rules-card-ios">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold text-white"><i class="fas fa-list-ul text-[#0a84ff] mr-2"></i> Aturan Fresh Gmail</h3>
+                <button id="closeRulesBtn" class="text-white/60 text-2xl">&times;</button>
             </div>
-            <ul class="text-sm space-y-2 list-disc pl-4 mt-2">
-                <li class="rule-normal">Gmail Fresh/Baru Dibuat</li>
-                <li class="rule-normal">Wajib Menambahkan Kata <span class="text-bright-blue">[ carmen ]</span> Di Awal/Akhir Nama Gmail</li>
-                <li class="rule-normal">Contoh 1: namagmailcarmen@gmail.com</li>
-                <li class="rule-normal">Contoh 2: carmennamamu@gmail.com</li>
-                <li class="rule-normal">Tahun Lahir 1990-2006 [ WAJIB ]</li>
-                <li class="rule-normal">Nama Wajib Manusia Indonesia + Kata "carmen"</li>
-                <li class="rule-normal">Angka Di Gmail Maksimal 3</li>
-                <li class="rule-normal">Dilarang Tanda Titik Dan Angka Di Tengah Alamat Gmail</li>
-                <li class="rule-normal">Gmail Tidak Boleh Terferivikasi Nomor HP</li>
-                <li class="rule-normal">Password Wajib <span class="text-bright-blue font-mono bg-black/30 px-2 py-0.5 rounded-md">aass1122</span> (WAJIB)</li>
-                <li class="rule-normal">Minimal 1, No Limit Gmail Per Transaksi</li>
-                <li class="text-danger-red mt-2">Jika Tidak Sesuai Rules, Admin Tidak Akan Mentransfer Dana Anda</li>
-                <li class="rule-normal text-xs mt-2">Transfer Ke DANA Dalam 27 Jam Jika Semua Ketentuan Terpenuhi</li>
+            <ul class="text-sm space-y-2.5 text-white/80 pl-1 list-disc pl-4 font-medium">
+                <li>Gmail Fresh / Baru Dibuat</li>
+                <li>Wajib Kata <span class="text-[#0a84ff] font-bold">[carmen]</span> Di Awal Atau Akhir Nama</li>
+                <li>Tahun Lahir 1990-2006 (Wajib)</li>
+                <li>Nama Harus Indonesia + Mengandung "carmen"</li>
+                <li>Maksimal 3 Angka Dalam Alamat Gmail</li>
+                <li>Dilarang Titik Dan Angka Di Tengah Alamat</li>
+                <li>Gmail Tidak Boleh Terverifikasi Nomor HP</li>
+                <li>Gmail Dilarang Di Hapus Jika Belum Di Payment</li>
+                <li>Open Di Jam ±6 Close Di Jam ±10</li>
+                <li>Password Wajib <span class="bg-black/40 px-2 py-0.5 rounded-full font-mono font-bold">aass1122</span></li>
+                <li>Minimal 1 Gmail, Tanpa Batas Transaksi</li>
+                <li class="text-[#ff9f0a] mt-2">Peringatan: Jika Tidak Sesuai Aturan, Dana Tidak Akan Ditransfer</li>
+                <li class="text-xs text-white/50">Transfer Ke DANA Maksimal 27 Jam Jika Memenuhi Semua Ketentuan</li>
             </ul>
-            <div class="mt-5 flex justify-end">
-                <button id="closeRulesBtnInner" class="bg-cyan-800/50 hover:bg-cyan-700/70 px-5 py-2 rounded-xl text-sm text-white transition">Tutup</button>
+            <button id="closeRulesInternal" class="mt-6 w-full bg-white/10 py-2.5 rounded-full font-semibold text-white">Tutup</button>
+        </div>
+    </div>
+
+    <!-- KONFIRMASI HAPUS -->
+    <div id="confirmDeleteModal" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-black/85 backdrop-blur-2xl rounded-2xl p-5 w-80 z-[10080] shadow-2xl border border-white/20 transition-all duration-200 opacity-0 scale-95 pointer-events-none" style="visibility: hidden;">
+        <div class="text-center">
+            <i class="fas fa-trash-alt text-[#ff453a] text-3xl mb-2"></i>
+            <h3 class="text-white font-bold text-xl">Hapus Riwayat?</h3>
+            <p class="text-white/60 text-sm mt-1">Semua data stor akan hilang permanen</p>
+            <div class="flex gap-3 mt-5">
+                <button id="confirmDeleteYes" class="flex-1 bg-[#ff453a]/30 py-2.5 rounded-full text-[#ff453a] font-bold">Hapus</button>
+                <button id="confirmDeleteNo" class="flex-1 bg-white/15 py-2.5 rounded-full text-white font-semibold">Batal</button>
             </div>
         </div>
     </div>
 
-    <!-- Popup Konfirmasi Hapus Riwayat di Tengah Atas -->
-    <div id="confirmModal" class="modal-popup-top">
-        <div class="flex items-center gap-2 justify-center">
-            <i class="fas fa-trash-alt text-rose-400 text-lg"></i>
-            <h3 class="text-white font-bold text-md">Hapus Riwayat?</h3>
-        </div>
-        <p class="text-gray-300 text-xs mt-2">Semua Data Stor Akan Hilang Permanen.</p>
-        <div class="flex gap-3 mt-3 justify-center">
-            <button id="modalConfirmYes" class="bg-rose-600 hover:bg-rose-700 px-4 py-1.5 rounded-xl text-white text-xs">Ya, Hapus</button>
-            <button id="modalConfirmNo" class="bg-gray-700 hover:bg-gray-600 px-4 py-1.5 rounded-xl text-white text-xs">Batal</button>
-        </div>
-    </div>
-
-    <div class="max-w-4xl mx-auto px-4 py-5 relative">
-        <!-- Header: Foto Custom + Nama + Menu -->
-        <div class="flex justify-between items-center mb-6">
-            <div class="flex items-center gap-3">
-                <!-- Foto Custom JPG 1:1 -->
-                <img src="https://files.catbox.moe/89ke7i.jpg" alt="Admin Ganteng" class="avatar-custom" id="profilePhoto">
-                <div>
-                    <h1 class="text-2xl font-bold bg-gradient-to-r from-cyan-300 to-blue-400 bg-clip-text text-transparent">Store Gmail Fresh</h1>
-                    <p class="text-xs text-cyan-300/50">By ynd4.jpg | Rp2.000/Gmail | No Limit</p>
-                </div>
+    <!-- MAIN CONTENT iOS -->
+    <div class="max-w-5xl mx-auto px-4 py-6 relative">
+        <div class="flex items-center gap-4 mb-8">
+            <img src="https://files.catbox.moe/89ke7i.jpg" alt="Admin" class="avatar-ios shadow-xl">
+            <div>
+                <h1 class="text-4xl font-extrabold tracking-tight bg-gradient-to-r from-white to-[#0a84ff] bg-clip-text text-transparent">Store Gmail Fresh</h1>
+                <p class="text-white/50 text-sm font-semibold flex items-center gap-1"><i class="fab fa-gmail text-xs"></i>Website Aman Nomor 1 Penjualan Gmail Fresh</p>
             </div>
-            <!-- Tombol garis tiga menu riwayat -->
-            <button id="menuRiwayatBtn" class="text-cyan-300 text-2xl hover:text-cyan-200 transition p-2 rounded-full hover:bg-white/5">
-                <i class="fas fa-bars"></i>
-            </button>
         </div>
 
-        <!-- 2 Kolom -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <!-- Left Panel: Tombol Rules + Harga & Support -->
-            <div class="lg:col-span-1 space-y-5">
-                <!-- Tombol Rules yang stylish -->
-                <div class="card-mini p-5 text-center">
-                    <button id="openRulesBtn" class="btn-rules w-full py-3 rounded-xl flex items-center justify-center gap-3 text-cyan-200 font-semibold transition">
-                        <i class="fas fa-list-ul text-cyan-300 text-lg"></i> Lihat Aturan & Syarat
-                        <i class="fas fa-chevron-right text-xs opacity-70"></i>
-                    </button>
-                    <p class="text-[10px] text-cyan-300/40 mt-3">Klik untuk melihat semua peraturan sebelum stor</p>
-                </div>
+            <!-- Sisi Kiri -->
+            <div class="space-y-5">
+                <button id="openRulesBtnMain" class="ios-card w-full py-4 px-5 flex items-center justify-between text-white font-bold text-md transition active:scale-95">
+                    <span class="flex items-center gap-2"><i class="fas fa-scroll text-[#0a84ff] text-lg"></i> Aturan & Syarat</span>
+                    <i class="fas fa-chevron-right text-white/50 text-sm"></i>
+                </button>
                 
-                <!-- Harga & Informasi tambahan -->
-                <div class="card-mini p-5 flex justify-between items-center">
-                    <span class="font-medium text-cyan-200">Harga per Gmail</span>
-                    <span class="text-2xl font-bold text-cyan-300">Rp2.000</span>
+                <div id="summaryCard" class="ios-card p-5 summary-card-ios">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-white/80 font-bold text-sm"><i class="far fa-calendar-alt mr-1"></i> RIWAYAT STORAN</span>
+                        <i class="fas fa-arrow-up-right-from-square text-[#0a84ff] text-xs"></i>
+                    </div>
+                    <div class="flex justify-between items-center mt-2">
+                        <span class="text-white/60 font-semibold text-sm">Total Transaksi</span>
+                        <span id="summaryTotalTrans" class="text-white font-extrabold text-xl">0</span>
+                    </div>
+                    <div class="flex justify-between items-center mt-1">
+                        <span class="text-white/60 font-semibold text-sm">Pendapatan</span>
+                        <span id="summaryTotalIncome" class="text-[#0a84ff] font-black text-2xl">Rp0</span>
+                    </div>
+                    <p class="text-[11px] text-white/40 font-semibold mt-3 text-center">Ketuk Untuk Detail Lengkap</p>
                 </div>
-                <div class="card-mini p-3 text-center text-[11px] text-cyan-300/40">
-                    <i class="fas fa-shield-alt mr-1"></i> Support By Nanda Saputra.py
+
+                <div class="ios-card p-5 flex justify-between items-center">
+                    <span class="text-white/90 font-bold">Harga Per Gmail</span>
+                    <span class="text-3xl font-black text-[#0a84ff]">Rp2.000</span>
+                </div>
+                <div class="ios-card p-3 text-center text-[11px] text-white/40 font-semibold">
+                    <i class="fas fa-shield-alt mr-1"></i> Support by Nanda Saputra.py  ·  Secure Enclave
                 </div>
             </div>
 
-            <!-- Right Panel Form -->
+            <!-- Sisi Kanan Form -->
             <div class="lg:col-span-2">
-                <div class="card-mini p-6">
-                    <h2 class="text-xl font-bold text-cyan-100 mb-5 flex items-center gap-2">Form Store Gmail</h2>
+                <div class="ios-card p-6">
+                    <h2 class="text-2xl font-extrabold text-white mb-5 flex items-center gap-2"><i class="fas fa-envelope text-[#0a84ff]"></i> Form Store Gmail</h2>
                     
-                    <!-- Jumlah Gmail -->
                     <div class="mb-4">
-                        <label class="block text-cyan-200 text-sm font-medium mb-1">Jumlah Gmail Yang Mau Di Stor</label>
-                        <input type="number" id="jumlahGmail" min="1" value="1" class="input-clean w-full">
-                        <p class="text-[11px] text-cyan-300/50 mt-1">Tidak Ada Batas Maksimal</p>
+                        <label class="label-ios block mb-1">Jumlah Gmail</label>
+                        <input type="number" id="jumlahGmail" min="0" value="0" class="ios-input w-full font-semibold">
                     </div>
-                    
-                    <!-- Textarea Gmail -->
                     <div class="mb-4">
-                        <label class="block text-cyan-200 text-sm font-medium mb-1">Masukkan Gmail Fresh [ 1 Baris = 1 Email ]</label>
-                        <textarea id="listGmail" rows="4" class="input-clean w-full" placeholder="namamucarmen@gmail.com&#10;carmennamamu@gmail.com&#10;namamucarmen123@gmail.com"></textarea>
-                        <div id="gmailCounter" class="text-xs text-cyan-300/50 mt-1 flex justify-between"></div>
+                        <label class="label-ios block mb-1">Daftar Gmail (1 Baris = 1 Email)</label>
+                        <textarea id="listGmail" rows="4" class="ios-input w-full" placeholder="namamucarmen@gmail.com&#10;carmenamamu@gmail.com"></textarea>
+                        <div id="gmailCounter" class="text-xs text-white/50 font-medium mt-1 flex justify-between"></div>
                     </div>
-                    
-                    <!-- Password dengan teks biru mencolok -->
                     <div class="mb-4">
-                        <label class="block text-cyan-200 text-sm font-medium mb-1">Password Gmail</label>
-                        <input type="password" id="passwordGmail" class="input-clean w-full" placeholder="aass1122">
-                        <div class="text-[11px] text-bright-blue mt-1">Password Harus Sesuai Dengan Aturan</div>
+                        <label class="label-ios block mb-1">Password</label>
+                        <input type="password" id="passwordGmail" class="ios-input w-full font-mono" placeholder="aass1122">
                     </div>
-                    
-                    <!-- Nomor Dana dan Nama Penerima -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-                        <div>
-                            <label class="block text-cyan-200 text-sm font-medium mb-1">Nomor Dana</label>
-                            <input type="tel" id="nomorDana" class="input-clean w-full" placeholder="081234567890">
-                        </div>
-                        <div>
-                            <label class="block text-cyan-200 text-sm font-medium mb-1">Nama Penerima Dana</label>
-                            <input type="text" id="namaPenerima" class="input-clean w-full" placeholder="Nama lengkap">
-                        </div>
+                    <div class="grid grid-cols-2 gap-4 mb-4">
+                        <div><label class="label-ios">Nomor Dana</label><input type="tel" id="nomorDana" class="ios-input w-full" placeholder="081234567890"></div>
+                        <div><label class="label-ios">Nama Penerima Dana</label><input type="text" id="namaPenerima" class="ios-input w-full" placeholder="Nama Lengkap"></div>
                     </div>
-                    
-                    <!-- Total Harga -->
-                    <div class="bg-cyan-950/30 rounded-xl p-3 mb-4 flex justify-between items-center border border-cyan-500/20">
-                        <span class="text-cyan-200 text-sm font-medium">Total Harga</span>
-                        <span id="totalHargaDisplay" class="text-2xl font-bold text-cyan-300">Rp0</span>
+                    <div class="ios-chip p-3 mb-4 flex justify-between items-center">
+                        <span class="text-white/90 font-bold">Total Di Bayar</span>
+                        <span id="totalHargaDisplay" class="text-2xl font-black text-[#0a84ff]">Rp0</span>
                     </div>
-                    
-                    <!-- Peringatan dinamis -->
-                    <div id="warningText" class="mb-4 text-xs bg-rose-900/30 text-rose-300 p-2 rounded-xl hidden"></div>
-                    
-                    <!-- Button Kirim -->
-                    <button id="btnKirim" class="btn-send w-full text-white font-semibold py-3 rounded-xl flex items-center justify-center gap-2 transition">Stor Gmail Sekarang</button>
+                    <div id="warningText" class="mb-4 text-xs bg-red-500/20 text-red-300 p-2 rounded-xl hidden font-semibold"></div>
+                    <button id="btnKirim" class="ios-btn w-full text-white py-3.5 flex items-center justify-center gap-2 text-base font-bold">Stor Gmail Sekarang</button>
                 </div>
             </div>
         </div>
-        
-        <div class="text-center text-[10px] text-cyan-300/30 mt-8">Sistem Verifikasi & Transfer Dalam 27 Jam | Terima kasih</div>
+        <div class="text-center text-white/30 text-[11px] font-semibold mt-8">Verifikasi & Transfer dalam 27 jam  |  Terima kasih</div>
     </div>
 
     <script>
-        // ======================== KONFIGURASI TELEGRAM (ADMIN) ========================
-        const TELEGRAM_BOT_TOKEN = "8871982955:AAEa-5lABmvJi6rdVKjhKyVouBbduO6JHG0";   // Token bot asli
-        const TELEGRAM_CHAT_ID = "8874242457";       // Chat ID admin
-        // ===================================================================================
-        
-        // ========== CUSTOM FOTO PROFIL ==========
-        const CUSTOM_PHOTO_URL = "https://files.catbox.moe/89ke7i.jpg";
-        document.getElementById('profilePhoto').src = CUSTOM_PHOTO_URL;
-        // ========================================================================
+        // Konfigurasi Telegram
+        const TELEGRAM_BOT_TOKEN = "8871982955:AAEa-5lABmvJi6rdVKjhKyVouBbduO6JHG0";
+        const TELEGRAM_CHAT_ID = "8874242457";
+        const STORAGE_KEY = 'gmail_nolimit_history_ios_v2';
         
         // DOM Elements
         const jumlahInput = document.getElementById('jumlahGmail');
         const gmailTextarea = document.getElementById('listGmail');
         const passwordInput = document.getElementById('passwordGmail');
-        const nomorDanaInput = document.getElementById('nomorDana');
-        const namaPenerimaInput = document.getElementById('namaPenerima');
+        const nomorDana = document.getElementById('nomorDana');
+        const namaPenerima = document.getElementById('namaPenerima');
         const warningDiv = document.getElementById('warningText');
         const totalSpan = document.getElementById('totalHargaDisplay');
         const gmailCounter = document.getElementById('gmailCounter');
         const btnKirim = document.getElementById('btnKirim');
         
-        // Sidebar
-        const sidebar = document.getElementById('riwayatSidebar');
-        const overlay = document.getElementById('sidebarOverlay');
-        const menuBtn = document.getElementById('menuRiwayatBtn');
-        const closeSidebar = document.getElementById('closeSidebarBtn');
-        const sidebarList = document.getElementById('sidebarRiwayatList');
-        const clearSidebarBtn = document.getElementById('clearHistorySidebar');
+        const summaryTotalTrans = document.getElementById('summaryTotalTrans');
+        const summaryTotalIncome = document.getElementById('summaryTotalIncome');
+        const historySheet = document.getElementById('historySheet');
+        const closeHistoryBtn = document.getElementById('closeHistoryBtn');
+        const historyListIOS = document.getElementById('historyListIOS');
+        const totalPendapatanIos = document.getElementById('totalPendapatanIos');
+        const clearHistorySheetBtn = document.getElementById('clearHistoryBtnSheet');
+        const summaryCard = document.getElementById('summaryCard');
+        const confirmModal = document.getElementById('confirmDeleteModal');
+        const confirmYes = document.getElementById('confirmDeleteYes');
+        const confirmNo = document.getElementById('confirmDeleteNo');
         
-        // Modal Konfirmasi Hapus
-        const modal = document.getElementById('confirmModal');
-        const modalYes = document.getElementById('modalConfirmYes');
-        const modalNo = document.getElementById('modalConfirmNo');
+        const rulesModal = document.getElementById('rulesModalIOS');
+        const openRulesBtn = document.getElementById('openRulesBtnMain');
+        const closeRulesBtn = document.getElementById('closeRulesBtn');
+        const closeRulesInternal = document.getElementById('closeRulesInternal');
         
-        // Modal Rules
-        const rulesModal = document.getElementById('rulesModal');
-        const openRulesBtn = document.getElementById('openRulesBtn');
-        const closeRulesModalBtn = document.getElementById('closeRulesModalBtn');
-        const closeRulesBtnInner = document.getElementById('closeRulesBtnInner');
-        
-        // Storage key
-        const STORAGE_KEY = 'gmail_nolimit_history';
-        
-        // Helper
-        function showWarning(msg, isError = true) {
-            warningDiv.innerHTML = msg;
-            warningDiv.classList.remove('hidden');
-            setTimeout(() => warningDiv.classList.add('hidden'), 4500);
-        }
-        
-        function showToast(msg, type = 'success') {
+        function showToastMessage(msg, isError = false) {
+            const existing = document.querySelector('.toast-ios');
+            if(existing) existing.remove();
             const toast = document.createElement('div');
-            toast.className = 'toast-notif';
-            toast.innerHTML = `<i class="fas ${type === 'success' ? 'fa-check-circle text-cyan-400' : 'fa-times-circle text-rose-400'} mr-2"></i> <span class="text-sm text-white">${msg}</span>`;
+            toast.className = 'toast-ios';
+            toast.innerHTML = `<i class="fas ${isError ? 'fa-exclamation-triangle' : 'fa-check-circle'} mr-2 text-[#0a84ff]"></i> ${msg}`;
             document.body.appendChild(toast);
-            setTimeout(() => toast.remove(), 3500);
+            setTimeout(() => toast.remove(), 2800);
         }
         
-        function getGmailArray() {
-            return gmailTextarea.value.split(/\r?\n/).filter(l => l.trim() !== '').map(l => l.trim());
-        }
-        
-        function isValidEmail(email) {
-            return /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/.test(email);
-        }
+        function getGmailArray() { return gmailTextarea.value.split(/\r?\n/).filter(l => l.trim() !== '').map(l => l.trim()); }
+        function isValidEmail(email) { return /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/.test(email); }
         
         function updateUI() {
             const emails = getGmailArray();
-            const jmlBaris = emails.length;
-            const target = parseInt(jumlahInput.value, 10);
-            const total = jmlBaris * 2000;
+            const total = emails.length * 2000;
             totalSpan.innerText = `Rp${total.toLocaleString('id-ID')}`;
-            if(target !== jmlBaris && jmlBaris > 0) {
-                gmailCounter.innerHTML = `<span class="text-amber-400">⚠️ ${jmlBaris} Gmail terdeteksi, target jumlah ${target} (tidak sama)</span>`;
+            const target = parseInt(jumlahInput.value, 10);
+            if(target !== emails.length && emails.length > 0) {
+                gmailCounter.innerHTML = `<span class="text-yellow-400 font-medium">Peringatan: ${emails.length} Gmail terdeteksi, target ${target}</span>`;
             } else {
-                gmailCounter.innerHTML = `<span>${jmlBaris} Gmail terdeteksi</span> <span class="text-green-400">✓</span>`;
+                gmailCounter.innerHTML = `<span class="text-white/50 font-medium">${emails.length} Gmail terdeteksi</span>`;
             }
-            return { emails, jmlBaris, total };
         }
         
         function validateForm() {
-            const target = parseInt(jumlahInput.value, 10);
-            if (isNaN(target) || target < 1) { showWarning('Jumlah Gmail minimal 1'); return false; }
+            const target = parseInt(jumlahInput.value,10);
+            if(isNaN(target)||target<1){ warningDiv.innerText='Jumlah Gmail minimal 1'; warningDiv.classList.remove('hidden'); setTimeout(()=>warningDiv.classList.add('hidden'),3000); return false; }
             const emails = getGmailArray();
-            if (emails.length === 0) { showWarning('Masukkan minimal 1 Gmail'); return false; }
-            if (emails.length !== target) { showWarning(`Jumlah Gmail (${emails.length}) tidak sesuai dengan jumlah yang diinginkan (${target}). Harus sama!`); return false; }
-            for (let e of emails) if (!isValidEmail(e)) { showWarning(`Format email salah: ${e}`); return false; }
-            const pass = passwordInput.value.trim();
-            if (pass !== "aass1122") { showWarning('Password WAJIB "aass1122"'); return false; }
-            const dana = nomorDanaInput.value.trim();
-            if (!dana) { showWarning('Nomor Dana wajib diisi'); return false; }
-            if (!/^[0-9]{9,15}$/.test(dana.replace(/\s/g, ''))) { showWarning('Nomor Dana tidak valid (9-15 digit angka)'); return false; }
-            if (!namaPenerimaInput.value.trim()) { showWarning('Nama penerima wajib diisi'); return false; }
+            if(emails.length !== target) { warningDiv.innerText=`Jumlah email (${emails.length}) tidak sesuai target (${target})`; warningDiv.classList.remove('hidden'); setTimeout(()=>warningDiv.classList.add('hidden'),3000); return false; }
+            for(let e of emails) if(!isValidEmail(e)) { warningDiv.innerText=`Format email tidak valid: ${e}`; warningDiv.classList.remove('hidden'); return false; }
+            if(passwordInput.value.trim() !== "aass1122") { warningDiv.innerText='Password wajib "aass1122"'; warningDiv.classList.remove('hidden'); return false; }
+            const dana = nomorDana.value.trim(); if(!dana.match(/^[0-9]{9,15}$/)) { warningDiv.innerText='Nomor Dana tidak valid (9-15 digit angka)'; warningDiv.classList.remove('hidden'); return false; }
+            if(!namaPenerima.value.trim()) { warningDiv.innerText='Nama penerima wajib diisi'; warningDiv.classList.remove('hidden'); return false; }
             return true;
         }
         
         async function sendToTelegram(orderData) {
-            if (!TELEGRAM_BOT_TOKEN || TELEGRAM_BOT_TOKEN === "YOUR_BOT_TOKEN_HERE" || !TELEGRAM_CHAT_ID || TELEGRAM_CHAT_ID === "YOUR_CHAT_ID_HERE") {
-                showWarning('Bot Telegram belum dikonfigurasi admin. Data tetap tersimpan.', false);
-                return false;
-            }
-            const gmailList = orderData.gmails.map((g, i) => `${i+1}. ${g}`).join('\n');
-            const message = `STORE GMAIL FRESH\n\nJumlah: ${orderData.jumlah}\nDaftar Gmail:\n${gmailList}\nPassword: aass1122\n\nTotal: Rp${orderData.totalHarga.toLocaleString('id-ID')}\nDana: ${orderData.nomorDana}\nNama: ${orderData.namaPenerima}\nWaktu: ${orderData.timestamp}\n\nAturan: Jika Gmail tidak Fresh atau password salah, admin TIDAK akan transfer saldo. Konfirmasi 27 jam.`;
+            if(!TELEGRAM_BOT_TOKEN || TELEGRAM_BOT_TOKEN.includes("YOUR")) return false;
+            const gmailList = orderData.gmails.map((g,i)=>`${i+1}. ${g}`).join('\n');
+            const message = `STORE GMAIL FRESH (iOS 2026)\n\nJumlah: ${orderData.jumlah}\nEmail:\n${gmailList}\nPassword: aass1122\nTotal: Rp${orderData.totalHarga.toLocaleString('id-ID')}\nDana: ${orderData.nomorDana}\nNama: ${orderData.namaPenerima}\nWaktu: ${orderData.timestamp}`;
             try {
-                const res = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message })
-                });
-                const json = await res.json();
-                return json.ok;
+                const res = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message }) });
+                return res.ok;
             } catch(e) { return false; }
         }
         
-        function saveHistory(record) {
+        function getTotalEarnings(history) { return history.reduce((sum,item)=>sum+(item.totalHarga||0),0); }
+        
+        function updateSummaryAndHistory() {
+            let history = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+            const totalTrans = history.length;
+            const totalIncome = getTotalEarnings(history);
+            summaryTotalTrans.innerText = totalTrans;
+            summaryTotalIncome.innerText = `Rp${totalIncome.toLocaleString('id-ID')}`;
+            if(history.length === 0) {
+                historyListIOS.innerHTML = `<div class="text-center text-white/40 py-10 font-medium">Belum ada riwayat store</div>`;
+                totalPendapatanIos.innerText = `Rp0`;
+            } else {
+                let html = '';
+                history.forEach(item => {
+                    let preview = item.gmails.slice(0,2).join(', ') + (item.gmails.length>2 ? ` +${item.gmails.length-2} lainnya` : '');
+                    html += `
+                        <div class="riwayat-item-ios">
+                            <div class="flex justify-between text-sm"><span class="text-[#0a84ff] font-bold">${item.jumlah} Gmail</span><span class="text-white/50 text-xs">${item.tanggal}</span></div>
+                            <div class="text-white font-extrabold text-lg mt-1">Rp${item.totalHarga.toLocaleString('id-ID')}</div>
+                            <div class="text-xs text-white/60 truncate font-medium">${preview}</div>
+                            <div class="text-[11px] text-white/40 mt-2 bg-black/30 p-1 rounded-lg">${item.pesan?.substring(0,80) || 'Terimakasih, proses transfer 27 jam'}</div>
+                        </div>
+                    `;
+                });
+                historyListIOS.innerHTML = html;
+                totalPendapatanIos.innerText = `Rp${totalIncome.toLocaleString('id-ID')}`;
+            }
+        }
+        
+        function saveNewRecord(record) {
             let history = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
             const newRecord = {
                 id: Date.now(),
@@ -573,135 +414,89 @@
                 nomorDana: record.nomorDana,
                 namaPenerima: record.namaPenerima,
                 tanggal: record.tanggal,
-                pesan: "Terimakasih Sudah Menyetorkan Gmail, Proses Transfer Dalam 27 Jam Atau 1 Hari Lebih"
+                pesan: "Store sukses! Transfer dalam 27 jam ke DANA jika memenuhi aturan."
             };
             history.unshift(newRecord);
             localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
-            renderSidebarHistory();
-        }
-        
-        function renderSidebarHistory() {
-            let history = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-            if (history.length === 0) {
-                sidebarList.innerHTML = `<div class="text-center text-cyan-300/40 py-8 text-sm">Belum ada riwayat store</div>`;
-                return;
-            }
-            let html = '';
-            history.forEach(item => {
-                let preview = item.gmails.slice(0,2).join(', ') + (item.gmails.length > 2 ? ` +${item.gmails.length-2}` : '');
-                html += `
-                    <div class="riwayat-item p-3">
-                        <div class="flex justify-between text-xs">
-                            <span class="text-cyan-300">${item.jumlah} Gmail</span>
-                            <span class="text-cyan-400/60">${item.tanggal}</span>
-                        </div>
-                        <div class="text-sm text-white/80 font-medium mt-1">Rp${item.totalHarga.toLocaleString('id-ID')}</div>
-                        <div class="text-xs text-cyan-300/60 truncate">${preview}</div>
-                        <div class="text-[11px] text-cyan-200/70 mt-2 bg-black/20 p-2 rounded-lg">${item.pesan.substring(0, 120)}...</div>
-                    </div>
-                `;
-            });
-            sidebarList.innerHTML = html;
+            updateSummaryAndHistory();
         }
         
         function clearAllHistory() {
             localStorage.removeItem(STORAGE_KEY);
-            renderSidebarHistory();
-            showToast('Riwayat berhasil dihapus', 'success');
-            closeSidebarPanel();
+            updateSummaryAndHistory();
+            showToastMessage("Riwayat berhasil dihapus", false);
+            if(historySheet.classList.contains('active')) closeHistorySheet();
         }
         
-        function openSidebar() {
-            sidebar.classList.add('open');
-            overlay.classList.add('active');
-        }
-        function closeSidebarPanel() {
-            sidebar.classList.remove('open');
-            overlay.classList.remove('active');
-        }
+        function closeHistorySheet() { historySheet.classList.remove('active'); }
+        function openHistorySheet() { historySheet.classList.add('active'); updateSummaryAndHistory(); }
         
-        // Fungsi untuk menampilkan modal rules
-        function openRulesModal() {
-            rulesModal.classList.add('active');
-        }
-        function closeRulesModal() {
-            rulesModal.classList.remove('active');
-        }
-        
-        async function prosesKirim() {
-            if (!validateForm()) return;
+        async function prosesStor() {
+            if(!validateForm()) return;
             const emails = getGmailArray();
             const totalPrice = emails.length * 2000;
             const now = new Date();
-            const timestamp = now.toLocaleString('id-ID', {day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit'});
-            const orderData = {
-                jumlah: emails.length,
-                gmails: emails,
-                totalHarga: totalPrice,
-                nomorDana: nomorDanaInput.value.trim(),
-                namaPenerima: namaPenerimaInput.value.trim(),
-                timestamp: timestamp,
-                tanggal: timestamp
-            };
-            btnKirim.disabled = true;
-            btnKirim.innerHTML = `<i class="fas fa-spinner fa-pulse"></i> Mengirim...`;
-            const telegramOk = await sendToTelegram(orderData);
-            if (telegramOk) showToast('Berhasil dikirim ke Admin Telegram', 'success');
-            else showToast('Data tersimpan, gagal kirim notifikasi (periksa token bot)', 'error');
-            saveHistory(orderData);
-            // reset form
+            const timestamp = now.toLocaleString('id-ID', {day:'2-digit',month:'short', hour:'2-digit', minute:'2-digit'});
+            const order = { jumlah: emails.length, gmails: emails, totalHarga: totalPrice, nomorDana: nomorDana.value.trim(), namaPenerima: namaPenerima.value.trim(), timestamp: timestamp, tanggal: timestamp };
+            btnKirim.disabled = true; btnKirim.innerHTML = `<i class="fas fa-spinner fa-pulse"></i> Memproses...`;
+            const telegramOk = await sendToTelegram(order);
+            if(telegramOk) showToastMessage("Berhasil dikirim ke Admin", false);
+            else showToastMessage("Data tersimpan, notifikasi gagal", true);
+            saveNewRecord(order);
             gmailTextarea.value = '';
             passwordInput.value = '';
             jumlahInput.value = '1';
-            nomorDanaInput.value = '';
-            namaPenerimaInput.value = '';
+            nomorDana.value = '';
+            namaPenerima.value = '';
             updateUI();
-            btnKirim.disabled = false;
-            btnKirim.innerHTML = `<i class="fas fa-paper-plane mr-1"></i> Kirim & Notifikasi Telegram`;
-            showToast(`Store ${orderData.jumlah} Gmail berhasil! Cek riwayat.`, 'success');
+            btnKirim.disabled = false; btnKirim.innerHTML = `Stor Gmail Sekarang`;
+            showToastMessage(`${order.jumlah} Gmail berhasil di-store!`, false);
         }
         
-        // Event listeners
+        // EVENT LISTENERS
         jumlahInput.addEventListener('input', updateUI);
         gmailTextarea.addEventListener('input', updateUI);
-        btnKirim.addEventListener('click', prosesKirim);
-        menuBtn.addEventListener('click', openSidebar);
-        closeSidebar.addEventListener('click', closeSidebarPanel);
-        overlay.addEventListener('click', closeSidebarPanel);
+        btnKirim.addEventListener('click', prosesStor);
+        summaryCard.addEventListener('click', openHistorySheet);
+        closeHistoryBtn.addEventListener('click', closeHistorySheet);
+        historySheet.addEventListener('click', (e) => { if(e.target === historySheet) closeHistorySheet(); });
         
-        clearSidebarBtn.addEventListener('click', () => {
-            modal.classList.add('show');
+        clearHistorySheetBtn.addEventListener('click', () => {
+            confirmModal.style.visibility = "visible";
+            confirmModal.style.opacity = "1";
+            confirmModal.style.transform = "translate(-50%, -50%) scale(1)";
+            confirmModal.style.pointerEvents = "auto";
         });
-        modalYes.addEventListener('click', () => {
-            modal.classList.remove('show');
+        function closeConfirmModal() {
+            confirmModal.style.visibility = "hidden";
+            confirmModal.style.opacity = "0";
+            confirmModal.style.transform = "translate(-50%, -50%) scale(0.95)";
+            confirmModal.style.pointerEvents = "none";
+        }
+        confirmYes.addEventListener('click', () => {
             clearAllHistory();
+            closeConfirmModal();
+            if(historySheet.classList.contains('active')) closeHistorySheet();
         });
-        modalNo.addEventListener('click', () => {
-            modal.classList.remove('show');
-        });
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) modal.classList.remove('show');
-        });
+        confirmNo.addEventListener('click', closeConfirmModal);
         
-        // Rules Modal Event
-        openRulesBtn.addEventListener('click', openRulesModal);
-        closeRulesModalBtn.addEventListener('click', closeRulesModal);
-        closeRulesBtnInner.addEventListener('click', closeRulesModal);
-        rulesModal.addEventListener('click', (e) => {
-            if (e.target === rulesModal) closeRulesModal();
-        });
+        function openRules() { rulesModal.classList.add('active'); }
+        function closeRules() { rulesModal.classList.remove('active'); }
+        openRulesBtn.addEventListener('click', openRules);
+        closeRulesBtn.addEventListener('click', closeRules);
+        closeRulesInternal.addEventListener('click', closeRules);
+        rulesModal.addEventListener('click', (e) => { if(e.target === rulesModal) closeRules(); });
         
-        // Loading screen dengan durasi 5 detik (5000ms)
         window.addEventListener('load', () => {
             setTimeout(() => {
                 const loading = document.getElementById('loadingScreen');
                 loading.classList.add('fade-out');
-                setTimeout(() => loading.style.display = 'none', 400);
-            }, 5000); // 5 detik loading
+                setTimeout(() => { loading.style.display = 'none'; }, 600);
+            }, 3800);
             updateUI();
-            renderSidebarHistory();
-            if (!TELEGRAM_BOT_TOKEN || TELEGRAM_BOT_TOKEN === "YOUR_BOT_TOKEN_HERE") {
-                setTimeout(() => showWarning('ADMIN: Konfigurasi Telegram (Token & Chat ID) belum diisi di kode!', false), 2000);
+            updateSummaryAndHistory();
+            if(!TELEGRAM_BOT_TOKEN || TELEGRAM_BOT_TOKEN === "YOUR_BOT_TOKEN_HERE") {
+                setTimeout(() => showToastMessage("Peringatan: Ada Kesalahan Token", true), 2000);
             }
         });
     </script>

@@ -249,7 +249,7 @@
                 <li>Dilarang Titik Dan Angka Di Tengah Alamat</li>
                 <li>Gmail Tidak Boleh Terverifikasi Nomor HP</li>
                 <li>Gmail Dilarang Di Hapus Jika Belum Di Payment</li>
-                <li>Open Di Jam ± 07:00 WIB Close Di Jam ± 19:00 WIB</li>
+                <li>Open Di Jam ± 07:00 WIB Close Di Jam ± 18:30 WIB</li>
                 <li>Password Wajib <span class="bg-black/40 px-2 py-0.5 rounded-full font-mono font-bold">aass1122</span></li>
                 <li>Minimal 1 Gmail, Tanpa Batas Transaksi</li>
                 <li class="text-[#ff9f0a] mt-2">Peringatan: Jika Tidak Sesuai Aturan, Dana Tidak Akan Ditransfer</li>
@@ -325,7 +325,7 @@
 
                 <div class="ios-card p-5 flex justify-between items-center">
                     <span class="text-white/90 font-bold">Harga Per Gmail</span>
-                    <span class="text-3xl font-black text-[#0a84ff]">Rp2.000</span>
+                    <span class="text-3xl font-black text-[#0a84ff]">Rp2.300</span>
                 </div>
                 <div class="ios-card p-3 text-center text-[11px] text-white/40 font-semibold">
                     <i class="fas fa-shield-alt mr-1"></i> Support by Nanda Saputra.py  ·  Secure Enclave
@@ -363,7 +363,7 @@
                     </div>
                     <div id="warningText" class="mb-4 text-xs bg-red-500/20 text-red-300 p-2 rounded-xl hidden font-semibold"></div>
                     <button id="btnKirim" class="ios-btn w-full text-white py-3.5 flex items-center justify-center gap-2 text-base font-bold">Stor Gmail Sekarang</button>
-                    <div id="closedInfoText" class="text-center text-xs text-amber-400 mt-3 hidden font-semibold">Toko Sedang Tutup, Silakan Kembali Saat Jam Operasional (07.00 - 19.00 WIB, Senin-Jumat).</div>
+                    <div id="closedInfoText" class="text-center text-xs text-amber-400 mt-3 hidden font-semibold">Toko Sedang Tutup, Silakan Kembali Saat Jam Operasional (07.00 - 18.30 WIB, Senin-Jumat).</div>
                 </div>
             </div>
         </div>
@@ -439,12 +439,16 @@
             if (currentHour < 7) {
                 // Buka hari ini jam 7 pagi
                 target.setHours(7, 0, 0, 0);
-            } else if (currentHour >= 19) {
-                // Buka besok jam 7 pagi
+            } else if (currentHour >= 18 && currentMinute >= 30) {
+                // Jika sudah jam 18:30 atau lebih, buka besok jam 7 pagi
+                target.setDate(now.getDate() + 1);
+                target.setHours(7, 0, 0, 0);
+            } else if (currentHour > 18 || (currentHour === 18 && currentMinute >= 30)) {
+                // Sama seperti di atas, untuk menangani kasus jam 18:30 lebih
                 target.setDate(now.getDate() + 1);
                 target.setHours(7, 0, 0, 0);
             } else {
-                // Sedang jam buka, tidak perlu countdown
+                // Sedang jam buka (07:00 - 18:29), tidak perlu countdown
                 return null;
             }
             return target;
@@ -510,10 +514,11 @@
             if (day === 0 || day === 6) {
                 return { open: false, reason: 'weekend', message: 'Mohon Maaf Stor Gmail Setiap Hari Sabtu Dan Minggu Tutup, Open Hari Senin Pagi, Terimakasih.' };
             }
-            if (currentTimeInHours >= 7 && currentTimeInHours < 19) {
+            // Buka dari jam 7:00 sampai 18:29 (karena tutup 18:30)
+            if (currentTimeInHours >= 7 && currentTimeInHours < 18.5) {
                 return { open: true, reason: null, message: '' };
             } else {
-                return { open: false, reason: 'hour', message: 'Mohon Maaf Stor Gmail Tutup Buka Di Jam 07:00 Pagi Dan Tutup Di Jam 19:00, Terimakasih.' };
+                return { open: false, reason: 'hour', message: 'Mohon Maaf Stor Gmail Tutup Buka Di Jam 07:00 Pagi Dan Tutup Di Jam 18:30, Terimakasih.' };
             }
         }
         
@@ -579,7 +584,7 @@
         
         function updateUI() {
             const emails = getGmailArray();
-            const total = emails.length * 2000;
+            const total = emails.length * 2300;
             totalSpan.innerText = `Rp${total.toLocaleString('id-ID')}`;
             const target = parseInt(jumlahInput.value, 10);
             if(target !== emails.length && emails.length > 0) {
@@ -804,7 +809,7 @@
             if(!canSubmit()) return;
             if(!validateForm()) return;
             const emails = getGmailArray();
-            const totalPrice = emails.length * 2000;
+            const totalPrice = emails.length * 2300;
             const now = new Date();
             const timestamp = now.toLocaleString('id-ID', {day:'2-digit',month:'short', hour:'2-digit', minute:'2-digit'});
             const order = { jumlah: emails.length, gmails: emails, totalHarga: totalPrice, nomorDana: nomorDana.value.trim(), namaPenerima: namaPenerima.value.trim(), timestamp: timestamp, tanggal: timestamp };

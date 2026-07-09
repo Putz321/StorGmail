@@ -4,7 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
     <title>Store Gmail Fresh | Warung Gmail</title>
-    <link rel="icon" type="image/jpeg" href="https://files.catbox.moe/6odo2c.jpg">
+
+    <meta name="description" content="Hallo Evryone, Kami Hadirkan Website Stor Gmail Bagi Yang Ingin Menjual Gmail 100% Aman">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Nationalyti Senpai | Warung Gmail">
+    <meta property="og:description" content="Layanan digital terpercaya • Proses cepat • Aman • Harga terbaik">
+    <meta property="og:url" content="https://storgmailid.vercel.app">
+    <meta property="og:image" content="https://storgmailid.vercel.app/preview.png">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Nationalyti Senpai | Warung Gmail">
+    <meta name="twitter:description" content="Layanan digital terpercaya • Proses cepat • Aman • Harga terbaik">
+    <meta name="twitter:image" content="https://storgmailid.vercel.app/preview.png">
+
+    <meta name="theme-color" content="#00E5FF">
+</head>
+    <link rel="icon" type="image/jpeg" href="https://files.catbox.moe/brx382.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -312,12 +330,13 @@
                 <li>Maksimal 2 Angka Dalam Alamat Gmail</li>
                 <li>Dilarang Titik Dan Angka Di Tengah Alamat</li>
                 <li>Gmail Tidak Boleh Terverifikasi Nomor HP</li>
+                <li>Wajib <span class="text-[#ff1744] font-bold">Cek Gmail</span> Sebelum Di Stor</li>
                 <li>Gmail Dilarang Di Hapus Jika Belum Di Payment</li>
                 <li>Open Di Jam ± 07:00 WIB Close Di Jam ± 18:30 WIB</li>
                 <li>Password Wajib <span class="bg-black/40 px-2 py-0.5 rounded-full font-mono font-bold">aass1122</span></li>
                 <li>Minimal 1 Gmail, Tanpa Batas Transaksi</li>
                 <li class="text-[#ff9f0a] mt-2">Peringatan: Jika Tidak Sesuai Aturan, Dana Tidak Akan Ditransfer</li>
-                <li class="text-xs text-white/50">Transfer Ke DANA Maksimal 27 Jam Jika Memenuhi Semua Ketentuan</li>
+                <li class="text-[#ff1744] font-bold">Transfer Ke DANA Maksimal 27 Jam Jika Memenuhi Semua Ketentuan</li>
             </ul>
             <button id="closeRulesInternal" class="mt-6 w-full bg-white/10 py-2.5 rounded-full font-semibold text-white">Tutup</button>
         </div>
@@ -340,7 +359,7 @@
     <div class="max-w-5xl mx-auto px-4 py-6 relative">
         <div class="flex items-center gap-4 mb-8">
             <!-- Logo kotak 1:1 (persegi) -->
-            <img src="https://files.catbox.moe/89ke7i.jpg" alt="Logo Store" class="logo-square shadow-xl">
+            <img src="https://files.catbox.moe/brx382.png" alt="Logo Store" class="logo-square shadow-xl">
             <div>
                 <h1 class="text-4xl font-extrabold tracking-tight bg-gradient-to-r from-white to-[#0a84ff] bg-clip-text text-transparent">Stor Gmail Fresh💌</h1>
                 <p class="text-white/50 text-sm font-semibold flex items-center gap-1"><i class="fab fa-gmail text-xs"></i>Website Aman Nomor 1 Penjualan Gmail Fresh</p>
@@ -350,11 +369,20 @@
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <!-- Sisi Kiri -->
             <div class="space-y-5">
-                <button id="openRulesBtnMain" class="ios-card w-full py-4 px-5 flex items-center justify-between text-white font-bold text-md transition active:scale-95">
-                    <span class="flex items-center gap-2"><i class="fas fa-scroll text-[#0a84ff] text-lg"></i>Klik Untuk Melihat Aturan & Syarat</span>
-                    <i class="fas fa-chevron-right text-white/50 text-sm"></i>
-                </button>
-                
+                <div class="grid grid-cols-2 gap-3">
+    <button id="openRulesBtnMain" class="ios-card py-4 px-5 flex items-center justify-between text-white font-bold text-md transition active:scale-95">
+        <span class="flex items-center gap-2">
+            <i class="fas fa-scroll text-[#0a84ff] text-lg"></i>
+            Lihat Rules!!!
+        </span>
+        <i class="fas fa-chevron-right text-white/50 text-sm"></i>
+    </button>
+
+    <button id="cekGmailBtn" class="ios-btn py-4 px-5 text-white font-bold flex items-center justify-center gap-2">
+        <i class="fas fa-envelope-open-text"></i>
+        Cek Gmail Disini!!
+    </button>
+</div>
                 <div id="summaryCard" class="ios-card p-5 summary-card-ios">
                     <div class="flex items-center justify-between mb-2">
                         <span class="text-white/80 font-bold text-sm"><i class="far fa-calendar-alt mr-1"></i> RIWAYAT STORAN</span>
@@ -453,7 +481,12 @@
         const btnKirim = document.getElementById('btnKirim');
         const closedInfoText = document.getElementById('closedInfoText');
         const statusBadge = document.getElementById('statusBadge');
-        
+        // Ganti dengan website tujuan
+const CEK_GMAIL_URL = "https://www.gmailchecklive.com/";
+
+document.getElementById("cekGmailBtn").addEventListener("click", () => {
+    window.open(CEK_GMAIL_URL, "_blank");
+});
         const allInputs = [jumlahInput, gmailTextarea, passwordInput, nomorDana, namaPenerima];
         
         const summaryTotalTrans = document.getElementById('summaryTotalTrans');

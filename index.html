@@ -117,9 +117,7 @@
             -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 9px), #000 calc(100% - 7px));
         }
         @keyframes spinLoader {
-            to {
-                transform: rotate(360deg);
-            }
+            to { transform: rotate(360deg); }
         }
         .ios-loading-text {
             font-weight: 700;
@@ -495,9 +493,7 @@
             overflow-x: auto;
             scrollbar-width: none;
         }
-        .stat-period::-webkit-scrollbar {
-            display: none;
-        }
+        .stat-period::-webkit-scrollbar { display: none; }
         .stat-gmail {
             font-weight: 700;
             font-size: 0.7rem;
@@ -598,35 +594,14 @@
         .status-pill.sukses { background: rgba(52, 199, 89, 0.15); color: #34c759; }
         .status-pill.gagal { background: rgba(255, 59, 48, 0.15); color: #ff3b30; }
 
-        /* Responsive */
         @media (max-width: 640px) {
-            .ios-card {
-                border-radius: 1.5rem;
-                padding: 1.2rem !important;
-            }
-            .success-card-ios {
-                padding: 1.5rem 1.2rem;
-            }
-            .success-title {
-                font-size: 1.4rem;
-            }
-            .success-data .row {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0.1rem;
-            }
-            .success-data .value {
-                max-width: 100%;
-                text-align: left;
-            }
-            .running-text {
-                font-size: 10px;
-                animation-duration: 20s;
-            }
-            .logo-square {
-                width: 44px;
-                height: 44px;
-            }
+            .ios-card { border-radius: 1.5rem; padding: 1.2rem !important; }
+            .success-card-ios { padding: 1.5rem 1.2rem; }
+            .success-title { font-size: 1.4rem; }
+            .success-data .row { flex-direction: column; align-items: flex-start; gap: 0.1rem; }
+            .success-data .value { max-width: 100%; text-align: left; }
+            .running-text { font-size: 10px; animation-duration: 20s; }
+            .logo-square { width: 44px; height: 44px; }
         }
     </style>
 </head>
@@ -708,19 +683,14 @@
             <ul class="text-sm space-y-2.5 text-white/80 pl-1 list-disc pl-4 font-medium">
                 <li>Gmail Fresh / Baru Dibuat</li>
                 <li>Nama Gmail <span class="text-[#0a84ff] font-bold">[ Harus Beda ]</span> Wajib</li>
-                <li>Contoh 1 Gmail Benar: faisalxaky@gmail.com</li>
-                <li>Contoh 2 Gmail Benar: danidianta@gmail.com</li>
                 <li>Tahun Lahir 1990 <span class="text-[#0a84ff] font-bold">[ Wajib ]</span></li>
                 <li>Nama Harus Nama Orang Indonesia <span class="text-[#0a84ff] font-bold">[ Wajib ]</span></li>
                 <li>Maksimal 2 Angka Dalam Alamat Gmail</li>
                 <li>Dilarang Titik Dan Angka Di Tengah Alamat</li>
                 <li>Gmail Tidak Boleh Terverifikasi Nomor HP</li>
                 <li>Wajib <span class="text-[#ff1744] font-bold">Cek Gmail</span> Sebelum Di Stor</li>
-                <li>Gmail Dilarang Di Hapus Jika Belum Di Payment</li>
                 <li>Open Di Jam ± 07:00 WIB Close Di Jam ± 18:30 WIB</li>
                 <li>Password Wajib <span class="bg-black/40 px-2 py-0.5 rounded-full font-mono font-bold">aass1122</span></li>
-                <li>Minimal 1 Gmail, Tanpa Batas Transaksi</li>
-                <li class="text-[#ff9f0a] mt-2">Peringatan: Jika Tidak Sesuai Aturan, Dana Tidak Akan Ditransfer</li>
                 <li class="text-[#ff1744] font-bold">Transfer Ke DANA Maksimal 27 Jam Jika Memenuhi Semua Ketentuan</li>
             </ul>
             <button id="closeRulesInternal" class="mt-6 w-full bg-white/10 py-2.5 rounded-full font-semibold text-white">Tutup</button>
@@ -748,9 +718,7 @@
                 <i class="fas fa-check"></i>
             </div>
             <div class="success-title">STORAN BERHASIL</div>
-            <div class="success-sub">
-                Storan Anda Akan Admin Proses 1-2 Hari Kerja, Jika Sesuai Panduan Admin Akan Transfer Anda Dengan Data:
-            </div>
+            <div class="success-sub">Storan Anda Akan Admin Proses 1-2 Hari Kerja, Jika Sesuai Panduan Admin Akan Transfer Anda Dengan Data:</div>
             <div class="success-data" id="successDataContainer">
                 <div class="row"><span class="label">Jumlah Gmail</span><span class="value" id="successJumlah">-</span></div>
                 <div class="row"><span class="label">Total Diterima</span><span class="value highlight" id="successTotal">-</span></div>
@@ -786,13 +754,12 @@
                 <div>
                     <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight bg-gradient-to-r from-white to-[#0a84ff] bg-clip-text text-transparent">GmailKu.ID</h1>
                     <p class="text-white/50 text-sm font-semibold flex items-center gap-1">
-                        <i class="fab fa-gmail text-xs"></i>
-                        Penjualan Akun Gmail Fresh No #1 Paling Aman
+                        <i class="fab fa-gmail text-xs"></i> Penjualan Akun Gmail Fresh No #1 Paling Aman
                     </p>
                 </div>
             </div>
             
-            <!-- MENU INFORMASI DENGAN TEKS + BADGE (DIPERBARUI) -->
+            <!-- MENU INFORMASI DENGAN TEKS + BADGE -->
             <button id="openInfoHubBtn" class="relative bg-white/5 border border-white/10 hover:bg-white/10 pl-5 pr-4 py-3.5 rounded-2xl transition active:scale-95 flex items-center justify-center gap-3">
                 <span class="text-sm font-bold text-white/90">Informasi Hub</span>
                 <div class="relative flex items-center justify-center">
@@ -806,7 +773,7 @@
         <div class="running-warning mb-5">
             <div class="running-text justify-center">
                 <i class="fas fa-triangle-exclamation"></i>
-                <span>HARAP BACA RULES!!‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ Hanya Gmail Yang Memenuhi Pernyataan Yang Admin Transfer‎ ‎   ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎• ‎ ‎  ‎ ‎ ‎ ‎ ‎ ‎ ‎ anisotropy Pembayaran Dilakukan ±27 Jam ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ • ‎ ‎ Lumens Admin Tidak Akan Transfer Jika Akun Tidak Sesuai‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ </span>
+                <span>HARAP BACA RULES!!‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ Hanya Gmail Yang Memenuhi Pernyataan Yang Admin Transfer‎ ‎   ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎• ‎ ‎  ‎ ‎ ‎ ‎ ‎ ‎ ‎ Payment Pembayaran Dilakukan ±27 Jam ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ • ‎ ‎ ‎ Admin Tidak Akan Transfer Jika Akun Tidak Sesuai‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ </span>
             </div>
         </div>
 
@@ -814,14 +781,12 @@
         <div class="grid grid-cols-2 gap-3 mb-5">
             <button id="openRulesBtnMain" class="ios-card py-4 px-5 flex items-center justify-between text-white font-bold text-md transition active:scale-95">
                 <span class="flex items-center gap-2">
-                    <i class="fas fa-scroll text-[#0a84ff] text-lg"></i>
-                    Lihat Rules!!
+                    <i class="fas fa-scroll text-[#0a84ff] text-lg"></i> Lihat Rules!!
                 </span>
                 <i class="fas fa-chevron-right text-white/50 text-sm"></i>
             </button>
             <button id="cekGmailBtn" class="ios-btn py-4 px-5 text-white font-bold flex items-center justify-center gap-2">
-                <i class="fas fa-envelope-open-text"></i>
-                Cek Gmail!!
+                <i class="fas fa-envelope-open-text"></i> Cek Gmail!!
             </button>
         </div>
 
@@ -865,9 +830,7 @@
 
             <div id="warningText" class="mb-4 text-xs bg-red-500/20 text-red-300 p-2 rounded-xl hidden font-semibold"></div>
 
-            <button id="btnKirim" class="ios-btn w-full text-white py-3.5 flex items-center justify-center gap-2 text-base font-bold">
-                Stor Gmail Sekarang
-            </button>
+            <button id="btnKirim" class="ios-btn w-full text-white py-3.5 flex items-center justify-center gap-2 text-base font-bold">Stor Gmail Sekarang</button>
 
             <div id="closedInfoText" class="text-center text-xs text-amber-400 mt-3 hidden font-semibold">
                 Toko Sedang Tutup, Silakan Kembali Saat Jam Operasional (07.00 - 18.30 WIB, Senin-Jumat).
@@ -897,8 +860,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-5">
             <div class="ios-card p-4 flex items-center justify-center">
                 <button id="infoPembayaranBtn" class="w-full bg-[#0a84ff] text-white py-4 rounded-full font-bold flex items-center justify-center gap-3">
-                    <i class="fab fa-whatsapp text-xl"></i>
-                    Klik All Information!!
+                    <i class="fab fa-whatsapp text-xl"></i> Klik All Information!!
                 </button>
             </div>
 
@@ -934,9 +896,6 @@
     </div>
 
     <script>
-        // ============================================================
-        // KONFIGURASI BOT TELEGRAM & LOCALSTORAGE
-        // ============================================================
         const TELEGRAM_BOT_TOKEN = "8871982955:AAEa-5lABmvJi6rdVKjhKyVouBbduO6JHG0";
         const TELEGRAM_CHAT_ID = "8874242457";
         const STORAGE_KEY = 'gmail_nolimit_history_ios_v2';
@@ -944,9 +903,7 @@
         const CEK_GMAIL_URL = "https://www.gmailchecklive.com/";
         const INFO_PEMBAYARAN_URL = "https://whatsapp.com/channel/0029VbCwOS21t90YmX0e8Q3P";
 
-        // ============================================================
-        // DOM REFS
-        // ============================================================
+        // ALL DOM REFS
         const jumlahInput = document.getElementById('jumlahGmail');
         const gmailTextarea = document.getElementById('listGmail');
         const passwordInput = document.getElementById('passwordGmail');
@@ -1010,22 +967,11 @@
         let currentPeriod = 'daily';
         let countdownInterval = null;
 
-        // ============================================================
-        // REALTIME TELEGRAM UPDATE HANDLER & STATUS STORAGE
-        // ============================================================
-        function getGlobalStatusState() {
-            try { return JSON.parse(localStorage.getItem('gmail_storan_status_state')) || {}; } catch(e) { return {}; }
-        }
-        function saveGlobalStatusState(state) {
-            try { localStorage.setItem('gmail_storan_status_state', JSON.stringify(state)); } catch(e) {}
-        }
-        function getNotifications() {
-            try { return JSON.parse(localStorage.getItem(NOTIF_STORAGE_KEY)) || []; } catch(e) { return []; }
-        }
-        function saveNotifications(notifs) {
-            try { localStorage.setItem(NOTIF_STORAGE_KEY, JSON.stringify(notifs)); } catch(e) {}
-            updateNotifBadge();
-        }
+        // LOCAL DATA HANDLERS
+        function getGlobalStatusState() { try { return JSON.parse(localStorage.getItem('gmail_storan_status_state')) || {}; } catch(e) { return {}; } }
+        function saveGlobalStatusState(state) { try { localStorage.setItem('gmail_storan_status_state', JSON.stringify(state)); } catch(e) {} }
+        function getNotifications() { try { return JSON.parse(localStorage.getItem(NOTIF_STORAGE_KEY)) || []; } catch(e) { return []; } }
+        function saveNotifications(notifs) { try { localStorage.setItem(NOTIF_STORAGE_KEY, JSON.stringify(notifs)); } catch(e) {} updateNotifBadge(); }
 
         function updateNotifBadge() {
             const notifs = getNotifications();
@@ -1038,11 +984,15 @@
             }
         }
 
+        // ============================================================
+        // TELEGRAM REAL-TIME ENGINE (UPGRADED CORE MECHANICS)
+        // ============================================================
         async function fetchTelegramAdminUpdates() {
             if (!TELEGRAM_BOT_TOKEN || TELEGRAM_BOT_TOKEN.includes("YOUR")) return;
             let lastUpdateId = parseInt(localStorage.getItem('tg_admin_last_update_id') || '0');
             try {
-                const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/getUpdates?offset=${lastUpdateId + 1}&timeout=0`);
+                // Gunakan allowed_updates untuk memastikan data group chat ditarik paksa
+                const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/getUpdates?offset=${lastUpdateId + 1}&timeout=2&allowed_updates=["message"]`);
                 const data = await response.json();
                 if (data.ok && data.result.length > 0) {
                     let statusState = getGlobalStatusState();
@@ -1051,17 +1001,17 @@
 
                     data.result.forEach(update => {
                         if (update.update_id > lastUpdateId) lastUpdateId = update.update_id;
-                        if (update.message && update.message.text) {
-                            const text = update.message.text.trim();
+                        
+                        let messageSource = update.message || update.channel_post || update.edited_message;
+                        if (messageSource && messageSource.text) {
+                            const text = messageSource.text.trim();
 
-                            // 1. /suksesweb regex parsing
-                            const matchSukses = text.match(/^\/suksesweb\s+([\s\S]+)$/i);
-                            if (matchSukses) {
-                                const content = matchSukses[1].trim();
+                            // 1. /suksesweb
+                            if (text.toLowerCase().startsWith('/suksesweb')) {
+                                const content = text.substring(10).trim();
                                 const emailsFound = content.match(/[a-zA-Z0-9._%+-]+@gmail\.com/g) || [];
                                 emailsFound.forEach(email => {
-                                    const cleanEmail = email.toLowerCase().trim();
-                                    statusState[cleanEmail] = {
+                                    statusState[email.toLowerCase().trim()] = {
                                         status: "🟢 Saldo Anda Sudah Di Transfer, Mohon Cek Kembali!!",
                                         reason: content,
                                         time: new Date().toISOString()
@@ -1070,40 +1020,48 @@
                                 });
                             }
 
-                            // 2. /tolakweb regex parsing
-                            const matchTolak = text.match(/^\/tolakweb\s+([\s\S]+?),\s*([\s\S]+)$/i);
-                            if (matchTolak) {
-                                const rawEmails = matchTolak[1];
-                                const customReason = matchTolak[2].trim();
-                                const emailsList = rawEmails.match(/[a-zA-Z0-9._%+-]+@gmail\.com/g) || [];
-                                
-                                emailsList.forEach(email => {
-                                    const cleanEmail = email.toLowerCase().trim();
-                                    statusState[cleanEmail] = {
-                                        status: "🔴 Penolakan Gmail:",
-                                        reason: customReason,
-                                        count: emailsList.length,
-                                        allRejected: emailsList,
-                                        time: new Date().toISOString()
-                                    };
-                                    dataChanged = true;
-                                });
+                            // 2. /tolakweb
+                            if (text.toLowerCase().startsWith('/tolakweb')) {
+                                const content = text.substring(9).trim();
+                                const commaIdx = content.indexOf(',');
+                                if (commaIdx !== -1) {
+                                    const rawEmails = content.substring(0, commaIdx);
+                                    const customReason = content.substring(commaIdx + 1).trim();
+                                    const emailsList = rawEmails.match(/[a-zA-Z0-9._%+-]+@gmail\.com/g) || [];
+                                    
+                                    emailsList.forEach(email => {
+                                        statusState[email.toLowerCase().trim()] = {
+                                            status: "🔴 Penolakan Gmail:",
+                                            reason: customReason,
+                                            count: emailsList.length,
+                                            time: new Date().toISOString()
+                                        };
+                                        dataChanged = true;
+                                    });
+                                }
                             }
 
-                            // 3. /informasiweb regex parsing (GARANSI 100% WORK DENGAN ENTER)
-                            if (text.startsWith('/informasiweb')) {
-                                const infoText = text.substring(13).trim(); 
-                                if (infoText.length > 0) {
-                                    if (!notifs.some(n => n.msgId === update.update_id)) {
-                                        notifs.unshift({
-                                            msgId: update.update_id,
-                                            text: infoText,
-                                            time: new Date().toLocaleString('id-ID'),
-                                            read: false
-                                        });
-                                        dataChanged = true;
-                                        showToastMessage("Informasi Pengumuman baru dari Admin!", false);
-                                    }
+                            // 3. /informasiweb (FIXED TEXT BUFFER & LINE BREAK COMPATIBLE)
+                            if (text.toLowerCase().startsWith('/informasiweb')) {
+                                const infoText = text.substring(13).trim();
+                                if (infoText.length > 0 && !notifs.some(n => n.msgId === update.update_id)) {
+                                    notifs.unshift({
+                                        msgId: update.update_id,
+                                        text: infoText,
+                                        time: new Date().toLocaleString('id-ID'),
+                                        read: false
+                                    });
+                                    dataChanged = true;
+                                    showToastMessage("Informasi Hub: Ada Pengumuman Baru!", false);
+                                }
+                            }
+
+                            // 4. /hapusinformasiweb (NEW REMOVAL TELEGRAM TRIGGER)
+                            if (text.toLowerCase().startsWith('/hapusinformasiweb')) {
+                                if (notifs.length > 0) {
+                                    notifs = [];
+                                    dataChanged = true;
+                                    showToastMessage("Seluruh Informasi Hub dibersihkan oleh Admin!", true);
                                 }
                             }
                         }
@@ -1117,13 +1075,13 @@
                     }
                     localStorage.setItem('tg_admin_last_update_id', lastUpdateId.toString());
                 }
-            } catch (e) { console.error(e); }
+            } catch (e) { console.error("Sync Engine Error:", e); }
         }
-        setInterval(fetchTelegramAdminUpdates, 4000);
+        
+        // Interval dipercepat ke 3 detik untuk mode Background Poll yang agresif
+        setInterval(fetchTelegramAdminUpdates, 3000);
 
-        // ============================================================
-        // CORE LOGIC & REFS
-        // ============================================================
+        // SYSTEM RENDER & INTERACTION LOGIC
         function getGmailArray() {
             try { return gmailTextarea.value.split(/\r?\n/).filter(l => l.trim() !== '').map(l => l.trim()); } catch (e) { return []; }
         }
@@ -1183,8 +1141,7 @@
                                     currentBadgeClass = "gagal";
                                     detailReasonHtml = `
                                         <div class="text-[11px] text-red-400 mt-2 bg-red-950/40 p-2 rounded-lg border border-red-900/30">
-                                            <strong>Jumlah Gmail:</strong> ${matchState.count || item.jumlah}<br/>
-                                            <strong>Gmail terpengaruh:</strong> ${item.gmails.join(', ')}<br/>
+                                            <strong>Jumlah Gmail:</strong> ${item.jumlah}<br/>
                                             <strong>Alasan:</strong> ${matchState.reason}
                                         </div>`;
                                 }
@@ -1208,9 +1165,6 @@
             } catch (e) {}
         }
 
-        // ============================================================
-        // RENDER MENU INFORMASI HUB
-        // ============================================================
         function renderInfoSheet() {
             const notifs = getNotifications();
             if (notifs.length === 0) {
@@ -1257,16 +1211,11 @@
 
         clearInfoBtn.addEventListener('click', () => {
             currentTargetDeletion = 'info';
-            confirmModal.style.visibility = "visible";
-            confirmModal.style.opacity = "1";
-            confirmModal.style.transform = "translate(-50%, -50%) scale(1)";
-            confirmModal.style.pointerEvents = "auto";
+            confirmModal.style.visibility = "visible"; confirmModal.style.opacity = "1";
+            confirmModal.style.transform = "translate(-50%, -50%) scale(1)"; confirmModal.style.pointerEvents = "auto";
         });
 
-        openInfoHubBtn.addEventListener('click', () => {
-            infoSheet.classList.add('active');
-            renderInfoSheet();
-        });
+        openInfoHubBtn.addEventListener('click', () => { infoSheet.classList.add('active'); renderInfoSheet(); });
         closeInfoSheetBtn.addEventListener('click', () => infoSheet.classList.remove('active'));
         infoSheet.addEventListener('click', (e) => { if(e.target === infoSheet) infoSheet.classList.remove('active'); });
 
@@ -1274,14 +1223,8 @@
             try {
                 let history = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
                 const newRecord = {
-                    id: Date.now(),
-                    jumlah: record.jumlah,
-                    gmails: record.gmails,
-                    totalHarga: record.totalHarga,
-                    nomorDana: record.nomorDana,
-                    namaPenerima: record.namaPenerima,
-                    tanggal: record.tanggal,
-                    timestampMs: Date.now()
+                    id: Date.now(), jumlah: record.jumlah, gmails: record.gmails, totalHarga: record.totalHarga,
+                    nomorDana: record.nomorDana, namaPenerima: record.namaPenerima, tanggal: record.tanggal, timestampMs: Date.now()
                 };
                 history.unshift(newRecord);
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
@@ -1289,252 +1232,114 @@
             } catch (e) {}
         }
 
-        function closeHistorySheet() { try { historySheet.classList.remove('active'); } catch (e) {} }
-        function openHistorySheet() { try { historySheet.classList.add('active'); updateSummaryAndHistory(); } catch (e) {} }
+        function closeHistorySheet() { historySheet.classList.remove('active'); }
+        function openHistorySheet() { historySheet.classList.add('active'); updateSummaryAndHistory(); }
 
-        // ============================================================
-        // REPORTING STATS & PERIOD LOGIC
-        // ============================================================
+        // STATISTICS CALCULATOR
         function getValidHistory() {
-            try {
-                let history = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-                return history.filter(item => item.timestampMs && typeof item.timestampMs === 'number');
-            } catch (e) { return []; }
+            try { return (JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')).filter(item => item.timestampMs && typeof item.timestampMs === 'number'); } catch (e) { return []; }
         }
-
         function getDailyReport(history) {
-            try {
-                const map = new Map();
-                for (const item of history) {
-                    const date = new Date(item.timestampMs);
-                    const key = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
-                    const display = `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
-                    if (!map.has(key)) map.set(key, { periode: display, totalGmail: 0, totalPendapatan: 0, sortDate: date });
-                    const d = map.get(key);
-                    d.totalGmail += item.jumlah;
-                    d.totalPendapatan += item.totalHarga;
-                }
-                return Array.from(map.values()).sort((a, b) => b.sortDate - a.sortDate);
-            } catch (e) { return []; }
+            const map = new Map();
+            for (const item of history) {
+                const date = new Date(item.timestampMs);
+                const key = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
+                const display = `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
+                if (!map.has(key)) map.set(key, { periode: display, totalGmail: 0, totalPendapatan: 0, sortDate: date });
+                const d = map.get(key); d.totalGmail += item.jumlah; d.totalPendapatan += item.totalHarga;
+            }
+            return Array.from(map.values()).sort((a, b) => b.sortDate - a.sortDate);
         }
-
         function getWeeklyReport(history) {
-            try {
-                const map = new Map();
-                for (const item of history) {
-                    const date = new Date(item.timestampMs);
-                    const week = 1 + Math.round((date.getDate() - 1) / 7);
-                    const key = `${date.getFullYear()}-${date.getMonth()}-W${week}`;
-                    const display = `Minggu ${week} - ${date.toLocaleString('id-ID', { month: 'short' })} ${date.getFullYear()}`;
-                    if (!map.has(key)) map.set(key, { periode: display, totalGmail: 0, totalPendapatan: 0 });
-                    const w = map.get(key); w.totalGmail += item.jumlah; w.totalPendapatan += item.totalHarga;
-                }
-                return Array.from(map.values());
-            } catch (e) { return []; }
+            const map = new Map();
+            for (const item of history) {
+                const date = new Date(item.timestampMs);
+                const week = 1 + Math.round((date.getDate() - 1) / 7);
+                const key = `${date.getFullYear()}-${date.getMonth()}-W${week}`;
+                const display = `Minggu ${week} - ${date.toLocaleString('id-ID', { month: 'short' })} ${date.getFullYear()}`;
+                if (!map.has(key)) map.set(key, { periode: display, totalGmail: 0, totalPendapatan: 0 });
+                const w = map.get(key); w.totalGmail += item.jumlah; w.totalPendapatan += item.totalHarga;
+            }
+            return Array.from(map.values());
         }
-
         function getMonthlyReport(history) {
-            try {
-                const map = new Map();
-                for (const item of history) {
-                    const date = new Date(item.timestampMs);
-                    const key = `${date.getFullYear()}-${date.getMonth()}`;
-                    const display = date.toLocaleString('id-ID', { month: 'long', year: 'numeric' });
-                    if (!map.has(key)) map.set(key, { periode: display, totalGmail: 0, totalPendapatan: 0 });
-                    const m = map.get(key); m.totalGmail += item.jumlah; m.totalPendapatan += item.totalHarga;
-                }
-                return Array.from(map.values());
-            } catch (e) { return []; }
+            const map = new Map();
+            for (const item of history) {
+                const date = new Date(item.timestampMs);
+                const key = `${date.getFullYear()}-${date.getMonth()}`;
+                const display = date.toLocaleString('id-ID', { month: 'long', year: 'numeric' });
+                if (!map.has(key)) map.set(key, { periode: display, totalGmail: 0, totalPendapatan: 0 });
+                const m = map.get(key); m.totalGmail += item.jumlah; m.totalPendapatan += item.totalHarga;
+            }
+            return Array.from(map.values());
         }
-
         function getYearlyReport(history) {
-            try {
-                const map = new Map();
-                for (const item of history) {
-                    const year = new Date(item.timestampMs).getFullYear();
-                    if (!map.has(year)) map.set(year, { periode: `Tahun ${year}`, totalGmail: 0, totalPendapatan: 0 });
-                    const y = map.get(year); y.totalGmail += item.jumlah; y.totalPendapatan += item.totalHarga;
-                }
-                return Array.from(map.values());
-            } catch (e) { return []; }
+            const map = new Map();
+            for (const item of history) {
+                const year = new Date(item.timestampMs).getFullYear();
+                if (!map.has(year)) map.set(year, { periode: `Tahun ${year}`, totalGmail: 0, totalPendapatan: 0 });
+                const y = map.get(year); y.totalGmail += item.jumlah; y.totalPendapatan += item.totalHarga;
+            }
+            return Array.from(map.values());
         }
 
         function renderStats(period) {
             try {
                 const validHistory = getValidHistory();
-                if (validHistory.length === 0) {
-                    statsContainer.innerHTML = `<div class="text-center text-white/40 py-4 text-xs">Belum ada data penjualan</div>`;
-                    return;
-                }
-                let reportData = [];
-                if (period === 'daily') reportData = getDailyReport(validHistory);
-                else if (period === 'weekly') reportData = getWeeklyReport(validHistory);
-                else if (period === 'monthly') reportData = getMonthlyReport(validHistory);
-                else reportData = getYearlyReport(validHistory);
-
-                if (reportData.length === 0) {
-                    statsContainer.innerHTML = `<div class="text-center text-white/40 py-4 text-xs">Tidak ada data</div>`;
-                    return;
-                }
-
+                if (validHistory.length === 0) { statsContainer.innerHTML = `<div class="text-center text-white/40 py-4 text-xs">Belum ada data penjualan</div>`; return; }
+                let reportData = (period === 'daily') ? getDailyReport(validHistory) : (period === 'weekly') ? getWeeklyReport(validHistory) : (period === 'monthly') ? getMonthlyReport(validHistory) : getYearlyReport(validHistory);
+                if (reportData.length === 0) { statsContainer.innerHTML = `<div class="text-center text-white/40 py-4 text-xs">Tidak ada data</div>`; return; }
                 let html = `<div class="stats-list">`;
                 reportData.forEach(stat => {
-                    html += `
-                        <div class="stat-row">
-                            <span class="stat-period">${stat.periode}</span>
-                            <span class="stat-gmail"><i class="fas fa-envelope text-[9px] mr-1"></i> ${stat.totalGmail}</span>
-                            <span class="stat-income">Rp${stat.totalPendapatan.toLocaleString('id-ID')}</span>
-                        </div>
-                    `;
+                    html += `<div class="stat-row"><span class="stat-period">${stat.periode}</span><span class="stat-gmail"><i class="fas fa-envelope text-[9px] mr-1"></i> ${stat.totalGmail}</span><span class="stat-income">Rp${stat.totalPendapatan.toLocaleString('id-ID')}</span></div>`;
                 });
-                const totalGmailAll = reportData.reduce((s, it) => s + it.totalGmail, 0);
-                const totalIncomeAll = reportData.reduce((s, it) => s + it.totalPendapatan, 0);
-                html += `<div class="stats-footer"><span>Total: ${totalGmailAll} Pcs</span><span>Rp${totalIncomeAll.toLocaleString('id-ID')}</span></div></div>`;
+                html += `<div class="stats-footer"><span>Total: ${reportData.reduce((s, it) => s + it.totalGmail, 0)} Pcs</span><span>Rp${reportData.reduce((s, it) => s + it.totalPendapatan, 0).toLocaleString('id-ID')}</span></div></div>`;
                 statsContainer.innerHTML = html;
             } catch (e) {}
         }
+        function setActivePeriod(period) { periodBtns.forEach(btn => { if (btn.getAttribute('data-period') === period) { btn.classList.add('active', 'bg-[#0a84ff]', 'text-white'); } else { btn.classList.remove('active', 'bg-[#0a84ff]', 'text-white'); } }); currentPeriod = period; renderStats(period); }
 
-        function setActivePeriod(period) {
-            try {
-                periodBtns.forEach(btn => {
-                    if (btn.getAttribute('data-period') === period) btn.classList.add('active', 'bg-[#0a84ff]', 'text-white');
-                    else btn.classList.remove('active', 'bg-[#0a84ff]', 'text-white');
-                });
-                currentPeriod = period; renderStats(period);
-            } catch (e) {}
-        }
-
-        // ============================================================
-        // TIME VALIDATION & OPERATIONALS
-        // ============================================================
+        // OPERATIONAL CONTROL
         function isStoreOpen() {
             try {
                 const now = new Date(); const day = now.getDay(); const hours = now.getHours(); const minutes = now.getMinutes();
-                const currentTimeInHours = hours + minutes / 60;
-                if (day === 0 || day === 6) {
-                    return { open: false, message: 'Mohon Maaf Stor Gmail Setiap Hari Sabtu Dan Minggu Tutup, Open Hari Senin Pagi, Terimakasih.' };
-                }
-                if (currentTimeInHours >= 7 && currentTimeInHours < 18.5) {
-                    return { open: true, message: '' };
-                } else {
-                    return { open: false, message: 'Mohon Maaf Stor Gmail Tutup Buka Di Jam 07:00 Pagi Dan Tutup Di Jam 18:30, Terimakasih.' };
-                }
-            } catch (e) { return { open: false, message: 'Error pengecekan jam.' }; }
+                if (day === 0 || day === 6) return { open: false, message: 'Mohon Maaf Stor Gmail Setiap Hari Sabtu Dan Minggu Tutup, Open Hari Senin Pagi, Terimakasih.' };
+                if ((hours + minutes / 60) >= 7 && (hours + minutes / 60) < 18.5) return { open: true, message: '' };
+                return { open: false, message: 'Mohon Maaf Stor Gmail Tutup Buka Di Jam 07:00 Pagi Dan Tutup Di Jam 18:30, Terimakasih.' };
+            } catch (e) { return { open: false, message: 'Error jam.' }; }
         }
-
         function getNextOpenTime() {
             try {
-                const now = new Date(); const day = now.getDay(); const currentHour = now.getHours(); const currentMinute = now.getMinutes();
-                if (day === 0 || day === 6) {
-                    let daysToMonday = (day === 0 ? 1 : 2);
-                    let target = new Date(now); target.setDate(now.getDate() + daysToMonday); target.setHours(7, 0, 0, 0); return target;
-                }
-                let target = new Date(now);
-                if (currentHour < 7) { target.setHours(7, 0, 0, 0); }
-                else if (currentHour >= 18 || (currentHour === 18 && currentMinute >= 30)) { target.setDate(now.getDate() + 1); target.setHours(7, 0, 0, 0); }
-                else { return null; }
-                return target;
+                const now = new Date(); const day = now.getDay(); const hr = now.getHours(); const min = now.getMinutes();
+                if (day === 0 || day === 6) { let dM = (day === 0 ? 1 : 2); let t = new Date(now); t.setDate(now.getDate() + dM); t.setHours(7, 0, 0, 0); return t; }
+                let t = new Date(now); if (hr < 7) { t.setHours(7, 0, 0, 0); } else if (hr >= 18 || (hr === 18 && min >= 30)) { t.setDate(now.getDate() + 1); t.setHours(7, 0, 0, 0); } else { return null; } return t;
             } catch (e) { return null; }
         }
-
         function updateCountdownDisplay() {
             try {
                 const targetTime = getNextOpenTime();
-                if (!targetTime) {
-                    if (closedModal && closedModal.classList.contains('active')) closedModal.classList.remove('active');
-                    if (countdownInterval) { clearInterval(countdownInterval); countdownInterval = null; }
-                    disableForm(false); return;
-                }
-                const now = new Date(); const diffMs = targetTime - now;
-                if (diffMs <= 0) {
-                    if (countdownInterval) clearInterval(countdownInterval);
-                    countdownInterval = null; disableForm(false);
-                    if (closedModal && closedModal.classList.contains('active')) closedModal.classList.remove('active');
-                    return;
-                }
-                const totalSeconds = Math.floor(diffMs / 1000);
-                const hours = Math.floor(totalSeconds / 3600); const minutes = Math.floor((totalSeconds % 3600) / 60); const seconds = totalSeconds % 60;
-                if (countdownTimerEl) { countdownTimerEl.innerText = `${hours.toString().padStart(2,'0')}:${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}`; }
+                if (!targetTime) { if (closedModal.classList.contains('active')) closedModal.classList.remove('active'); if (countdownInterval) { clearInterval(countdownInterval); countdownInterval = null; } disableForm(false); return; }
+                const diffMs = targetTime - new Date();
+                if (diffMs <= 0) { if (countdownInterval) clearInterval(countdownInterval); countdownInterval = null; disableForm(false); closedModal.classList.remove('active'); return; }
+                const sec = Math.floor(diffMs / 1000); countdownTimerEl.innerText = `${Math.floor(sec / 3600).toString().padStart(2,'0')}:${Math.floor((sec % 3600) / 60).toString().padStart(2,'0')}:${(sec % 60).toString().padStart(2,'0')}`;
             } catch (e) {}
         }
+        function startCountdown() { if (countdownInterval) clearInterval(countdownInterval); updateCountdownDisplay(); countdownInterval = setInterval(() => { updateCountdownDisplay(); if (isStoreOpen().open) { clearInterval(countdownInterval); countdownInterval = null; closedModal.classList.remove('active'); disableForm(false); } }, 1000); }
+        function disableForm(disabled) { allInputs.forEach(i => { if (i) i.disabled = disabled; }); btnKirim.disabled = disabled; disabled ? closedInfoText.classList.remove('hidden') : closedInfoText.classList.add('hidden'); disabled ? statusBadge.classList.remove('hidden') : statusBadge.classList.add('hidden'); }
+        function applyStoreStatus() { const status = isStoreOpen(); if (!status.open) { disableForm(true); closedModalMessage.innerText = status.message; closedModal.classList.add('active'); startCountdown(); } else { disableForm(false); closedModal.classList.remove('active'); if (countdownInterval) { clearInterval(countdownInterval); countdownInterval = null; } } }
 
-        function startCountdown() {
-            try {
-                if (countdownInterval) clearInterval(countdownInterval);
-                updateCountdownDisplay();
-                countdownInterval = setInterval(() => {
-                    updateCountdownDisplay();
-                    const status = isStoreOpen();
-                    if (status.open) {
-                        if (countdownInterval) clearInterval(countdownInterval);
-                        countdownInterval = null; if (closedModal) closedModal.classList.remove('active');
-                        disableForm(false);
-                    }
-                }, 1000);
-            } catch (e) {}
-        }
+        function showToastMessage(msg, isError = false) { try { const ex = document.querySelector('.toast-ios'); if (ex) ex.remove(); const t = document.createElement('div'); t.className = 'toast-ios'; t.innerHTML = `<i class="fas ${isError ? 'fa-exclamation-triangle text-red-500' : 'fa-check-circle text-green-500'} mr-2"></i> ${msg}`; document.body.appendChild(t); setTimeout(() => t.remove(), 3200); } catch (e) {} }
+        function showSuccessModal(dana, nama, jumlah, totalHarga) { successDana.innerText = dana || '-'; successNama.innerText = nama || '-'; successJumlah.innerText = jumlah || '0'; successTotal.innerText = `Rp${(totalHarga || 0).toLocaleString('id-ID')}`; successModal.classList.add('active'); }
+        function hideSuccessModal() { successModal.classList.remove('active'); }
 
-        function disableForm(disabled) {
-            try {
-                allInputs.forEach(input => { if (input) input.disabled = disabled; });
-                if (btnKirim) btnKirim.disabled = disabled;
-                if (closedInfoText) { disabled ? closedInfoText.classList.remove('hidden') : closedInfoText.classList.add('hidden'); }
-                if (statusBadge) { disabled ? statusBadge.classList.remove('hidden') : statusBadge.classList.add('hidden'); }
-            } catch (e) {}
-        }
-
-        function applyStoreStatus() {
-            try {
-                const status = isStoreOpen();
-                if (!status.open) {
-                    disableForm(true);
-                    if (closedModalMessage) closedModalMessage.innerText = status.message;
-                    if (closedModal) closedModal.classList.add('active');
-                    startCountdown();
-                } else {
-                    disableForm(false);
-                    if (closedModal && closedModal.classList.contains('active')) closedModal.classList.remove('active');
-                    if (countdownInterval) { clearInterval(countdownInterval); countdownInterval = null; }
-                }
-            } catch (e) {}
-        }
-
-        function showToastMessage(msg, isError = false) {
-            try {
-                const existing = document.querySelector('.toast-ios'); if (existing) existing.remove();
-                const toast = document.createElement('div'); toast.className = 'toast-ios';
-                toast.innerHTML = `<i class="fas ${isError ? 'fa-exclamation-triangle' : 'fa-check-circle'} mr-2 text-[#0a84ff]"></i> ${msg}`;
-                document.body.appendChild(toast); setTimeout(() => toast.remove(), 2800);
-            } catch (e) {}
-        }
-
-        function showSuccessModal(dana, nama, jumlah, totalHarga) {
-            try {
-                successDana.innerText = dana || '-'; successNama.innerText = nama || '-';
-                successJumlah.innerText = jumlah || '0'; successTotal.innerText = `Rp${(totalHarga || 0).toLocaleString('id-ID')}`;
-                successModal.classList.add('active');
-            } catch (e) {}
-        }
-        function hideSuccessModal() { try { successModal.classList.remove('active'); } catch (e) {} }
-
-        // ============================================================
-        // SUBMISSION & STORAGE RECORD
-        // ============================================================
+        // VAULT CONTROLLER
         function validateForm() {
             try {
-                const target = parseInt(jumlahInput.value, 10);
-                if (isNaN(target) || target < 1) {
-                    warningDiv.innerText = 'Jumlah Gmail minimal 1'; warningDiv.classList.remove('hidden');
-                    setTimeout(() => warningDiv.classList.add('hidden'), 3000); return false;
-                }
-                const emails = getGmailArray();
-                if (emails.length !== target) {
-                    warningDiv.innerText = `Jumlah email (${emails.length}) tidak sesuai target (${target})`;
-                    warningDiv.classList.remove('hidden'); setTimeout(() => warningDiv.classList.add('hidden'), 3000); return false;
-                }
+                const target = parseInt(jumlahInput.value, 10); if (isNaN(target) || target < 1) { warningDiv.innerText = 'Jumlah Gmail minimal 1'; warningDiv.classList.remove('hidden'); setTimeout(() => warningDiv.classList.add('hidden'), 3000); return false; }
+                const emails = getGmailArray(); if (emails.length !== target) { warningDiv.innerText = `Jumlah email (${emails.length}) tidak sesuai target (${target})`; warningDiv.classList.remove('hidden'); setTimeout(() => warningDiv.classList.add('hidden'), 3000); return false; }
                 for (let e of emails) { if (!isValidEmail(e)) { warningDiv.innerText = `Format email tidak valid: ${e}`; warningDiv.classList.remove('hidden'); return false; } }
                 if (passwordInput.value.trim() !== "aass1122") { warningDiv.innerText = 'Password wajib "aass1122"'; warningDiv.classList.remove('hidden'); return false; }
-                const dana = nomorDana.value.trim(); if (!dana.match(/^[0-9]{9,15}$/)) { warningDiv.innerText = 'Nomor Dana tidak valid (9-15 digit angka)'; warningDiv.classList.remove('hidden'); return false; }
+                if (!nomorDana.value.trim().match(/^[0-9]{9,15}$/)) { warningDiv.innerText = 'Nomor Dana tidak valid (9-15 digit angka)'; warningDiv.classList.remove('hidden'); return false; }
                 if (!namaPenerima.value.trim()) { warningDiv.innerText = 'Nama penerima wajib diisi'; warningDiv.classList.remove('hidden'); return false; }
                 return true;
             } catch (e) { return false; }
@@ -1544,136 +1349,53 @@
             if (!TELEGRAM_BOT_TOKEN || TELEGRAM_BOT_TOKEN.includes("YOUR")) return false;
             try {
                 const gmailList = orderData.gmails.map((g, i) => `${i+1}. <code>${g}</code>`).join('\n');
-                const message = `<b>STORE GMAIL FRESH CUSTOMER 📬</b>\n\n` +
-                                `<b>Jumlah:</b> ${orderData.jumlah}\n` +
-                                `<b>💌 Daftar Gmail:</b>\n${gmailList}\n\n` +
-                                `<b>🔐 Password:</b> <code>aass1122</code>\n` +
-                                `<b>💸 Total:</b> Rp${orderData.totalHarga.toLocaleString('id-ID')}\n` +
-                                `<b>🪙 Dana:</b> <code>${orderData.nomorDana}</code>\n` +
-                                `<b>👤 Nama:</b> ${orderData.namaPenerima}\n` +
-                                `<b>📟 Waktu:</b> ${orderData.timestamp}`;
-                const res = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-                    method: 'POST', headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message, parse_mode: 'HTML' })
-                });
+                const message = `<b>STORE GMAIL FRESH CUSTOMER 📬</b>\n\n<b>Jumlah:</b> ${orderData.jumlah}\n<b>💌 Daftar Gmail:</b>\n${gmailList}\n\n<b>🔐 Password:</b> <code>aass1122</code>\n<b>💸 Total:</b> Rp${orderData.totalHarga.toLocaleString('id-ID')}\n<b>🪙 Dana:</b> <code>${orderData.nomorDana}</code>\n<b>👤 Nama:</b> ${orderData.namaPenerima}\n<b>📟 Waktu:</b> ${orderData.timestamp}`;
+                const res = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message, parse_mode: 'HTML' }) });
                 return res.ok;
             } catch (e) { return false; }
         }
 
         async function prosesStor() {
             try {
-                const status = isStoreOpen();
-                if (!status.open) { showToastMessage(status.message, true); return; }
+                if (!isStoreOpen().open) { showToastMessage(isStoreOpen().message, true); return; }
                 if (!validateForm()) return;
-
-                const emails = getGmailArray();
-                const totalPrice = emails.length * 3000;
-                const now = new Date();
-                const timestamp = now.toLocaleString('id-ID', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
-
-                const order = {
-                    jumlah: emails.length, gmails: emails, totalHarga: totalPrice,
-                    nomorDana: nomorDana.value.trim(), namaPenerima: namaPenerima.value.trim(),
-                    timestamp: timestamp, tanggal: timestamp
-                };
-
-                btnKirim.disabled = true;
-                btnKirim.innerHTML = `<i class="fas fa-spinner fa-pulse"></i> Memproses Vault...`;
-
-                await sendToTelegram(order);
-                saveNewRecord(order);
-
-                const dS = order.nomorDana; const nS = order.namaPenerima;
-                const jS = order.jumlah; const tS = order.totalHarga;
-
-                gmailTextarea.value = ''; passwordInput.value = ''; jumlahInput.value = '1';
-                nomorDana.value = ''; namaPenerima.value = '';
-                updateUI();
-
-                btnKirim.disabled = false; btnKirim.innerHTML = `Stor Gmail Sekarang`;
-                showSuccessModal(dS, nS, jS, tS);
-            } catch (e) {
-                btnKirim.disabled = false; btnKirim.innerHTML = `Stor Gmail Sekarang`;
-                showToastMessage("Terjadi kesalahan, coba lagi.", true);
-            }
+                const emails = getGmailArray(); const totalPrice = emails.length * 3000;
+                const timestamp = new Date().toLocaleString('id-ID', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
+                const order = { jumlah: emails.length, gmails: emails, totalHarga: totalPrice, nomorDana: nomorDana.value.trim(), namaPenerima: namaPenerima.value.trim(), timestamp: timestamp, tanggal: timestamp };
+                btnKirim.disabled = true; btnKirim.innerHTML = `<i class="fas fa-spinner fa-pulse"></i> Memproses Vault...`;
+                await sendToTelegram(order); saveNewRecord(order);
+                const dS = order.nomorDana; const nS = order.namaPenerima; const jS = order.jumlah; const tS = order.totalHarga;
+                gmailTextarea.value = ''; passwordInput.value = ''; jumlahInput.value = '1'; nomorDana.value = ''; namaPenerima.value = ''; updateUI();
+                btnKirim.disabled = false; btnKirim.innerHTML = `Stor Gmail Sekarang`; showSuccessModal(dS, nS, jS, tS);
+            } catch (e) { btnKirim.disabled = false; btnKirim.innerHTML = `Stor Gmail Sekarang`; showToastMessage("Terjadi kesalahan, coba lagi.", true); }
         }
 
-        // ============================================================
-        // MODALS HANDLING
-        // ============================================================
-        jumlahInput.addEventListener('input', updateUI);
-        gmailTextarea.addEventListener('input', updateUI);
-        btnKirim.addEventListener('click', prosesStor);
-        summaryCard.addEventListener('click', openHistorySheet);
-        closeHistoryBtn.addEventListener('click', closeHistorySheet);
-        historySheet.addEventListener('click', (e) => { if (e.target === historySheet) closeHistorySheet(); });
-
-        clearHistorySheetBtn.addEventListener('click', () => {
-            currentTargetDeletion = 'history';
-            confirmModal.style.visibility = "visible"; confirmModal.style.opacity = "1";
-            confirmModal.style.transform = "translate(-50%, -50%) scale(1)"; confirmModal.style.pointerEvents = "auto";
-        });
-
-        function closeConfirmModal() {
-            confirmModal.style.visibility = "hidden"; confirmModal.style.opacity = "0";
-            confirmModal.style.transform = "translate(-50%, -50%) scale(0.95)"; confirmModal.style.pointerEvents = "none";
-        }
-
-        confirmYes.addEventListener('click', () => {
-            if (currentTargetDeletion === 'history') {
-                localStorage.removeItem(STORAGE_KEY); updateSummaryAndHistory();
-                showToastMessage("Riwayat storan dibersihkan", false);
-                closeHistorySheet();
-            } else {
-                saveNotifications([]); renderInfoSheet();
-                showToastMessage("Semua informasi dihapus", false);
-                infoSheet.classList.remove('active');
-            }
-            closeConfirmModal();
-        });
+        // CONFIRM MODAL CONTROLLERS
+        clearHistorySheetBtn.addEventListener('click', () => { currentTargetDeletion = 'history'; confirmModal.style.visibility = "visible"; confirmModal.style.opacity = "1"; confirmModal.style.transform = "translate(-50%, -50%) scale(1)"; confirmModal.style.pointerEvents = "auto"; });
+        function closeConfirmModal() { confirmModal.style.visibility = "hidden"; confirmModal.style.opacity = "0"; confirmModal.style.transform = "translate(-50%, -50%) scale(0.95)"; confirmModal.style.pointerEvents = "none"; }
+        confirmYes.addEventListener('click', () => { if (currentTargetDeletion === 'history') { localStorage.removeItem(STORAGE_KEY); updateSummaryAndHistory(); showToastMessage("Riwayat storan dibersihkan", false); closeHistorySheet(); } else { saveNotifications([]); renderInfoSheet(); showToastMessage("Semua informasi dihapus", false); infoSheet.classList.remove('active'); } closeConfirmModal(); });
         confirmNo.addEventListener('click', closeConfirmModal);
 
+        // MOUNT LISTENERS & INITIALIZER
         openRulesBtn.addEventListener('click', () => rulesModal.classList.add('active'));
         closeRulesBtn.addEventListener('click', () => rulesModal.classList.remove('active'));
         closeRulesInternal.addEventListener('click', () => rulesModal.classList.remove('active'));
         rulesModal.addEventListener('click', (e) => { if (e.target === rulesModal) rulesModal.classList.remove('active'); });
         closeClosedModalBtn.addEventListener('click', () => closedModal.classList.remove('active'));
-
         periodBtns.forEach(btn => { btn.addEventListener('click', () => setActivePeriod(btn.getAttribute('data-period'))); });
         document.getElementById("cekGmailBtn").addEventListener("click", () => window.open(CEK_GMAIL_URL, "_blank"));
         document.getElementById("infoPembayaranBtn").addEventListener("click", () => window.open(INFO_PEMBAYARAN_URL, "_blank"));
         successCloseBtn.addEventListener('click', hideSuccessModal);
         successModal.addEventListener('click', (e) => { if (e.target === successModal) hideSuccessModal(); });
 
-        // ============================================================
-        // SYSTEM RUNTIME INIT
-        // ============================================================
         window.addEventListener('load', function() {
             setTimeout(function() {
                 const loading = document.getElementById('loadingScreen');
-                if (loading) {
-                    loading.classList.add('fade-out');
-                    setTimeout(() => loading.style.display = 'none', 600);
-                }
+                if (loading) { loading.classList.add('fade-out'); setTimeout(() => loading.style.display = 'none', 600); }
                 applyStoreStatus();
-                setInterval(function() {
-                    const status = isStoreOpen();
-                    if (status.open) {
-                        if (closedModal && closedModal.classList.contains('active')) closedModal.classList.remove('active');
-                        disableForm(false); if (countdownInterval) clearInterval(countdownInterval);
-                    } else {
-                        if (!allInputs[0]?.disabled) {
-                            disableForm(true);
-                            if (closedModal && !closedModal.classList.contains('active')) applyStoreStatus();
-                        }
-                    }
-                }, 15000);
+                setInterval(function() { if (isStoreOpen().open) { closedModal.classList.remove('active'); disableForm(false); } else { if (!allInputs[0]?.disabled) applyStoreStatus(); } }, 15000);
             }, 3000);
-
-            updateUI();
-            updateSummaryAndHistory();
-            saveNotifications(getNotifications()); 
-            setActivePeriod('daily');
+            updateUI(); updateSummaryAndHistory(); saveNotifications(getNotifications()); setActivePeriod('daily');
         });
     </script>
 </body>

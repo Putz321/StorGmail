@@ -14,12 +14,6 @@
     <meta property="og:url" content="https://storgmailid.vercel.app" />
     <meta property="og:image" content="https://files.catbox.moe/v6c2zy.png" />
 
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Nationalyti Senpai | Warung Gmail" />
-    <meta name="twitter:description" content="Kami Menghadirkan Website Stor Gmail Agar Pengguna Lebih Simpel Saat Stor Gmail Website Kami 100% Aman Dan Terpercaya." />
-    <meta name="twitter:image" content="https://files.catbox.moe/v6c2zy.png" />
-
     <meta name="theme-color" content="#00E5FF" />
 
     <link rel="icon" type="image/jpeg" href="https://files.catbox.moe/v6c2zy.png" />
@@ -134,7 +128,7 @@
             visibility: hidden;
         }
 
-        /* SHEET MODAL (Riwayat & Informasi) */
+        /* SHEET MODAL (Riwayat & Notifikasi) */
         .sheet-modal {
             position: fixed;
             top: 0;
@@ -567,7 +561,7 @@
             100% { transform: translateX(-100%); }
         }
 
-        /* NOTIFICATION BULLET BADGE */
+        /* NOTIFICATION HUB BULLET */
         .notif-badge {
             position: absolute;
             top: -2px;
@@ -653,13 +647,13 @@
         </div>
     </div>
 
-    <!-- ===== SHEET INFORMASI (PENGUMUMAN) ===== -->
+    <!-- ===== SHEET NOTIFIKASI ===== -->
     <div id="infoSheet" class="sheet-modal">
         <div class="sheet-content">
             <div class="sheet-handle"></div>
             <div class="flex justify-between items-center px-5 pt-2 pb-1">
                 <h2 class="text-2xl font-bold text-white flex items-center gap-2">
-                    <i class="fas fa-bell text-[#0a84ff]"></i> Informasi Hub
+                    <i class="fas fa-bell text-[#0a84ff]"></i> Notifikasi Hub
                 </h2>
                 <button id="closeInfoSheetBtn" class="text-white/60 text-2xl leading-5">&times;</button>
             </div>
@@ -667,9 +661,23 @@
                 <!-- Di-render via JS -->
             </div>
             <div class="border-t border-white/10 p-4 flex justify-end gap-3">
-                <button id="readAllInfoBtn" class="bg-white/10 border border-white/20 text-white font-semibold px-4 py-2 rounded-full text-xs transition active:scale-95">Read All</button>
+                <button id="readAllInfoBtn" class="bg-white/10 border border-white/20 text-white font-semibold px-4 py-2 rounded-full text-xs transition active:scale-95">Baca Semua</button>
                 <button id="clearInfoBtn" class="btn-clear-ios text-xs px-4 py-2">Hapus Semua</button>
             </div>
+        </div>
+    </div>
+
+    <!-- ===== DETAIL NOTIFIKASI POPUP ===== -->
+    <div id="notifDetailModal" class="rules-modal-ios">
+        <div class="rules-card-ios text-left">
+            <div class="flex justify-between items-center mb-3 border-b border-white/10 pb-2">
+                <h3 class="text-lg font-bold text-white"><i class="fas fa-info-circle text-[#0a84ff] mr-2"></i> Detail Notifikasi</h3>
+                <button id="closeNotifDetailBtn" class="text-white/60 text-2xl">&times;</button>
+            </div>
+            <div id="notifDetailBody" class="text-sm text-white/90 leading-relaxed font-medium whitespace-pre-line bg-black/40 p-4 rounded-xl max-height-[50vh] overflow-y-auto">
+                <!-- Konten dinamis -->
+            </div>
+            <button id="closeNotifDetailBtnInternal" class="mt-4 w-full bg-[#0a84ff] py-2.5 rounded-full font-semibold text-white">Selesai</button>
         </div>
     </div>
 
@@ -694,20 +702,6 @@
                 <li class="text-[#ff1744] font-bold">Transfer Ke DANA Maksimal 27 Jam Jika Memenuhi Semua Ketentuan</li>
             </ul>
             <button id="closeRulesInternal" class="mt-6 w-full bg-white/10 py-2.5 rounded-full font-semibold text-white">Tutup</button>
-        </div>
-    </div>
-
-    <!-- ===== DETAIL NOTIFIKASI POPUP ===== -->
-    <div id="notifDetailModal" class="rules-modal-ios">
-        <div class="rules-card-ios text-left">
-            <div class="flex justify-between items-center mb-3 border-b border-white/10 pb-2">
-                <h3 class="text-lg font-bold text-white"><i class="fas fa-info-circle text-[#0a84ff] mr-2"></i> Isi Informasi</h3>
-                <button id="closeNotifDetailBtn" class="text-white/60 text-2xl">&times;</button>
-            </div>
-            <div id="notifDetailBody" class="text-sm text-white/90 leading-relaxed font-medium whitespace-pre-line bg-black/40 p-4 rounded-xl max-height-[50vh] overflow-y-auto">
-                <!-- Konten dinamis -->
-            </div>
-            <button id="closeNotifDetailBtnInternal" class="mt-4 w-full bg-[#0a84ff] py-2.5 rounded-full font-semibold text-white">Selesai Membaca</button>
         </div>
     </div>
 
@@ -758,10 +752,10 @@
                     </p>
                 </div>
             </div>
-            
-            <!-- MENU INFORMASI DENGAN TEKS + BADGE -->
+
+            <!-- MENU NOTIFIKASI DENGAN BADGE -->
             <button id="openInfoHubBtn" class="relative bg-white/5 border border-white/10 hover:bg-white/10 pl-5 pr-4 py-3.5 rounded-2xl transition active:scale-95 flex items-center justify-center gap-3">
-                <span class="text-sm font-bold text-white/90">Informasi Hub</span>
+                <span class="text-sm font-bold text-white/90">Notifikasi</span>
                 <div class="relative flex items-center justify-center">
                     <i class="fas fa-bell text-white text-xl"></i>
                     <span id="infoBadgeCount" class="notif-badge hidden">0</span>
@@ -773,7 +767,7 @@
         <div class="running-warning mb-5">
             <div class="running-text justify-center">
                 <i class="fas fa-triangle-exclamation"></i>
-                <span>HARAP BACA RULES!!‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ Hanya Gmail Yang Memenuhi Pernyataan Yang Admin Transfer‎ ‎   ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎• ‎ ‎  ‎ ‎ ‎ ‎ ‎ ‎ ‎ Payment Pembayaran Dilakukan ±27 Jam ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ • ‎ ‎ ‎ Admin Tidak Akan Transfer Jika Akun Tidak Sesuai‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ </span>
+                <span>HARAP BACA RULES!!‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ Hanya Gmail Yang Memenuhi Pernyataan Yang Admin Transfer‎ ‎   ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎• ‎ ‎  ‎ ‎ ‎ ‎ ‎ ‎ ‎ Payment Pembayaran Dilakukan ±27 Jam ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ • ‎ ‎  Admin Tidak Akan Transfer Jika Akun Tidak Sesuai‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ Lumayan Kan Buat Tambah Uang Jajan Menghasilkan Uang💸 </span>
             </div>
         </div>
 
@@ -833,7 +827,7 @@
             <button id="btnKirim" class="ios-btn w-full text-white py-3.5 flex items-center justify-center gap-2 text-base font-bold">Stor Gmail Sekarang</button>
 
             <div id="closedInfoText" class="text-center text-xs text-amber-400 mt-3 hidden font-semibold">
-                Toko Sedang Tutup, Silakan Kembali Saat Jam Operasional (07.00 - 18.30 WIB, Senin-Jumat).
+                Toko Sedang Tutup, Silakan Kembali Saat Jam Operasional (07.00 - 18.30 WIB).
             </div>
         </div>
 
@@ -853,10 +847,10 @@
                     <span id="summaryTotalIncome" class="text-[#0a84ff] font-black text-2xl ml-2">Rp0</span>
                 </div>
             </div>
-            <p class="text-[11px] text-white/40 font-semibold mt-3 text-center">Ketuk Untuk Detail Lengkap & Pelacakan Status</p>
+            <p class="text-[11px] text-white/40 font-semibold mt-3 text-center">Ketuk Untuk Melihat List Storan & Status Utama</p>
         </div>
 
-        <!-- BARIS 4: INFO PEMBAYARAN + LAPORAN PENJUALAN + HARGA -->
+        <!-- BARIS 4: INFO PEMBAYARAN + LAPORAN -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-5">
             <div class="ios-card p-4 flex items-center justify-center">
                 <button id="infoPembayaranBtn" class="w-full bg-[#0a84ff] text-white py-4 rounded-full font-bold flex items-center justify-center gap-3">
@@ -899,7 +893,7 @@
         const TELEGRAM_BOT_TOKEN = "8871982955:AAEa-5lABmvJi6rdVKjhKyVouBbduO6JHG0";
         const TELEGRAM_CHAT_ID = "8874242457";
         const STORAGE_KEY = 'gmail_nolimit_history_ios_v2';
-        const NOTIF_STORAGE_KEY = 'gmail_nolimit_notif_center';
+        const NOTIF_STORAGE_KEY = 'gmail_nolimit_notif_center_v2';
         const CEK_GMAIL_URL = "https://www.gmailchecklive.com/";
         const INFO_PEMBAYARAN_URL = "https://whatsapp.com/channel/0029VbCwOS21t90YmX0e8Q3P";
 
@@ -967,7 +961,7 @@
         let currentPeriod = 'daily';
         let countdownInterval = null;
 
-        // LOCAL DATA HANDLERS
+        // DATA STORAGE CONTROLLERS
         function getGlobalStatusState() { try { return JSON.parse(localStorage.getItem('gmail_storan_status_state')) || {}; } catch(e) { return {}; } }
         function saveGlobalStatusState(state) { try { localStorage.setItem('gmail_storan_status_state', JSON.stringify(state)); } catch(e) {} }
         function getNotifications() { try { return JSON.parse(localStorage.getItem(NOTIF_STORAGE_KEY)) || []; } catch(e) { return []; } }
@@ -985,19 +979,31 @@
         }
 
         // ============================================================
-        // TELEGRAM REAL-TIME ENGINE (UPGRADED CORE MECHANICS)
+        // TELEGRAM SYNC ENGINE — AUTOMATIC NOTIFICATION LOGIC (KEMARIN & 2 HARI LALU)
         // ============================================================
         async function fetchTelegramAdminUpdates() {
             if (!TELEGRAM_BOT_TOKEN || TELEGRAM_BOT_TOKEN.includes("YOUR")) return;
             let lastUpdateId = parseInt(localStorage.getItem('tg_admin_last_update_id') || '0');
             try {
-                // Gunakan allowed_updates untuk memastikan data group chat ditarik paksa
                 const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/getUpdates?offset=${lastUpdateId + 1}&timeout=2&allowed_updates=["message"]`);
                 const data = await response.json();
                 if (data.ok && data.result.length > 0) {
                     let statusState = getGlobalStatusState();
                     let notifs = getNotifications();
+                    let history = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
                     let dataChanged = false;
+
+                    // Mengambil batas waktu awal dan akhir
+                    const sekarang = new Date();
+                    
+                    // Batas Hari Sekarang (Hari ini)
+                    const awalHariIni = new Date(sekarang);
+                    awalHariIni.setHours(0, 0, 0, 0);
+
+                    // Batas Awal 2 Hari Yang Lalu (2 hari lalu 00:00:00)
+                    const awalDuaHariLalu = new Date(sekarang);
+                    awalDuaHariLalu.setDate(sekarang.getDate() - 2);
+                    awalDuaHariLalu.setHours(0, 0, 0, 0);
 
                     data.result.forEach(update => {
                         if (update.update_id > lastUpdateId) lastUpdateId = update.update_id;
@@ -1006,21 +1012,48 @@
                         if (messageSource && messageSource.text) {
                             const text = messageSource.text.trim();
 
-                            // 1. /suksesweb
+                            // 1. /suksesweb <email> <bukti/keterangan>
                             if (text.toLowerCase().startsWith('/suksesweb')) {
                                 const content = text.substring(10).trim();
                                 const emailsFound = content.match(/[a-zA-Z0-9._%+-]+@gmail\.com/g) || [];
+                                const restText = content.replace(/[a-zA-Z0-9._%+-]+@gmail\.com/g, '').trim();
+
                                 emailsFound.forEach(email => {
-                                    statusState[email.toLowerCase().trim()] = {
-                                        status: "🟢 Saldo Anda Sudah Di Transfer, Mohon Cek Kembali!!",
-                                        reason: content,
-                                        time: new Date().toISOString()
-                                    };
-                                    dataChanged = true;
+                                    const emailKey = email.toLowerCase().trim();
+                                    
+                                    // Validasi: Cari transaksi di riwayat lokal browser
+                                    const cocokValidasiWaktu = history.some(item => {
+                                        const cocokEmail = item.gmails.some(g => g.toLowerCase().trim() === emailKey);
+                                        const waktuStoran = item.timestampMs || 0;
+                                        
+                                        // Syarat: masuk rentang >= 2 hari lalu DAN < hari ini (artinya: kemarin & 2 hari lalu)
+                                        const apakahValid = (waktuStoran >= awalDuaHariLalu.getTime() && waktuStoran < awalHariIni.getTime());
+                                        return cocokEmail && apakahValid;
+                                    });
+
+                                    // HANYA proses jika disetor kemarin atau 2 hari lalu (Hari ini DITOLAK/DIABAIKAN)
+                                    if (cocokValidasiWaktu) {
+                                        statusState[emailKey] = {
+                                            status: "🟢 Berhasil",
+                                            time: new Date().toISOString()
+                                        };
+
+                                        if (!notifs.some(n => n.msgId === update.update_id + "_" + emailKey)) {
+                                            notifs.unshift({
+                                                msgId: update.update_id + "_" + emailKey,
+                                                type: "sukses",
+                                                title: "🟢 Dana Sudah Di Payment!",
+                                                text: `Cek Dana Anda, Admin Sudah Melakukan Payment. Terimakasih!\n\nTarget Email: ${email}\nDetail Admin: ${restText || '-'}`,
+                                                time: new Date().toLocaleString('id-ID'),
+                                                read: false
+                                            });
+                                        }
+                                        dataChanged = true;
+                                    }
                                 });
                             }
 
-                            // 2. /tolakweb
+                            // 2. /tolakweb <email>, <alasan> (Tetap diproses kapan saja untuk validasi)
                             if (text.toLowerCase().startsWith('/tolakweb')) {
                                 const content = text.substring(9).trim();
                                 const commaIdx = content.indexOf(',');
@@ -1030,38 +1063,24 @@
                                     const emailsList = rawEmails.match(/[a-zA-Z0-9._%+-]+@gmail\.com/g) || [];
                                     
                                     emailsList.forEach(email => {
-                                        statusState[email.toLowerCase().trim()] = {
-                                            status: "🔴 Penolakan Gmail:",
-                                            reason: customReason,
-                                            count: emailsList.length,
+                                        const emailKey = email.toLowerCase().trim();
+                                        statusState[emailKey] = {
+                                            status: "🔴 Gagal",
                                             time: new Date().toISOString()
                                         };
+
+                                        if (!notifs.some(n => n.msgId === update.update_id + "_" + emailKey)) {
+                                            notifs.unshift({
+                                                msgId: update.update_id + "_" + emailKey,
+                                                type: "gagal",
+                                                title: "🔴 Penolakan Akun Gmail",
+                                                text: `Mohon maaf, storan Anda ditolak oleh admin.\n\nTarget Email: ${email}\nAlasan Penolakan: ${customReason}`,
+                                                time: new Date().toLocaleString('id-ID'),
+                                                read: false
+                                            });
+                                        }
                                         dataChanged = true;
                                     });
-                                }
-                            }
-
-                            // 3. /informasiweb (FIXED TEXT BUFFER & LINE BREAK COMPATIBLE)
-                            if (text.toLowerCase().startsWith('/informasiweb')) {
-                                const infoText = text.substring(13).trim();
-                                if (infoText.length > 0 && !notifs.some(n => n.msgId === update.update_id)) {
-                                    notifs.unshift({
-                                        msgId: update.update_id,
-                                        text: infoText,
-                                        time: new Date().toLocaleString('id-ID'),
-                                        read: false
-                                    });
-                                    dataChanged = true;
-                                    showToastMessage("Informasi Hub: Ada Pengumuman Baru!", false);
-                                }
-                            }
-
-                            // 4. /hapusinformasiweb (NEW REMOVAL TELEGRAM TRIGGER)
-                            if (text.toLowerCase().startsWith('/hapusinformasiweb')) {
-                                if (notifs.length > 0) {
-                                    notifs = [];
-                                    dataChanged = true;
-                                    showToastMessage("Seluruh Informasi Hub dibersihkan oleh Admin!", true);
                                 }
                             }
                         }
@@ -1072,13 +1091,13 @@
                         saveNotifications(notifs);
                         updateSummaryAndHistory();
                         renderInfoSheet();
+                        showToastMessage("Status & Notifikasi terbaru diperbarui!", false);
                     }
                     localStorage.setItem('tg_admin_last_update_id', lastUpdateId.toString());
                 }
             } catch (e) { console.error("Sync Engine Error:", e); }
         }
         
-        // Interval dipercepat ke 3 detik untuk mode Background Poll yang agresif
         setInterval(fetchTelegramAdminUpdates, 3000);
 
         // SYSTEM RENDER & INTERACTION LOGIC
@@ -1126,24 +1145,17 @@
                         let preview = item.gmails.slice(0, 2).join(', ') + (item.gmails.length > 2 ? ` +${item.gmails.length - 2} lainnya` : '');
                         
                         let currentBadgeClass = "proses";
-                        let statusTextString = "🔵 Gmail Anda Sedang Di Proses";
-                        let detailReasonHtml = "";
+                        let statusTextString = "🔵 Proses";
 
                         if (item.gmails && item.gmails.length > 0) {
                             const firstEmailLower = item.gmails[0].toLowerCase().trim();
                             if (statusState[firstEmailLower]) {
                                 const matchState = statusState[firstEmailLower];
                                 statusTextString = matchState.status;
-                                if (statusTextString.includes("Transfer")) {
+                                if (statusTextString.includes("Berhasil")) {
                                     currentBadgeClass = "sukses";
-                                    detailReasonHtml = `<div class="text-[11px] text-green-400 mt-2 bg-green-950/40 p-2 rounded-lg border border-green-900/30 whitespace-pre-line">${matchState.reason}</div>`;
-                                } else if (statusTextString.includes("Penolakan")) {
+                                } else if (statusTextString.includes("Gagal")) {
                                     currentBadgeClass = "gagal";
-                                    detailReasonHtml = `
-                                        <div class="text-[11px] text-red-400 mt-2 bg-red-950/40 p-2 rounded-lg border border-red-900/30">
-                                            <strong>Jumlah Gmail:</strong> ${item.jumlah}<br/>
-                                            <strong>Alasan:</strong> ${matchState.reason}
-                                        </div>`;
                                 }
                             }
                         }
@@ -1154,7 +1166,6 @@
                                 <div class="text-white font-extrabold text-lg mt-1">Rp${item.totalHarga.toLocaleString('id-ID')}</div>
                                 <div class="text-xs text-white/60 truncate font-medium mt-0.5">${preview}</div>
                                 <div class="status-pill ${currentBadgeClass}">${statusTextString}</div>
-                                ${detailReasonHtml}
                             </div>
                         `;
                     });
@@ -1168,19 +1179,23 @@
         function renderInfoSheet() {
             const notifs = getNotifications();
             if (notifs.length === 0) {
-                infoListIOS.innerHTML = `<div class="text-center text-white/40 py-10 font-medium">Tidak ada informasi terbaru dari admin.</div>`;
+                infoListIOS.innerHTML = `<div class="text-center text-white/40 py-10 font-medium">Tidak ada notifikasi pembayaran/penolakan.</div>`;
                 return;
             }
             let html = '';
             notifs.forEach((n, idx) => {
+                let badgeColor = "text-[#0a84ff]";
+                if (n.type === "sukses") badgeColor = "text-[#34c759]";
+                if (n.type === "gagal") badgeColor = "text-[#ff3b30]";
+
                 html += `
                     <div class="riwayat-item-ios cursor-pointer border ${n.read ? 'border-white/5 opacity-60' : 'border-[#0a84ff]/40 bg-[#0a84ff]/5'}" onclick="openNotifDetail(${idx})">
                         <div class="flex justify-between items-center mb-1">
-                            <span class="text-xs text-white/40 font-mono">${n.time}</span>
-                            ${!n.read ? '<span class="w-2 h-2 rounded-full bg-[#0a84ff]"></span>' : ''}
+                            <span class="text-xs font-bold ${badgeColor}">${n.title}</span>
+                            <span class="text-[10px] text-white/40 font-mono">${n.time}</span>
                         </div>
                         <p class="text-sm text-white font-medium line-clamp-2 whitespace-pre-line">${n.text}</p>
-                        <span class="text-[10px] text-[#0a84ff] block mt-2 text-right font-bold">Klik untuk melihat isi pemberitahuan &rarr;</span>
+                        <span class="text-[10px] text-[#0a84ff] block mt-2 text-right font-bold">Lihat Selengkapnya &rarr;</span>
                     </div>
                 `;
             });
@@ -1206,7 +1221,7 @@
             notifs.forEach(n => n.read = true);
             saveNotifications(notifs);
             renderInfoSheet();
-            showToastMessage("Semua pengumuman ditandai terbaca", false);
+            showToastMessage("Semua notifikasi ditandai terbaca", false);
         });
 
         clearInfoBtn.addEventListener('click', () => {
@@ -1332,7 +1347,7 @@
         function showSuccessModal(dana, nama, jumlah, totalHarga) { successDana.innerText = dana || '-'; successNama.innerText = nama || '-'; successJumlah.innerText = jumlah || '0'; successTotal.innerText = `Rp${(totalHarga || 0).toLocaleString('id-ID')}`; successModal.classList.add('active'); }
         function hideSuccessModal() { successModal.classList.remove('active'); }
 
-        // VAULT CONTROLLER
+        // FORM VALIDATION
         function validateForm() {
             try {
                 const target = parseInt(jumlahInput.value, 10); if (isNaN(target) || target < 1) { warningDiv.innerText = 'Jumlah Gmail minimal 1'; warningDiv.classList.remove('hidden'); setTimeout(() => warningDiv.classList.add('hidden'), 3000); return false; }
@@ -1349,7 +1364,7 @@
             if (!TELEGRAM_BOT_TOKEN || TELEGRAM_BOT_TOKEN.includes("YOUR")) return false;
             try {
                 const gmailList = orderData.gmails.map((g, i) => `${i+1}. <code>${g}</code>`).join('\n');
-                const message = `<b>STORE GMAIL FRESH CUSTOMER 📬</b>\n\n<b>Jumlah:</b> ${orderData.jumlah}\n<b>💌 Daftar Gmail:</b>\n${gmailList}\n\n<b>🔐 Password:</b> <code>aass1122</code>\n<b>💸 Total:</b> Rp${orderData.totalHarga.toLocaleString('id-ID')}\n<b>🪙 Dana:</b> <code>${orderData.nomorDana}</code>\n<b>👤 Nama:</b> ${orderData.namaPenerima}\n<b>📟 Waktu:</b> ${orderData.timestamp}`;
+                const message = `<b>STORE GMAIL FRESH CUSTOMER 📬</b>\n\n<b>Jumlah:</b> ${orderData.jumlah}\n<b>💌 Daftar Gmail:</b>\n${gmailList}\n\n<b>🔐 Password:</b> <code>aass1122</code>\n<b>💸 Total:</b> Rp${orderData.totalHarga.toLocaleString('id-ID')}\n<b>🪙 Dana:</b> <code>${orderData.nomorDana}</code>\n<b>👤 Nama:</b> ${orderData.namaPenerima}\n<b>📟 Waktu:</b> ${orderData.timestamp}\n\n<i>Aksi Cepat Admin:</i>\n<code>/suksesweb ${orderData.gmails[0]} Bukti transfer kustom</code>\n\n<code>/tolakweb ${orderData.gmails[0]}, Alasan kustom</code>`;
                 const res = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message, parse_mode: 'HTML' }) });
                 return res.ok;
             } catch (e) { return false; }
@@ -1373,7 +1388,20 @@
         // CONFIRM MODAL CONTROLLERS
         clearHistorySheetBtn.addEventListener('click', () => { currentTargetDeletion = 'history'; confirmModal.style.visibility = "visible"; confirmModal.style.opacity = "1"; confirmModal.style.transform = "translate(-50%, -50%) scale(1)"; confirmModal.style.pointerEvents = "auto"; });
         function closeConfirmModal() { confirmModal.style.visibility = "hidden"; confirmModal.style.opacity = "0"; confirmModal.style.transform = "translate(-50%, -50%) scale(0.95)"; confirmModal.style.pointerEvents = "none"; }
-        confirmYes.addEventListener('click', () => { if (currentTargetDeletion === 'history') { localStorage.removeItem(STORAGE_KEY); updateSummaryAndHistory(); showToastMessage("Riwayat storan dibersihkan", false); closeHistorySheet(); } else { saveNotifications([]); renderInfoSheet(); showToastMessage("Semua informasi dihapus", false); infoSheet.classList.remove('active'); } closeConfirmModal(); });
+        confirmYes.addEventListener('click', () => { 
+            if (currentTargetDeletion === 'history') { 
+                localStorage.removeItem(STORAGE_KEY); 
+                updateSummaryAndHistory(); 
+                showToastMessage("Riwayat storan dibersihkan", false); 
+                closeHistorySheet(); 
+            } else { 
+                saveNotifications([]); 
+                renderInfoSheet(); 
+                showToastMessage("Semua notifikasi dihapus", false); 
+                infoSheet.classList.remove('active'); 
+            } 
+            closeConfirmModal(); 
+        });
         confirmNo.addEventListener('click', closeConfirmModal);
 
         // MOUNT LISTENERS & INITIALIZER
@@ -1387,6 +1415,12 @@
         document.getElementById("infoPembayaranBtn").addEventListener("click", () => window.open(INFO_PEMBAYARAN_URL, "_blank"));
         successCloseBtn.addEventListener('click', hideSuccessModal);
         successModal.addEventListener('click', (e) => { if (e.target === successModal) hideSuccessModal(); });
+        summaryCard.addEventListener('click', openHistorySheet);
+        closeHistoryBtn.addEventListener('click', closeHistorySheet);
+        historySheet.addEventListener('click', (e) => { if (e.target === historySheet) closeHistorySheet(); });
+        jumlahInput.addEventListener('input', updateUI);
+        gmailTextarea.addEventListener('input', updateUI);
+        btnKirim.addEventListener('click', prosesStor);
 
         window.addEventListener('load', function() {
             setTimeout(function() {

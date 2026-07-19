@@ -25,8 +25,7 @@
     <link rel="icon" type="image/jpeg" href="https://files.catbox.moe/v6c2zy.png" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
-    <script src="https://cdn.tailwindcss.com">
-    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 
     <style>
@@ -137,7 +136,7 @@
             visibility: hidden;
         }
 
-        /* SHEET MODAL (Riwayat) */
+        /* SHEET MODAL (Riwayat & Informasi) */
         .sheet-modal {
             position: fixed;
             top: 0;
@@ -203,6 +202,7 @@
             padding: 0.9rem;
             margin-bottom: 0.8rem;
             border: 0.5px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.2s ease;
         }
 
         /* RULES MODAL */
@@ -239,7 +239,7 @@
             border: 0.5px solid rgba(255, 255, 255, 0.2);
         }
 
-        /* SUCCESS MODAL (baru) */
+        /* SUCCESS MODAL */
         .success-modal-ios {
             position: fixed;
             top: 0;
@@ -360,7 +360,7 @@
             background: rgba(255, 255, 255, 0.18);
         }
 
-        /* Toast (hanya untuk error/peringatan ringan) */
+        /* Toast */
         .toast-ios {
             position: fixed;
             bottom: 28px;
@@ -567,13 +567,36 @@
             text-shadow: 0 0 10px #ff1744;
         }
         @keyframes runningText {
-            0% {
-                transform: translateX(100%);
-            }
-            100% {
-                transform: translateX(-100%);
-            }
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
         }
+
+        /* NOTIFICATION BULLET BADGE */
+        .notif-badge {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            background: #ff3b30;
+            color: white;
+            font-size: 0.65rem;
+            font-weight: 800;
+            padding: 1px 5px;
+            border-radius: 999px;
+            border: 1.5px solid #05070c;
+        }
+
+        /* Status Storan Badge */
+        .status-pill {
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 2rem;
+            display: inline-block;
+            margin-top: 4px;
+        }
+        .status-pill.proses { background: rgba(10, 132, 255, 0.15); color: #0a84ff; }
+        .status-pill.sukses { background: rgba(52, 199, 89, 0.15); color: #34c759; }
+        .status-pill.gagal { background: rgba(255, 59, 48, 0.15); color: #ff3b30; }
 
         /* Responsive */
         @media (max-width: 640px) {
@@ -655,6 +678,26 @@
         </div>
     </div>
 
+    <!-- ===== SHEET INFORMASI (PENGUMUMAN) ===== -->
+    <div id="infoSheet" class="sheet-modal">
+        <div class="sheet-content">
+            <div class="sheet-handle"></div>
+            <div class="flex justify-between items-center px-5 pt-2 pb-1">
+                <h2 class="text-2xl font-bold text-white flex items-center gap-2">
+                    <i class="fas fa-bell text-[#0a84ff]"></i> Informasi Hub
+                </h2>
+                <button id="closeInfoSheetBtn" class="text-white/60 text-2xl leading-5">&times;</button>
+            </div>
+            <div id="infoListIOS" class="history-scroll space-y-3">
+                <!-- Di-render via JS -->
+            </div>
+            <div class="border-t border-white/10 p-4 flex justify-end gap-3">
+                <button id="readAllInfoBtn" class="bg-white/10 border border-white/20 text-white font-semibold px-4 py-2 rounded-full text-xs transition active:scale-95">Read All</button>
+                <button id="clearInfoBtn" class="btn-clear-ios text-xs px-4 py-2">Hapus Semua</button>
+            </div>
+        </div>
+    </div>
+
     <!-- ===== RULES MODAL ===== -->
     <div id="rulesModalIOS" class="rules-modal-ios">
         <div class="rules-card-ios">
@@ -684,7 +727,21 @@
         </div>
     </div>
 
-    <!-- ===== SUCCESS MODAL (baru) ===== -->
+    <!-- ===== DETAIL NOTIFIKASI POPUP ===== -->
+    <div id="notifDetailModal" class="rules-modal-ios">
+        <div class="rules-card-ios text-left">
+            <div class="flex justify-between items-center mb-3 border-b border-white/10 pb-2">
+                <h3 class="text-lg font-bold text-white"><i class="fas fa-info-circle text-[#0a84ff] mr-2"></i> Isi Informasi</h3>
+                <button id="closeNotifDetailBtn" class="text-white/60 text-2xl">&times;</button>
+            </div>
+            <div id="notifDetailBody" class="text-sm text-white/90 leading-relaxed font-medium whitespace-pre-line bg-black/40 p-4 rounded-xl max-height-[50vh] overflow-y-auto">
+                <!-- Konten dinamis -->
+            </div>
+            <button id="closeNotifDetailBtnInternal" class="mt-4 w-full bg-[#0a84ff] py-2.5 rounded-full font-semibold text-white">Selesai Membaca</button>
+        </div>
+    </div>
+
+    <!-- ===== SUCCESS MODAL ===== -->
     <div id="successModal" class="success-modal-ios">
         <div class="success-card-ios">
             <div class="success-icon">
@@ -710,8 +767,8 @@
     <div id="confirmDeleteModal" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-black/85 backdrop-blur-2xl rounded-2xl p-5 w-80 z-[10090] shadow-2xl border border-white/20 transition-all duration-200 opacity-0 scale-95 pointer-events-none" style="visibility: hidden;">
         <div class="text-center">
             <i class="fas fa-trash-alt text-[#ff453a] text-3xl mb-2"></i>
-            <h3 class="text-white font-bold text-xl">Hapus Riwayat?</h3>
-            <p class="text-white/60 text-sm mt-1">Semua data stor akan hilang permanen</p>
+            <h3 class="text-white font-bold text-xl">Hapus Data?</h3>
+            <p class="text-white/60 text-sm mt-1">Data akan hilang secara permanen dari browser</p>
             <div class="flex gap-3 mt-5">
                 <button id="confirmDeleteYes" class="flex-1 bg-[#ff453a]/30 py-2.5 rounded-full text-[#ff453a] font-bold">Hapus</button>
                 <button id="confirmDeleteNo" class="flex-1 bg-white/15 py-2.5 rounded-full text-white font-semibold">Batal</button>
@@ -723,26 +780,37 @@
     <div class="max-w-4xl mx-auto px-4 py-5 relative">
 
         <!-- HEADER -->
-        <div class="flex items-center gap-4 mb-4">
-            <img src="https://files.catbox.moe/v6c2zy.png" alt="Copyright©" class="logo-square shadow-xl" />
-            <div>
-                <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight bg-gradient-to-r from-white to-[#0a84ff] bg-clip-text text-transparent">GmailKu.ID</h1>
-                <p class="text-white/50 text-sm font-semibold flex items-center gap-1">
-                    <i class="fab fa-gmail text-xs"></i>
-                    Penjualan Akun Gmail Fresh No #1 Paling Aman
-                </p>
+        <div class="flex items-center justify-between mb-4 flex-wrap gap-4">
+            <div class="flex items-center gap-4">
+                <img src="https://files.catbox.moe/v6c2zy.png" alt="Copyright©" class="logo-square shadow-xl" />
+                <div>
+                    <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight bg-gradient-to-r from-white to-[#0a84ff] bg-clip-text text-transparent">GmailKu.ID</h1>
+                    <p class="text-white/50 text-sm font-semibold flex items-center gap-1">
+                        <i class="fab fa-gmail text-xs"></i>
+                        Penjualan Akun Gmail Fresh No #1 Paling Aman
+                    </p>
+                </div>
             </div>
+            
+            <!-- MENU INFORMASI DENGAN TEKS + BADGE (DIPERBARUI) -->
+            <button id="openInfoHubBtn" class="relative bg-white/5 border border-white/10 hover:bg-white/10 pl-5 pr-4 py-3.5 rounded-2xl transition active:scale-95 flex items-center justify-center gap-3">
+                <span class="text-sm font-bold text-white/90">Informasi Hub</span>
+                <div class="relative flex items-center justify-center">
+                    <i class="fas fa-bell text-white text-xl"></i>
+                    <span id="infoBadgeCount" class="notif-badge hidden">0</span>
+                </div>
+            </button>
         </div>
 
         <!-- RUNNING WARNING -->
         <div class="running-warning mb-5">
             <div class="running-text justify-center">
                 <i class="fas fa-triangle-exclamation"></i>
-                <span>HARAP BACA RULES!!‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ Hanya Gmail Yang Memenuhi Pernyataan Yang Admin Transfer‎ ‎   ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎• ‎ ‎  ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎Pembayaran Dilakukan ±27 Jam ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ • ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ Admin Tidak Akan Transfer Jika Akun Tidak Sesuai‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ </span>
+                <span>HARAP BACA RULES!!‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ Hanya Gmail Yang Memenuhi Pernyataan Yang Admin Transfer‎ ‎   ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎• ‎ ‎  ‎ ‎ ‎ ‎ ‎ ‎ ‎ anisotropy Pembayaran Dilakukan ±27 Jam ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ • ‎ ‎ Lumens Admin Tidak Akan Transfer Jika Akun Tidak Sesuai‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ </span>
             </div>
         </div>
 
-        <!-- BARIS 1: RULES + CEK GMAIL (side by side) -->
+        <!-- BARIS 1: RULES + CEK GMAIL -->
         <div class="grid grid-cols-2 gap-3 mb-5">
             <button id="openRulesBtnMain" class="ios-card py-4 px-5 flex items-center justify-between text-white font-bold text-md transition active:scale-95">
                 <span class="flex items-center gap-2">
@@ -757,7 +825,7 @@
             </button>
         </div>
 
-        <!-- BARIS 2: FORM (full width) -->
+        <!-- BARIS 2: FORM -->
         <div class="ios-card p-5 md:p-6 mb-5">
             <div class="flex justify-between items-center mb-4">
                 <h2 class="text-2xl font-extrabold text-white flex items-center gap-2">
@@ -772,7 +840,7 @@
             </div>
             <div class="mb-4">
                 <label class="label-ios">Daftar Gmail (1 Baris = 1 Email)</label>
-                <textarea id="listGmail" rows="4" class="ios-input" placeholder="contoh gmail: faisalxaky@gmail.com&#10;contoh gmail: xakyfaisal@gmail.com"></textarea>
+                <textarea id="listGmail" rows="4" class="ios-input font-mono text-sm" placeholder="contoh gmail: faisalxaky@gmail.com&#10;contoh gmail: xakyfaisal@gmail.com"></textarea>
                 <div id="gmailCounter" class="text-xs text-white/50 font-medium mt-1 flex justify-between"></div>
             </div>
             <div class="mb-4">
@@ -806,10 +874,10 @@
             </div>
         </div>
 
-        <!-- BARIS 3: RIWAYAT STORAN (full width) -->
+        <!-- BARIS 3: RIWAYAT STORAN -->
         <div id="summaryCard" class="ios-card p-5 summary-card-ios mb-5">
             <div class="flex items-center justify-between mb-2">
-                <span class="text-white/80 font-bold text-sm"><i class="far fa-calendar-alt mr-1"></i> RIWAYAT STORAN</span>
+                <span class="text-white/80 font-bold text-sm"><i class="far fa-calendar-alt mr-1"></i> RIWAYAT STORAN & TRANSAKSI</span>
                 <i class="fas fa-arrow-up-right-from-square text-[#0a84ff] text-xs"></i>
             </div>
             <div class="flex flex-wrap justify-between items-center gap-2 mt-2">
@@ -822,12 +890,11 @@
                     <span id="summaryTotalIncome" class="text-[#0a84ff] font-black text-2xl ml-2">Rp0</span>
                 </div>
             </div>
-            <p class="text-[11px] text-white/40 font-semibold mt-3 text-center">Ketuk Untuk Detail Lengkap</p>
+            <p class="text-[11px] text-white/40 font-semibold mt-3 text-center">Ketuk Untuk Detail Lengkap & Pelacakan Status</p>
         </div>
 
-        <!-- BARIS 4: INFO PEMBAYARAN + LAPORAN PENJUALAN + HARGA (grid 3) -->
+        <!-- BARIS 4: INFO PEMBAYARAN + LAPORAN PENJUALAN + HARGA -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-5">
-            <!-- Info Pembayaran -->
             <div class="ios-card p-4 flex items-center justify-center">
                 <button id="infoPembayaranBtn" class="w-full bg-[#0a84ff] text-white py-4 rounded-full font-bold flex items-center justify-center gap-3">
                     <i class="fab fa-whatsapp text-xl"></i>
@@ -835,7 +902,6 @@
                 </button>
             </div>
 
-            <!-- Laporan Penjualan -->
             <div class="ios-card p-4 md:col-span-1">
                 <div class="flex items-center gap-2 mb-3">
                     <i class="fas fa-chart-line text-[#0a84ff] text-sm"></i>
@@ -852,7 +918,6 @@
                 </div>
             </div>
 
-            <!-- Harga Per Gmail -->
             <div class="ios-card p-4 flex flex-col items-center justify-center">
                 <span class="text-white/90 font-bold text-sm">Harga Per Gmail</span>
                 <span class="text-2xl font-black text-[#0a84ff]">Rp3.000</span>
@@ -870,16 +935,17 @@
 
     <script>
         // ============================================================
-        // KONFIGURASI
+        // KONFIGURASI BOT TELEGRAM & LOCALSTORAGE
         // ============================================================
         const TELEGRAM_BOT_TOKEN = "8871982955:AAEa-5lABmvJi6rdVKjhKyVouBbduO6JHG0";
         const TELEGRAM_CHAT_ID = "8874242457";
         const STORAGE_KEY = 'gmail_nolimit_history_ios_v2';
+        const NOTIF_STORAGE_KEY = 'gmail_nolimit_notif_center';
         const CEK_GMAIL_URL = "https://www.gmailchecklive.com/";
         const INFO_PEMBAYARAN_URL = "https://whatsapp.com/channel/0029VbCwOS21t90YmX0e8Q3P";
 
         // ============================================================
-        // DOM
+        // DOM REFS
         // ============================================================
         const jumlahInput = document.getElementById('jumlahGmail');
         const gmailTextarea = document.getElementById('listGmail');
@@ -902,9 +968,24 @@
         const totalPendapatanIos = document.getElementById('totalPendapatanIos');
         const clearHistorySheetBtn = document.getElementById('clearHistoryBtnSheet');
         const summaryCard = document.getElementById('summaryCard');
+        
+        const infoSheet = document.getElementById('infoSheet');
+        const openInfoHubBtn = document.getElementById('openInfoHubBtn');
+        const closeInfoSheetBtn = document.getElementById('closeInfoSheetBtn');
+        const infoListIOS = document.getElementById('infoListIOS');
+        const infoBadgeCount = document.getElementById('infoBadgeCount');
+        const readAllInfoBtn = document.getElementById('readAllInfoBtn');
+        const clearInfoBtn = document.getElementById('clearInfoBtn');
+
+        const notifDetailModal = document.getElementById('notifDetailModal');
+        const notifDetailBody = document.getElementById('notifDetailBody');
+        const closeNotifDetailBtn = document.getElementById('closeNotifDetailBtn');
+        const closeNotifDetailBtnInternal = document.getElementById('closeNotifDetailBtnInternal');
+
         const confirmModal = document.getElementById('confirmDeleteModal');
         const confirmYes = document.getElementById('confirmDeleteYes');
         const confirmNo = document.getElementById('confirmDeleteNo');
+        let currentTargetDeletion = 'history'; 
 
         const rulesModal = document.getElementById('rulesModalIOS');
         const openRulesBtn = document.getElementById('openRulesBtnMain');
@@ -919,7 +1000,6 @@
         const statsContainer = document.getElementById('statsContainer');
         const periodBtns = document.querySelectorAll('.period-langsung-btn');
 
-        // Success Modal
         const successModal = document.getElementById('successModal');
         const successCloseBtn = document.getElementById('successCloseBtn');
         const successDana = document.getElementById('successDana');
@@ -931,14 +1011,122 @@
         let countdownInterval = null;
 
         // ============================================================
-        // FUNGSI UTAMA
+        // REALTIME TELEGRAM UPDATE HANDLER & STATUS STORAGE
         // ============================================================
-        function getGmailArray() {
-            try {
-                return gmailTextarea.value.split(/\r?\n/).filter(l => l.trim() !== '').map(l => l.trim());
-            } catch (e) { return []; }
+        function getGlobalStatusState() {
+            try { return JSON.parse(localStorage.getItem('gmail_storan_status_state')) || {}; } catch(e) { return {}; }
+        }
+        function saveGlobalStatusState(state) {
+            try { localStorage.setItem('gmail_storan_status_state', JSON.stringify(state)); } catch(e) {}
+        }
+        function getNotifications() {
+            try { return JSON.parse(localStorage.getItem(NOTIF_STORAGE_KEY)) || []; } catch(e) { return []; }
+        }
+        function saveNotifications(notifs) {
+            try { localStorage.setItem(NOTIF_STORAGE_KEY, JSON.stringify(notifs)); } catch(e) {}
+            updateNotifBadge();
         }
 
+        function updateNotifBadge() {
+            const notifs = getNotifications();
+            const unread = notifs.filter(n => !n.read).length;
+            if(unread > 0) {
+                infoBadgeCount.innerText = unread;
+                infoBadgeCount.classList.remove('hidden');
+            } else {
+                infoBadgeCount.classList.add('hidden');
+            }
+        }
+
+        async function fetchTelegramAdminUpdates() {
+            if (!TELEGRAM_BOT_TOKEN || TELEGRAM_BOT_TOKEN.includes("YOUR")) return;
+            let lastUpdateId = parseInt(localStorage.getItem('tg_admin_last_update_id') || '0');
+            try {
+                const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/getUpdates?offset=${lastUpdateId + 1}&timeout=0`);
+                const data = await response.json();
+                if (data.ok && data.result.length > 0) {
+                    let statusState = getGlobalStatusState();
+                    let notifs = getNotifications();
+                    let dataChanged = false;
+
+                    data.result.forEach(update => {
+                        if (update.update_id > lastUpdateId) lastUpdateId = update.update_id;
+                        if (update.message && update.message.text) {
+                            const text = update.message.text.trim();
+
+                            // 1. /suksesweb regex parsing
+                            const matchSukses = text.match(/^\/suksesweb\s+([\s\S]+)$/i);
+                            if (matchSukses) {
+                                const content = matchSukses[1].trim();
+                                const emailsFound = content.match(/[a-zA-Z0-9._%+-]+@gmail\.com/g) || [];
+                                emailsFound.forEach(email => {
+                                    const cleanEmail = email.toLowerCase().trim();
+                                    statusState[cleanEmail] = {
+                                        status: "🟢 Saldo Anda Sudah Di Transfer, Mohon Cek Kembali!!",
+                                        reason: content,
+                                        time: new Date().toISOString()
+                                    };
+                                    dataChanged = true;
+                                });
+                            }
+
+                            // 2. /tolakweb regex parsing
+                            const matchTolak = text.match(/^\/tolakweb\s+([\s\S]+?),\s*([\s\S]+)$/i);
+                            if (matchTolak) {
+                                const rawEmails = matchTolak[1];
+                                const customReason = matchTolak[2].trim();
+                                const emailsList = rawEmails.match(/[a-zA-Z0-9._%+-]+@gmail\.com/g) || [];
+                                
+                                emailsList.forEach(email => {
+                                    const cleanEmail = email.toLowerCase().trim();
+                                    statusState[cleanEmail] = {
+                                        status: "🔴 Penolakan Gmail:",
+                                        reason: customReason,
+                                        count: emailsList.length,
+                                        allRejected: emailsList,
+                                        time: new Date().toISOString()
+                                    };
+                                    dataChanged = true;
+                                });
+                            }
+
+                            // 3. /informasiweb regex parsing (GARANSI 100% WORK DENGAN ENTER)
+                            if (text.startsWith('/informasiweb')) {
+                                const infoText = text.substring(13).trim(); 
+                                if (infoText.length > 0) {
+                                    if (!notifs.some(n => n.msgId === update.update_id)) {
+                                        notifs.unshift({
+                                            msgId: update.update_id,
+                                            text: infoText,
+                                            time: new Date().toLocaleString('id-ID'),
+                                            read: false
+                                        });
+                                        dataChanged = true;
+                                        showToastMessage("Informasi Pengumuman baru dari Admin!", false);
+                                    }
+                                }
+                            }
+                        }
+                    });
+
+                    if (dataChanged) {
+                        saveGlobalStatusState(statusState);
+                        saveNotifications(notifs);
+                        updateSummaryAndHistory();
+                        renderInfoSheet();
+                    }
+                    localStorage.setItem('tg_admin_last_update_id', lastUpdateId.toString());
+                }
+            } catch (e) { console.error(e); }
+        }
+        setInterval(fetchTelegramAdminUpdates, 4000);
+
+        // ============================================================
+        // CORE LOGIC & REFS
+        // ============================================================
+        function getGmailArray() {
+            try { return gmailTextarea.value.split(/\r?\n/).filter(l => l.trim() !== '').map(l => l.trim()); } catch (e) { return []; }
+        }
         function isValidEmail(email) {
             try { return /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/.test(email); } catch (e) { return false; }
         }
@@ -950,8 +1138,7 @@
                 totalSpan.innerText = `Rp${total.toLocaleString('id-ID')}`;
                 const target = parseInt(jumlahInput.value, 10);
                 if (target !== emails.length && emails.length > 0) {
-                    gmailCounter.innerHTML =
-                        `<span class="text-yellow-400 font-medium">Peringatan: ${emails.length} Gmail terdeteksi, target ${target}</span>`;
+                    gmailCounter.innerHTML = `<span class="text-yellow-400 font-medium">Peringatan: ${emails.length} Gmail terdeteksi, target ${target}</span>`;
                 } else {
                     gmailCounter.innerHTML = `<span class="text-white/50 font-medium">${emails.length} Gmail terdeteksi</span>`;
                 }
@@ -970,23 +1157,49 @@
                 summaryTotalTrans.innerText = totalTrans;
                 summaryTotalIncome.innerText = `Rp${totalIncome.toLocaleString('id-ID')}`;
 
+                const statusState = getGlobalStatusState();
+
                 if (history.length === 0) {
-                    historyListIOS.innerHTML =
-                        `<div class="text-center text-white/40 py-10 font-medium">Belum ada riwayat store</div>`;
+                    historyListIOS.innerHTML = `<div class="text-center text-white/40 py-10 font-medium">Belum ada riwayat store</div>`;
                     totalPendapatanIos.innerText = `Rp0`;
                 } else {
                     let html = '';
                     history.forEach(item => {
-                        let preview = item.gmails.slice(0, 2).join(', ') + (item.gmails.length > 2 ?
-                            ` +${item.gmails.length - 2} lainnya` : '');
+                        let preview = item.gmails.slice(0, 2).join(', ') + (item.gmails.length > 2 ? ` +${item.gmails.length - 2} lainnya` : '');
+                        
+                        let currentBadgeClass = "proses";
+                        let statusTextString = "🔵 Gmail Anda Sedang Di Proses";
+                        let detailReasonHtml = "";
+
+                        if (item.gmails && item.gmails.length > 0) {
+                            const firstEmailLower = item.gmails[0].toLowerCase().trim();
+                            if (statusState[firstEmailLower]) {
+                                const matchState = statusState[firstEmailLower];
+                                statusTextString = matchState.status;
+                                if (statusTextString.includes("Transfer")) {
+                                    currentBadgeClass = "sukses";
+                                    detailReasonHtml = `<div class="text-[11px] text-green-400 mt-2 bg-green-950/40 p-2 rounded-lg border border-green-900/30 whitespace-pre-line">${matchState.reason}</div>`;
+                                } else if (statusTextString.includes("Penolakan")) {
+                                    currentBadgeClass = "gagal";
+                                    detailReasonHtml = `
+                                        <div class="text-[11px] text-red-400 mt-2 bg-red-950/40 p-2 rounded-lg border border-red-900/30">
+                                            <strong>Jumlah Gmail:</strong> ${matchState.count || item.jumlah}<br/>
+                                            <strong>Gmail terpengaruh:</strong> ${item.gmails.join(', ')}<br/>
+                                            <strong>Alasan:</strong> ${matchState.reason}
+                                        </div>`;
+                                }
+                            }
+                        }
+
                         html += `
-                                <div class="riwayat-item-ios">
-                                    <div class="flex justify-between text-sm"><span class="text-[#0a84ff] font-bold">${item.jumlah} Gmail</span><span class="text-white/50 text-xs">${item.tanggal}</span></div>
-                                    <div class="text-white font-extrabold text-lg mt-1">Rp${item.totalHarga.toLocaleString('id-ID')}</div>
-                                    <div class="text-xs text-white/60 truncate font-medium">${preview}</div>
-                                    <div class="text-[11px] text-white/40 mt-2 bg-black/30 p-1 rounded-lg">${item.pesan?.substring(0,80) || 'Terimakasih, proses transfer 27 jam'}</div>
-                                </div>
-                            `;
+                            <div class="riwayat-item-ios">
+                                <div class="flex justify-between text-sm"><span class="text-[#0a84ff] font-bold">${item.jumlah} Gmail</span><span class="text-white/50 text-xs">${item.tanggal}</span></div>
+                                <div class="text-white font-extrabold text-lg mt-1">Rp${item.totalHarga.toLocaleString('id-ID')}</div>
+                                <div class="text-xs text-white/60 truncate font-medium mt-0.5">${preview}</div>
+                                <div class="status-pill ${currentBadgeClass}">${statusTextString}</div>
+                                ${detailReasonHtml}
+                            </div>
+                        `;
                     });
                     historyListIOS.innerHTML = html;
                     totalPendapatanIos.innerText = `Rp${totalIncome.toLocaleString('id-ID')}`;
@@ -994,6 +1207,68 @@
                 renderStats(currentPeriod);
             } catch (e) {}
         }
+
+        // ============================================================
+        // RENDER MENU INFORMASI HUB
+        // ============================================================
+        function renderInfoSheet() {
+            const notifs = getNotifications();
+            if (notifs.length === 0) {
+                infoListIOS.innerHTML = `<div class="text-center text-white/40 py-10 font-medium">Tidak ada informasi terbaru dari admin.</div>`;
+                return;
+            }
+            let html = '';
+            notifs.forEach((n, idx) => {
+                html += `
+                    <div class="riwayat-item-ios cursor-pointer border ${n.read ? 'border-white/5 opacity-60' : 'border-[#0a84ff]/40 bg-[#0a84ff]/5'}" onclick="openNotifDetail(${idx})">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="text-xs text-white/40 font-mono">${n.time}</span>
+                            ${!n.read ? '<span class="w-2 h-2 rounded-full bg-[#0a84ff]"></span>' : ''}
+                        </div>
+                        <p class="text-sm text-white font-medium line-clamp-2 whitespace-pre-line">${n.text}</p>
+                        <span class="text-[10px] text-[#0a84ff] block mt-2 text-right font-bold">Klik untuk melihat isi pemberitahuan &rarr;</span>
+                    </div>
+                `;
+            });
+            infoListIOS.innerHTML = html;
+        }
+
+        window.openNotifDetail = function(idx) {
+            let notifs = getNotifications();
+            if(!notifs[idx]) return;
+            notifs[idx].read = true;
+            saveNotifications(notifs);
+            renderInfoSheet();
+
+            notifDetailBody.innerText = notifs[idx].text;
+            notifDetailModal.classList.add('active');
+        };
+
+        closeNotifDetailBtn.addEventListener('click', () => notifDetailModal.classList.remove('active'));
+        closeNotifDetailBtnInternal.addEventListener('click', () => notifDetailModal.classList.remove('active'));
+
+        readAllInfoBtn.addEventListener('click', () => {
+            let notifs = getNotifications();
+            notifs.forEach(n => n.read = true);
+            saveNotifications(notifs);
+            renderInfoSheet();
+            showToastMessage("Semua pengumuman ditandai terbaca", false);
+        });
+
+        clearInfoBtn.addEventListener('click', () => {
+            currentTargetDeletion = 'info';
+            confirmModal.style.visibility = "visible";
+            confirmModal.style.opacity = "1";
+            confirmModal.style.transform = "translate(-50%, -50%) scale(1)";
+            confirmModal.style.pointerEvents = "auto";
+        });
+
+        openInfoHubBtn.addEventListener('click', () => {
+            infoSheet.classList.add('active');
+            renderInfoSheet();
+        });
+        closeInfoSheetBtn.addEventListener('click', () => infoSheet.classList.remove('active'));
+        infoSheet.addEventListener('click', (e) => { if(e.target === infoSheet) infoSheet.classList.remove('active'); });
 
         function saveNewRecord(record) {
             try {
@@ -1006,8 +1281,7 @@
                     nomorDana: record.nomorDana,
                     namaPenerima: record.namaPenerima,
                     tanggal: record.tanggal,
-                    timestampMs: Date.now(),
-                    pesan: "Store sukses! Transfer dalam 27 jam ke DANA jika memenuhi aturan."
+                    timestampMs: Date.now()
                 };
                 history.unshift(newRecord);
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
@@ -1015,22 +1289,11 @@
             } catch (e) {}
         }
 
-        function clearAllHistory() {
-            try {
-                localStorage.removeItem(STORAGE_KEY);
-                updateSummaryAndHistory();
-                showToastMessage("Riwayat berhasil dihapus", false);
-                if (historySheet.classList.contains('active')) closeHistorySheet();
-            } catch (e) {}
-        }
-
         function closeHistorySheet() { try { historySheet.classList.remove('active'); } catch (e) {} }
-
-        function openHistorySheet() { try { historySheet.classList.add('active');
-                updateSummaryAndHistory(); } catch (e) {} }
+        function openHistorySheet() { try { historySheet.classList.add('active'); updateSummaryAndHistory(); } catch (e) {} }
 
         // ============================================================
-        // STATISTIK
+        // REPORTING STATS & PERIOD LOGIC
         // ============================================================
         function getValidHistory() {
             try {
@@ -1055,43 +1318,18 @@
             } catch (e) { return []; }
         }
 
-        function getWeekNumber(date) {
-            try {
-                const d = new Date(date);
-                d.setHours(0, 0, 0, 0);
-                d.setDate(d.getDate() + 3 - (d.getDay() + 6) % 7);
-                const week1 = new Date(d.getFullYear(), 0, 4);
-                return 1 + Math.round(((d - week1) / 86400000 - 3 + (week1.getDay() + 6) % 7) / 7);
-            } catch (e) { return 1; }
-        }
-
-        function formatWeekRange(date) {
-            try {
-                const d = new Date(date);
-                const start = new Date(d);
-                start.setDate(d.getDate() - d.getDay() + (d.getDay() === 0 ? -6 : 1));
-                const end = new Date(start);
-                end.setDate(start.getDate() + 6);
-                return `${start.getDate()}/${start.getMonth()+1} - ${end.getDate()}/${end.getMonth()+1}`;
-            } catch (e) { return ''; }
-        }
-
         function getWeeklyReport(history) {
             try {
                 const map = new Map();
                 for (const item of history) {
                     const date = new Date(item.timestampMs);
-                    const year = date.getFullYear();
-                    const week = getWeekNumber(date);
-                    const key = `${year}-W${week}`;
-                    const display = `Minggu ${week} (${formatWeekRange(date)})`;
-                    if (!map.has(key)) map.set(key, { periode: display, totalGmail: 0, totalPendapatan: 0,
-                            sortKey: `${year}-${week.toString().padStart(2,'0')}` });
-                    const w = map.get(key);
-                    w.totalGmail += item.jumlah;
-                    w.totalPendapatan += item.totalHarga;
+                    const week = 1 + Math.round((date.getDate() - 1) / 7);
+                    const key = `${date.getFullYear()}-${date.getMonth()}-W${week}`;
+                    const display = `Minggu ${week} - ${date.toLocaleString('id-ID', { month: 'short' })} ${date.getFullYear()}`;
+                    if (!map.has(key)) map.set(key, { periode: display, totalGmail: 0, totalPendapatan: 0 });
+                    const w = map.get(key); w.totalGmail += item.jumlah; w.totalPendapatan += item.totalHarga;
                 }
-                return Array.from(map.values()).sort((a, b) => b.sortKey.localeCompare(a.sortKey));
+                return Array.from(map.values());
             } catch (e) { return []; }
         }
 
@@ -1102,13 +1340,10 @@
                     const date = new Date(item.timestampMs);
                     const key = `${date.getFullYear()}-${date.getMonth()}`;
                     const display = date.toLocaleString('id-ID', { month: 'long', year: 'numeric' });
-                    if (!map.has(key)) map.set(key, { periode: display, totalGmail: 0, totalPendapatan: 0,
-                            sortKey: `${date.getFullYear()}-${date.getMonth().toString().padStart(2,'0')}` });
-                    const m = map.get(key);
-                    m.totalGmail += item.jumlah;
-                    m.totalPendapatan += item.totalHarga;
+                    if (!map.has(key)) map.set(key, { periode: display, totalGmail: 0, totalPendapatan: 0 });
+                    const m = map.get(key); m.totalGmail += item.jumlah; m.totalPendapatan += item.totalHarga;
                 }
-                return Array.from(map.values()).sort((a, b) => b.sortKey.localeCompare(a.sortKey));
+                return Array.from(map.values());
             } catch (e) { return []; }
         }
 
@@ -1117,14 +1352,10 @@
                 const map = new Map();
                 for (const item of history) {
                     const year = new Date(item.timestampMs).getFullYear();
-                    const key = year;
-                    if (!map.has(key)) map.set(key, { periode: `Tahun ${year}`, totalGmail: 0, totalPendapatan: 0,
-                            sortKey: year });
-                    const y = map.get(key);
-                    y.totalGmail += item.jumlah;
-                    y.totalPendapatan += item.totalHarga;
+                    if (!map.has(year)) map.set(year, { periode: `Tahun ${year}`, totalGmail: 0, totalPendapatan: 0 });
+                    const y = map.get(year); y.totalGmail += item.jumlah; y.totalPendapatan += item.totalHarga;
                 }
-                return Array.from(map.values()).sort((a, b) => b.sortKey - a.sortKey);
+                return Array.from(map.values());
             } catch (e) { return []; }
         }
 
@@ -1132,8 +1363,7 @@
             try {
                 const validHistory = getValidHistory();
                 if (validHistory.length === 0) {
-                    statsContainer.innerHTML =
-                    `<div class="text-center text-white/40 py-4 text-xs">Belum ada data penjualan</div>`;
+                    statsContainer.innerHTML = `<div class="text-center text-white/40 py-4 text-xs">Belum ada data penjualan</div>`;
                     return;
                 }
                 let reportData = [];
@@ -1150,20 +1380,16 @@
                 let html = `<div class="stats-list">`;
                 reportData.forEach(stat => {
                     html += `
-                            <div class="stat-row">
-                                <span class="stat-period">${stat.periode}</span>
-                                <span class="stat-gmail"><i class="fas fa-envelope text-[9px] mr-1"></i> ${stat.totalGmail}</span>
-                                <span class="stat-income">Rp${stat.totalPendapatan.toLocaleString('id-ID')}</span>
-                            </div>
-                        `;
+                        <div class="stat-row">
+                            <span class="stat-period">${stat.periode}</span>
+                            <span class="stat-gmail"><i class="fas fa-envelope text-[9px] mr-1"></i> ${stat.totalGmail}</span>
+                            <span class="stat-income">Rp${stat.totalPendapatan.toLocaleString('id-ID')}</span>
+                        </div>
+                    `;
                 });
                 const totalGmailAll = reportData.reduce((s, it) => s + it.totalGmail, 0);
                 const totalIncomeAll = reportData.reduce((s, it) => s + it.totalPendapatan, 0);
-                html += `<div class="stats-footer">
-                            <span>Total Gmail: ${totalGmailAll}</span>
-                            <span>Pendapatan: Rp${totalIncomeAll.toLocaleString('id-ID')}</span>
-                        </div>`;
-                html += `</div>`;
+                html += `<div class="stats-footer"><span>Total: ${totalGmailAll} Pcs</span><span>Rp${totalIncomeAll.toLocaleString('id-ID')}</span></div></div>`;
                 statsContainer.innerHTML = html;
             } catch (e) {}
         }
@@ -1171,65 +1397,42 @@
         function setActivePeriod(period) {
             try {
                 periodBtns.forEach(btn => {
-                    if (btn.getAttribute('data-period') === period) btn.classList.add('active', 'bg-[#0a84ff]',
-                        'text-white');
+                    if (btn.getAttribute('data-period') === period) btn.classList.add('active', 'bg-[#0a84ff]', 'text-white');
                     else btn.classList.remove('active', 'bg-[#0a84ff]', 'text-white');
                 });
-                currentPeriod = period;
-                renderStats(period);
+                currentPeriod = period; renderStats(period);
             } catch (e) {}
         }
 
         // ============================================================
-        // CEK JAM OPERASIONAL
+        // TIME VALIDATION & OPERATIONALS
         // ============================================================
         function isStoreOpen() {
             try {
-                const now = new Date();
-                const day = now.getDay();
-                const hours = now.getHours();
-                const minutes = now.getMinutes();
+                const now = new Date(); const day = now.getDay(); const hours = now.getHours(); const minutes = now.getMinutes();
                 const currentTimeInHours = hours + minutes / 60;
                 if (day === 0 || day === 6) {
-                    return { open: false, reason: 'weekend',
-                    message: 'Mohon Maaf Stor Gmail Setiap Hari Sabtu Dan Minggu Tutup, Open Hari Senin Pagi, Terimakasih.' };
+                    return { open: false, message: 'Mohon Maaf Stor Gmail Setiap Hari Sabtu Dan Minggu Tutup, Open Hari Senin Pagi, Terimakasih.' };
                 }
                 if (currentTimeInHours >= 7 && currentTimeInHours < 18.5) {
-                    return { open: true, reason: null, message: '' };
+                    return { open: true, message: '' };
                 } else {
-                    return { open: false, reason: 'hour',
-                    message: 'Mohon Maaf Stor Gmail Tutup Buka Di Jam 07:00 Pagi Dan Tutup Di Jam 18:30, Terimakasih.' };
+                    return { open: false, message: 'Mohon Maaf Stor Gmail Tutup Buka Di Jam 07:00 Pagi Dan Tutup Di Jam 18:30, Terimakasih.' };
                 }
-            } catch (e) {
-                return { open: false, reason: 'error', message: 'Error pengecekan jam.' };
-            }
+            } catch (e) { return { open: false, message: 'Error pengecekan jam.' }; }
         }
 
         function getNextOpenTime() {
             try {
-                const now = new Date();
-                const day = now.getDay();
-                const currentHour = now.getHours();
-                const currentMinute = now.getMinutes();
+                const now = new Date(); const day = now.getDay(); const currentHour = now.getHours(); const currentMinute = now.getMinutes();
                 if (day === 0 || day === 6) {
                     let daysToMonday = (day === 0 ? 1 : 2);
-                    let target = new Date(now);
-                    target.setDate(now.getDate() + daysToMonday);
-                    target.setHours(7, 0, 0, 0);
-                    return target;
+                    let target = new Date(now); target.setDate(now.getDate() + daysToMonday); target.setHours(7, 0, 0, 0); return target;
                 }
                 let target = new Date(now);
-                if (currentHour < 7) {
-                    target.setHours(7, 0, 0, 0);
-                } else if (currentHour >= 18 && currentMinute >= 30) {
-                    target.setDate(now.getDate() + 1);
-                    target.setHours(7, 0, 0, 0);
-                } else if (currentHour > 18 || (currentHour === 18 && currentMinute >= 30)) {
-                    target.setDate(now.getDate() + 1);
-                    target.setHours(7, 0, 0, 0);
-                } else {
-                    return null;
-                }
+                if (currentHour < 7) { target.setHours(7, 0, 0, 0); }
+                else if (currentHour >= 18 || (currentHour === 18 && currentMinute >= 30)) { target.setDate(now.getDate() + 1); target.setHours(7, 0, 0, 0); }
+                else { return null; }
                 return target;
             } catch (e) { return null; }
         }
@@ -1239,29 +1442,19 @@
                 const targetTime = getNextOpenTime();
                 if (!targetTime) {
                     if (closedModal && closedModal.classList.contains('active')) closedModal.classList.remove('active');
-                    if (countdownInterval) { clearInterval(countdownInterval);
-                        countdownInterval = null; }
-                    disableForm(false);
-                    return;
+                    if (countdownInterval) { clearInterval(countdownInterval); countdownInterval = null; }
+                    disableForm(false); return;
                 }
-                const now = new Date();
-                const diffMs = targetTime - now;
+                const now = new Date(); const diffMs = targetTime - now;
                 if (diffMs <= 0) {
                     if (countdownInterval) clearInterval(countdownInterval);
-                    countdownInterval = null;
-                    disableForm(false);
+                    countdownInterval = null; disableForm(false);
                     if (closedModal && closedModal.classList.contains('active')) closedModal.classList.remove('active');
-                    showToastMessage("Toko sudah buka! Silakan lanjutkan transaksi.", false);
                     return;
                 }
                 const totalSeconds = Math.floor(diffMs / 1000);
-                const hours = Math.floor(totalSeconds / 3600);
-                const minutes = Math.floor((totalSeconds % 3600) / 60);
-                const seconds = totalSeconds % 60;
-                if (countdownTimerEl) {
-                    countdownTimerEl.innerText =
-                        `${hours.toString().padStart(2,'0')}:${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}`;
-                }
+                const hours = Math.floor(totalSeconds / 3600); const minutes = Math.floor((totalSeconds % 3600) / 60); const seconds = totalSeconds % 60;
+                if (countdownTimerEl) { countdownTimerEl.innerText = `${hours.toString().padStart(2,'0')}:${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}`; }
             } catch (e) {}
         }
 
@@ -1274,8 +1467,7 @@
                     const status = isStoreOpen();
                     if (status.open) {
                         if (countdownInterval) clearInterval(countdownInterval);
-                        countdownInterval = null;
-                        if (closedModal) closedModal.classList.remove('active');
+                        countdownInterval = null; if (closedModal) closedModal.classList.remove('active');
                         disableForm(false);
                     }
                 }, 1000);
@@ -1286,22 +1478,8 @@
             try {
                 allInputs.forEach(input => { if (input) input.disabled = disabled; });
                 if (btnKirim) btnKirim.disabled = disabled;
-                if (closedInfoText) {
-                    if (disabled) closedInfoText.classList.remove('hidden');
-                    else closedInfoText.classList.add('hidden');
-                }
-                if (statusBadge) {
-                    if (disabled) statusBadge.classList.remove('hidden');
-                    else statusBadge.classList.add('hidden');
-                }
-            } catch (e) {}
-        }
-
-        function showClosedModalWithCountdown(message) {
-            try {
-                if (closedModalMessage) closedModalMessage.innerText = message;
-                if (closedModal) closedModal.classList.add('active');
-                startCountdown();
+                if (closedInfoText) { disabled ? closedInfoText.classList.remove('hidden') : closedInfoText.classList.add('hidden'); }
+                if (statusBadge) { disabled ? statusBadge.classList.remove('hidden') : statusBadge.classList.add('hidden'); }
             } catch (e) {}
         }
 
@@ -1310,104 +1488,54 @@
                 const status = isStoreOpen();
                 if (!status.open) {
                     disableForm(true);
-                    showClosedModalWithCountdown(status.message);
+                    if (closedModalMessage) closedModalMessage.innerText = status.message;
+                    if (closedModal) closedModal.classList.add('active');
+                    startCountdown();
                 } else {
                     disableForm(false);
                     if (closedModal && closedModal.classList.contains('active')) closedModal.classList.remove('active');
-                    if (countdownInterval) { clearInterval(countdownInterval);
-                        countdownInterval = null; }
+                    if (countdownInterval) { clearInterval(countdownInterval); countdownInterval = null; }
                 }
             } catch (e) {}
         }
 
-        function canSubmit() {
-            try {
-                const status = isStoreOpen();
-                if (!status.open) {
-                    showToastMessage(status.message, true);
-                    return false;
-                }
-                return true;
-            } catch (e) { return false; }
-        }
-
-        // ============================================================
-        // TOAST (hanya untuk error/peringatan)
-        // ============================================================
         function showToastMessage(msg, isError = false) {
             try {
-                const existing = document.querySelector('.toast-ios');
-                if (existing) existing.remove();
-                const toast = document.createElement('div');
-                toast.className = 'toast-ios';
-                toast.innerHTML =
-                    `<i class="fas ${isError ? 'fa-exclamation-triangle' : 'fa-check-circle'} mr-2 text-[#0a84ff]"></i> ${msg}`;
-                document.body.appendChild(toast);
-                setTimeout(() => toast.remove(), 2800);
+                const existing = document.querySelector('.toast-ios'); if (existing) existing.remove();
+                const toast = document.createElement('div'); toast.className = 'toast-ios';
+                toast.innerHTML = `<i class="fas ${isError ? 'fa-exclamation-triangle' : 'fa-check-circle'} mr-2 text-[#0a84ff]"></i> ${msg}`;
+                document.body.appendChild(toast); setTimeout(() => toast.remove(), 2800);
             } catch (e) {}
         }
 
-        // ============================================================
-        // SHOW SUCCESS MODAL (baru dengan jumlah & total)
-        // ============================================================
         function showSuccessModal(dana, nama, jumlah, totalHarga) {
             try {
-                successDana.innerText = dana || '-';
-                successNama.innerText = nama || '-';
-                successJumlah.innerText = jumlah || '0';
-                successTotal.innerText = `Rp${(totalHarga || 0).toLocaleString('id-ID')}`;
+                successDana.innerText = dana || '-'; successNama.innerText = nama || '-';
+                successJumlah.innerText = jumlah || '0'; successTotal.innerText = `Rp${(totalHarga || 0).toLocaleString('id-ID')}`;
                 successModal.classList.add('active');
             } catch (e) {}
         }
-
-        function hideSuccessModal() {
-            try {
-                successModal.classList.remove('active');
-            } catch (e) {}
-        }
+        function hideSuccessModal() { try { successModal.classList.remove('active'); } catch (e) {} }
 
         // ============================================================
-        // VALIDASI & PROSES STOR
+        // SUBMISSION & STORAGE RECORD
         // ============================================================
         function validateForm() {
             try {
                 const target = parseInt(jumlahInput.value, 10);
                 if (isNaN(target) || target < 1) {
-                    warningDiv.innerText = 'Jumlah Gmail minimal 1';
-                    warningDiv.classList.remove('hidden');
-                    setTimeout(() => warningDiv.classList.add('hidden'), 3000);
-                    return false;
+                    warningDiv.innerText = 'Jumlah Gmail minimal 1'; warningDiv.classList.remove('hidden');
+                    setTimeout(() => warningDiv.classList.add('hidden'), 3000); return false;
                 }
                 const emails = getGmailArray();
                 if (emails.length !== target) {
                     warningDiv.innerText = `Jumlah email (${emails.length}) tidak sesuai target (${target})`;
-                    warningDiv.classList.remove('hidden');
-                    setTimeout(() => warningDiv.classList.add('hidden'), 3000);
-                    return false;
+                    warningDiv.classList.remove('hidden'); setTimeout(() => warningDiv.classList.add('hidden'), 3000); return false;
                 }
-                for (let e of emails) {
-                    if (!isValidEmail(e)) {
-                        warningDiv.innerText = `Format email tidak valid: ${e}`;
-                        warningDiv.classList.remove('hidden');
-                        return false;
-                    }
-                }
-                if (passwordInput.value.trim() !== "aass1122") {
-                    warningDiv.innerText = 'Password wajib "aass1122"';
-                    warningDiv.classList.remove('hidden');
-                    return false;
-                }
-                const dana = nomorDana.value.trim();
-                if (!dana.match(/^[0-9]{9,15}$/)) {
-                    warningDiv.innerText = 'Nomor Dana tidak valid (9-15 digit angka)';
-                    warningDiv.classList.remove('hidden');
-                    return false;
-                }
-                if (!namaPenerima.value.trim()) {
-                    warningDiv.innerText = 'Nama penerima wajib diisi';
-                    warningDiv.classList.remove('hidden');
-                    return false;
-                }
+                for (let e of emails) { if (!isValidEmail(e)) { warningDiv.innerText = `Format email tidak valid: ${e}`; warningDiv.classList.remove('hidden'); return false; } }
+                if (passwordInput.value.trim() !== "aass1122") { warningDiv.innerText = 'Password wajib "aass1122"'; warningDiv.classList.remove('hidden'); return false; }
+                const dana = nomorDana.value.trim(); if (!dana.match(/^[0-9]{9,15}$/)) { warningDiv.innerText = 'Nomor Dana tidak valid (9-15 digit angka)'; warningDiv.classList.remove('hidden'); return false; }
+                if (!namaPenerima.value.trim()) { warningDiv.innerText = 'Nama penerima wajib diisi'; warningDiv.classList.remove('hidden'); return false; }
                 return true;
             } catch (e) { return false; }
         }
@@ -1415,13 +1543,18 @@
         async function sendToTelegram(orderData) {
             if (!TELEGRAM_BOT_TOKEN || TELEGRAM_BOT_TOKEN.includes("YOUR")) return false;
             try {
-                const gmailList = orderData.gmails.map((g, i) => `${i+1}. ${g}`).join('\n');
-                const message =
-                    `STORE GMAIL FRESH CUSTOMER 🤑👨‍💻\n\nJumlah: ${orderData.jumlah}\n💌Email:\n${gmailList}\n🔐Password: aass1122\n💸Total: Rp${orderData.totalHarga.toLocaleString('id-ID')}\n🪙Dana: ${orderData.nomorDana}\n👤Nama: ${orderData.namaPenerima}\n📟Waktu: ${orderData.timestamp}`;
+                const gmailList = orderData.gmails.map((g, i) => `${i+1}. <code>${g}</code>`).join('\n');
+                const message = `<b>STORE GMAIL FRESH CUSTOMER 📬</b>\n\n` +
+                                `<b>Jumlah:</b> ${orderData.jumlah}\n` +
+                                `<b>💌 Daftar Gmail:</b>\n${gmailList}\n\n` +
+                                `<b>🔐 Password:</b> <code>aass1122</code>\n` +
+                                `<b>💸 Total:</b> Rp${orderData.totalHarga.toLocaleString('id-ID')}\n` +
+                                `<b>🪙 Dana:</b> <code>${orderData.nomorDana}</code>\n` +
+                                `<b>👤 Nama:</b> ${orderData.namaPenerima}\n` +
+                                `<b>📟 Waktu:</b> ${orderData.timestamp}`;
                 const res = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message })
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message, parse_mode: 'HTML' })
                 });
                 return res.ok;
             } catch (e) { return false; }
@@ -1429,185 +1562,118 @@
 
         async function prosesStor() {
             try {
-                if (!canSubmit()) return;
+                const status = isStoreOpen();
+                if (!status.open) { showToastMessage(status.message, true); return; }
                 if (!validateForm()) return;
 
                 const emails = getGmailArray();
-                const totalPrice = emails.length * 2300;
+                const totalPrice = emails.length * 3000;
                 const now = new Date();
-                const timestamp = now.toLocaleString('id-ID', { day: '2-digit', month: 'short', hour: '2-digit',
-                    minute: '2-digit' });
+                const timestamp = now.toLocaleString('id-ID', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
 
                 const order = {
-                    jumlah: emails.length,
-                    gmails: emails,
-                    totalHarga: totalPrice,
-                    nomorDana: nomorDana.value.trim(),
-                    namaPenerima: namaPenerima.value.trim(),
-                    timestamp: timestamp,
-                    tanggal: timestamp
+                    jumlah: emails.length, gmails: emails, totalHarga: totalPrice,
+                    nomorDana: nomorDana.value.trim(), namaPenerima: namaPenerima.value.trim(),
+                    timestamp: timestamp, tanggal: timestamp
                 };
 
                 btnKirim.disabled = true;
-                btnKirim.innerHTML = `<i class="fas fa-spinner fa-pulse"></i> Memproses...`;
+                btnKirim.innerHTML = `<i class="fas fa-spinner fa-pulse"></i> Memproses Vault...`;
 
-                const telegramOk = await sendToTelegram(order);
-                if (!telegramOk) {
-                    showToastMessage("Data tersimpan, notifikasi gagal", true);
-                }
-
+                await sendToTelegram(order);
                 saveNewRecord(order);
 
-                // Simpan data untuk modal (sebelum reset)
-                const danaSaved = order.nomorDana;
-                const namaSaved = order.namaPenerima;
-                const jumlahSaved = order.jumlah;
-                const totalSaved = order.totalHarga;
+                const dS = order.nomorDana; const nS = order.namaPenerima;
+                const jS = order.jumlah; const tS = order.totalHarga;
 
-                // Reset form
-                gmailTextarea.value = '';
-                passwordInput.value = '';
-                jumlahInput.value = '1';
-                nomorDana.value = '';
-                namaPenerima.value = '';
+                gmailTextarea.value = ''; passwordInput.value = ''; jumlahInput.value = '1';
+                nomorDana.value = ''; namaPenerima.value = '';
                 updateUI();
 
-                btnKirim.disabled = false;
-                btnKirim.innerHTML = `Stor Gmail Sekarang`;
-
-                // TAMPILKAN MODAL SUKSES dengan data lengkap
-                showSuccessModal(danaSaved, namaSaved, jumlahSaved, totalSaved);
-
+                btnKirim.disabled = false; btnKirim.innerHTML = `Stor Gmail Sekarang`;
+                showSuccessModal(dS, nS, jS, tS);
             } catch (e) {
-                btnKirim.disabled = false;
-                btnKirim.innerHTML = `Stor Gmail Sekarang`;
+                btnKirim.disabled = false; btnKirim.innerHTML = `Stor Gmail Sekarang`;
                 showToastMessage("Terjadi kesalahan, coba lagi.", true);
             }
         }
 
         // ============================================================
-        // EVENT LISTENERS
+        // MODALS HANDLING
         // ============================================================
         jumlahInput.addEventListener('input', updateUI);
         gmailTextarea.addEventListener('input', updateUI);
         btnKirim.addEventListener('click', prosesStor);
-
         summaryCard.addEventListener('click', openHistorySheet);
         closeHistoryBtn.addEventListener('click', closeHistorySheet);
         historySheet.addEventListener('click', (e) => { if (e.target === historySheet) closeHistorySheet(); });
 
         clearHistorySheetBtn.addEventListener('click', () => {
-            try {
-                confirmModal.style.visibility = "visible";
-                confirmModal.style.opacity = "1";
-                confirmModal.style.transform = "translate(-50%, -50%) scale(1)";
-                confirmModal.style.pointerEvents = "auto";
-            } catch (e) {}
+            currentTargetDeletion = 'history';
+            confirmModal.style.visibility = "visible"; confirmModal.style.opacity = "1";
+            confirmModal.style.transform = "translate(-50%, -50%) scale(1)"; confirmModal.style.pointerEvents = "auto";
         });
 
         function closeConfirmModal() {
-            try {
-                confirmModal.style.visibility = "hidden";
-                confirmModal.style.opacity = "0";
-                confirmModal.style.transform = "translate(-50%, -50%) scale(0.95)";
-                confirmModal.style.pointerEvents = "none";
-            } catch (e) {}
+            confirmModal.style.visibility = "hidden"; confirmModal.style.opacity = "0";
+            confirmModal.style.transform = "translate(-50%, -50%) scale(0.95)"; confirmModal.style.pointerEvents = "none";
         }
 
         confirmYes.addEventListener('click', () => {
-            clearAllHistory();
+            if (currentTargetDeletion === 'history') {
+                localStorage.removeItem(STORAGE_KEY); updateSummaryAndHistory();
+                showToastMessage("Riwayat storan dibersihkan", false);
+                closeHistorySheet();
+            } else {
+                saveNotifications([]); renderInfoSheet();
+                showToastMessage("Semua informasi dihapus", false);
+                infoSheet.classList.remove('active');
+            }
             closeConfirmModal();
-            if (historySheet.classList.contains('active')) closeHistorySheet();
         });
         confirmNo.addEventListener('click', closeConfirmModal);
 
-        // Rules
-        function openRules() { try { rulesModal.classList.add('active'); } catch (e) {} }
+        openRulesBtn.addEventListener('click', () => rulesModal.classList.add('active'));
+        closeRulesBtn.addEventListener('click', () => rulesModal.classList.remove('active'));
+        closeRulesInternal.addEventListener('click', () => rulesModal.classList.remove('active'));
+        rulesModal.addEventListener('click', (e) => { if (e.target === rulesModal) rulesModal.classList.remove('active'); });
+        closeClosedModalBtn.addEventListener('click', () => closedModal.classList.remove('active'));
 
-        function closeRules() { try { rulesModal.classList.remove('active'); } catch (e) {} }
-        openRulesBtn.addEventListener('click', openRules);
-        closeRulesBtn.addEventListener('click', closeRules);
-        closeRulesInternal.addEventListener('click', closeRules);
-        rulesModal.addEventListener('click', (e) => { if (e.target === rulesModal) closeRules(); });
-
-        // Closed modal
-        closeClosedModalBtn.addEventListener('click', () => {
-            try { closedModal.classList.remove('active'); } catch (e) {}
-        });
-
-        // Period buttons
-        periodBtns.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const period = btn.getAttribute('data-period');
-                setActivePeriod(period);
-            });
-        });
-
-        // Cek Gmail & Info Pembayaran
-        document.getElementById("cekGmailBtn").addEventListener("click", () => {
-            window.open(CEK_GMAIL_URL, "_blank");
-        });
-        document.getElementById("infoPembayaranBtn").addEventListener("click", () => {
-            window.open(INFO_PEMBAYARAN_URL, "_blank");
-        });
-
-        // Success modal close
+        periodBtns.forEach(btn => { btn.addEventListener('click', () => setActivePeriod(btn.getAttribute('data-period'))); });
+        document.getElementById("cekGmailBtn").addEventListener("click", () => window.open(CEK_GMAIL_URL, "_blank"));
+        document.getElementById("infoPembayaranBtn").addEventListener("click", () => window.open(INFO_PEMBAYARAN_URL, "_blank"));
         successCloseBtn.addEventListener('click', hideSuccessModal);
         successModal.addEventListener('click', (e) => { if (e.target === successModal) hideSuccessModal(); });
 
         // ============================================================
-        // INIT
+        // SYSTEM RUNTIME INIT
         // ============================================================
         window.addEventListener('load', function() {
-            // Loading hilang setelah 3 detik
             setTimeout(function() {
-                try {
-                    const loading = document.getElementById('loadingScreen');
-                    if (loading) {
-                        loading.classList.add('fade-out');
-                        setTimeout(function() {
-                            if (loading) loading.style.display = 'none';
-                        }, 600);
-                    }
-                } catch (e) {
-                    const loading = document.getElementById('loadingScreen');
-                    if (loading) loading.style.display = 'none';
+                const loading = document.getElementById('loadingScreen');
+                if (loading) {
+                    loading.classList.add('fade-out');
+                    setTimeout(() => loading.style.display = 'none', 600);
                 }
-
-                // Inisialisasi status toko
-                try {
-                    applyStoreStatus();
-                    setInterval(function() {
-                        try {
-                            const status = isStoreOpen();
-                            if (status.open) {
-                                if (closedModal && closedModal.classList.contains('active'))
-                                    closedModal.classList.remove('active');
-                                disableForm(false);
-                                if (countdownInterval) clearInterval(countdownInterval);
-                            } else {
-                                if (!allInputs[0]?.disabled) {
-                                    disableForm(true);
-                                    if (closedModal && !closedModal.classList.contains('active')) {
-                                        showClosedModalWithCountdown(status.message);
-                                    }
-                                }
-                            }
-                        } catch (e) {}
-                    }, 30000);
-                } catch (e) {}
-
+                applyStoreStatus();
+                setInterval(function() {
+                    const status = isStoreOpen();
+                    if (status.open) {
+                        if (closedModal && closedModal.classList.contains('active')) closedModal.classList.remove('active');
+                        disableForm(false); if (countdownInterval) clearInterval(countdownInterval);
+                    } else {
+                        if (!allInputs[0]?.disabled) {
+                            disableForm(true);
+                            if (closedModal && !closedModal.classList.contains('active')) applyStoreStatus();
+                        }
+                    }
+                }, 15000);
             }, 3000);
 
-            // UI
-            try {
-                updateUI();
-                updateSummaryAndHistory();
-                setActivePeriod('daily');
-                if (!TELEGRAM_BOT_TOKEN || TELEGRAM_BOT_TOKEN === "YOUR_BOT_TOKEN_HERE") {
-                    setTimeout(() => showToastMessage("Peringatan: Ada Kesalahan Token", true), 2000);
-                }
-            } catch (e) {}
+            updateUI();
+            updateSummaryAndHistory();
+            saveNotifications(getNotifications()); 
+            setActivePeriod('daily');
         });
     </script>
 </body>

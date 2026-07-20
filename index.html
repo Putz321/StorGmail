@@ -745,7 +745,7 @@
             </button>
             <div class="bg-white/5 border border-white/10 px-6 py-3 rounded-full text-center">
                 <span class="text-white/40 font-bold text-xs block">HARGA/AKUN</span>
-                <span class="text-xl font-black text-[#0a84ff]">Rp 4.500</span>
+                <span class="text-xl font-black text-[#0a84ff]">Rp 3.000</span>
             </div>
         </div>
 
@@ -1173,7 +1173,7 @@
         function updateUI() {
             try {
                 const emails = getGmailArray();
-                const total = emails.length * 4500;
+                const total = emails.length * 3000;
                 totalSpan.innerText = `Rp${total.toLocaleString('id-ID')}`;
                 const target = parseInt(jumlahInput.value, 10);
                 if (target !== emails.length && emails.length > 0) {

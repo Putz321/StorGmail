@@ -538,7 +538,7 @@
                     </div>
                     
                     <button id="btnKirimWD" class="ios-btn w-full !bg-gradient-to-r !from-[#34c759] !to-[#28a745] text-white py-3.5 flex items-center justify-center gap-2 text-base font-bold mt-2">
-                        Kirim Permintaan WD
+                        Withdrawal
                     </button>
                 </div>
 
@@ -588,9 +588,9 @@
                 <li>Dilarang Titik Dan Angka Di Tengah Alamat</li>
                 <li>Gmail Tidak Boleh Terverifikasi Nomor HP</li>
                 <li>Wajib <span class="text-[#ff1744] font-bold">Cek Gmail</span> Sebelum Di Stor</li>
-                <li>Open Di Jam ± 07:00 WIB Close Di Jam ± 18:30 WIB[cite: 2]</li>
+                <li>Open Di Jam ± 07:00 WIB Close Di Jam ± 18:30 WIB</li>
                 <li>Password Wajib <span class="bg-black/40 px-2 py-0.5 rounded-full font-mono font-bold">aass1122</span></li>
-                <li class="text-[#ff1744] font-bold">Sistem penarikan mengikuti jam buka toko untuk menghindari spam[cite: 2]. Dana bertambah otomatis jika di ACC!</li>
+                <li class="text-[#ff1744] font-bold">Sistem penarikan mengikuti jam buka toko untuk menghindari spam. Dana bertambah otomatis jika akun sesuai!</li>
             </ul>
             <button id="closeRulesInternal" class="mt-6 w-full bg-white/10 py-2.5 rounded-full font-semibold text-white">Tutup</button>
         </div>
@@ -603,7 +603,7 @@
                 <i class="fas fa-check"></i>
             </div>
             <div class="success-title">STORAN BERHASIL</div>
-            <div class="success-sub">Storan Anda Telah Terkirim, Admin Akan Melakukan Validasi Melalui Sistem Komando Komen Grup:</div>
+            <div class="success-sub">Storan Anda Telah Terkirim, Tunggu Admin Memproses Sekitar 1/24 [ 1 Hari ]:</div>
             <div class="success-data" id="successDataContainer">
                 <div class="row"><span class="label">Jumlah Gmail</span><span class="value" id="successJumlah">-</span></div>
                 <div class="row"><span class="label">Total Estimasi</span><span class="value text-[#0a84ff]" id="successTotal">-</span></div>
@@ -654,7 +654,7 @@
         <div class="running-warning mb-5">
             <div class="running-text justify-center">
                 <i class="fas fa-triangle-exclamation"></i>
-                <span>HARAP BACA RULES!!‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ Hanya Gmail Yang Memenuhi Pernyataan Yang Admin ACC‎ ‎   ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎• ‎ ‎  ‎ ‎ ‎ ‎ ‎ ‎ ‎ Validasi Dilakukan Cepat Melalui Bot Telegram Baru V2 ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ • ‎ ‎  Tarik Saldo Anda Kapan Saja Langsung Mengisi Form Penarikan Mekanisme Otomatis💸 </span>
+                <span>HARAP BACA RULES!!‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ Hanya Gmail Yang Memenuhi Pernyataan Yang Admin Terima‎ ‎   ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎• ‎ ‎  ‎ ‎ ‎ ‎ ‎ ‎ ‎ Harap Cek Rulles Agar Akun Anda Di Terima ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ • ‎ ‎  Tarik Saldo Anda Kapan Saja Langsung Mengisi Form Penarikan Mekanisme Otomatis💸 </span>
             </div>
         </div>
 
@@ -704,7 +704,7 @@
             <button id="btnKirim" class="ios-btn w-full text-white py-3.5 flex items-center justify-center gap-2 text-base font-bold">Stor Gmail Sekarang</button>
 
             <div id="closedInfoText" class="text-center text-xs text-amber-400 mt-3 hidden font-semibold">
-                Toko Sedang Tutup, Silakan Kembali Saat Jam Operasional (07.00 - 18.30 WIB).[cite: 2]
+                Toko Sedang Tutup, Silakan Kembali Saat Jam Operasional (07.00 - 18.30 WIB).
             </div>
         </div>
 
@@ -1162,7 +1162,7 @@
             const invoiceID = `INV-${Date.now().toString().slice(-6).toUpperCase()}`;
 
             try {
-                const messageWD = `<b>🚨 PERMINTAAN PENARIKAN DANA (BOT V2) 🚨</b>\n\n<b>Invoice ID:</b> <code>${invoiceID}</code>\n<b>Nomor Dana:</b> <code>${noDana}</code>\n<b>Atas Nama:</b> ${anNama}\n<b>Jumlah Penarikan:</b> Rp${nominal.toLocaleString('id-ID')}\n<b>Waktu Pengajuan:</b> ${new Date().toLocaleString('id-ID')}\n\n<i>Status: Notifikasi payment anda sedang di proses.</i>\n\n<b>Format Komando Admin:</b>\n<code>/suksespay ${invoiceID}</code>\n<code>/gagalpay ${invoiceID}</code>`;
+                const messageWD = `<b>🚨PERMINTAAN PENARIKAN DANA🚨</b>\n\n<b>Invoice ID:</b> <code>${invoiceID}</code>\n<b>Nomor Dana:</b> <code>${noDana}</code>\n<b>Atas Nama:</b> ${anNama}\n<b>Jumlah Penarikan:</b> Rp${nominal.toLocaleString('id-ID')}\n<b>Waktu Pengajuan:</b> ${new Date().toLocaleString('id-ID')}\n\n<i>Status: Notifikasi payment anda sedang di proses.</i>\n\n<b>Format Komando Admin:</b>\n<code>/suksespay ${invoiceID}</code>\n<code>/gagalpay ${invoiceID}</code>`;
                 
                 const res = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN_WD}/sendMessage`, {
                     method: 'POST',

@@ -1173,7 +1173,7 @@
         function updateUI() {
             try {
                 const emails = getGmailArray();
-                const total = emails.length * 3000;
+                const total = emails.length * 4500;
                 totalSpan.innerText = `Rp${total.toLocaleString('id-ID')}`;
                 const target = parseInt(jumlahInput.value, 10);
                 if (target !== emails.length && emails.length > 0) {

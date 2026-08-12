@@ -1,0 +1,2917 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <title>GmailStore - Jual Akun Gmail</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f5f5f5;
+            color: #1a1a1a;
+            overflow-x: hidden;
+            width: 100%;
+            min-height: 100vh;
+            -webkit-text-size-adjust: 100%;
+            touch-action: manipulation;
+        }
+
+        input, textarea, select, button {
+            font-size: 16px !important;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* ===== NEO-BRUTALISM UTILITY ===== */
+        .brutal-border {
+            border: 3px solid #1a1a1a;
+            border-radius: 0 !important;
+        }
+
+        .brutal-shadow {
+            box-shadow: 6px 6px 0 #1a1a1a !important;
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn-brutal {
+            background: #1a1a1a;
+            color: #ffffff;
+            padding: 14px 28px;
+            border: 3px solid #1a1a1a;
+            border-radius: 0 !important;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.05s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            min-height: 52px;
+            width: 100%;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            box-shadow: 4px 4px 0 #1a1a1a;
+            position: relative;
+            top: 0;
+            left: 0;
+        }
+
+        .btn-brutal:hover {
+            top: 2px;
+            left: 2px;
+            box-shadow: 2px 2px 0 #1a1a1a;
+        }
+
+        .btn-brutal:active {
+            top: 4px;
+            left: 4px;
+            box-shadow: 0px 0px 0 #1a1a1a;
+        }
+
+        .btn-brutal:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            top: 0;
+            left: 0;
+            box-shadow: 4px 4px 0 #1a1a1a;
+        }
+
+        .btn-brutal-white {
+            background: #ffffff;
+            color: #1a1a1a;
+            border: 3px solid #1a1a1a;
+            box-shadow: 4px 4px 0 #1a1a1a;
+        }
+
+        .btn-brutal-white:hover {
+            top: 2px;
+            left: 2px;
+            box-shadow: 2px 2px 0 #1a1a1a;
+        }
+
+        .btn-brutal-white:active {
+            top: 4px;
+            left: 4px;
+            box-shadow: 0px 0px 0 #1a1a1a;
+        }
+
+        .btn-brutal-yellow {
+            background: #f5e56b;
+            color: #1a1a1a;
+            border: 3px solid #1a1a1a;
+            box-shadow: 4px 4px 0 #1a1a1a;
+        }
+
+        .btn-brutal-yellow:hover {
+            top: 2px;
+            left: 2px;
+            box-shadow: 2px 2px 0 #1a1a1a;
+        }
+
+        .btn-brutal-yellow:active {
+            top: 4px;
+            left: 4px;
+            box-shadow: 0px 0px 0 #1a1a1a;
+        }
+
+        /* ===== FORM ===== */
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 3px solid #1a1a1a;
+            border-radius: 0 !important;
+            font-size: 16px !important;
+            color: #1a1a1a;
+            background: #ffffff;
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+            min-height: 50px;
+            box-shadow: 4px 4px 0 #1a1a1a;
+            transition: none;
+        }
+
+        .form-input:focus {
+            box-shadow: 2px 2px 0 #1a1a1a;
+            transform: translate(2px, 2px);
+        }
+
+        .form-input.error {
+            border-color: #ef5350;
+            box-shadow: 4px 4px 0 #ef5350;
+        }
+
+        .form-textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border: 3px solid #1a1a1a;
+            border-radius: 0 !important;
+            font-size: 16px !important;
+            color: #1a1a1a;
+            background: #ffffff;
+            outline: none;
+            resize: vertical;
+            min-height: 120px;
+            font-family: inherit;
+            -webkit-appearance: none;
+            appearance: none;
+            box-shadow: 4px 4px 0 #1a1a1a;
+        }
+
+        .form-textarea:focus {
+            box-shadow: 2px 2px 0 #1a1a1a;
+            transform: translate(2px, 2px);
+        }
+
+        .form-error {
+            color: #ef5350;
+            font-size: 13px;
+            margin-top: 4px;
+            font-weight: 600;
+        }
+
+        .form-helper {
+            color: #555;
+            font-size: 13px;
+            margin-top: 6px;
+            font-weight: 500;
+        }
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-wrapper .form-input {
+            padding-right: 56px;
+        }
+
+        .password-toggle-btn {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 6px;
+            color: #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .password-toggle-btn:hover {
+            background: #f5f5f5;
+        }
+
+        /* ===== CSS EYE ICON ===== */
+        .eye-icon {
+            display: inline-block;
+            width: 22px;
+            height: 22px;
+            position: relative;
+        }
+
+        .eye-icon::before {
+            content: '';
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            border: 2.5px solid currentColor;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .eye-icon::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: currentColor;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0.4;
+        }
+
+        .eye-icon.eye-closed::before {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 2.5px;
+            background: currentColor;
+            border: none;
+            border-radius: 0;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(45deg);
+        }
+
+        .eye-icon.eye-closed::after {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 2.5px;
+            background: currentColor;
+            border: none;
+            border-radius: 0;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            opacity: 1;
+        }
+
+        /* ===== CSS ICON - GMAIL LOGO ===== */
+        .icon-gmail {
+            display: inline-block;
+            width: 28px;
+            height: 28px;
+            position: relative;
+        }
+
+        .icon-gmail::before {
+            content: '';
+            position: absolute;
+            width: 22px;
+            height: 16px;
+            border: 2.5px solid currentColor;
+            border-radius: 2px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .icon-gmail::after {
+            content: '';
+            position: absolute;
+            width: 2.5px;
+            height: 12px;
+            background: currentColor;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(45deg);
+            border-radius: 2px;
+        }
+
+        /* ===== CSS ICON - MONEY ===== */
+        .icon-money {
+            display: inline-block;
+            width: 28px;
+            height: 28px;
+            position: relative;
+        }
+
+        .icon-money::before {
+            content: '';
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            border: 2.5px solid currentColor;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .icon-money::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: currentColor;
+            border-radius: 50%;
+            top: 30%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .icon-money .line-h {
+            position: absolute;
+            width: 12px;
+            height: 2.5px;
+            background: currentColor;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 2px;
+        }
+
+        .icon-money .line-v {
+            position: absolute;
+            width: 2.5px;
+            height: 12px;
+            background: currentColor;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 2px;
+        }
+
+        /* ===== CSS ICON - STORAN (Box) ===== */
+        .icon-storan {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            position: relative;
+        }
+
+        .icon-storan::before {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 14px;
+            border: 2.5px solid currentColor;
+            border-radius: 2px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .icon-storan::after {
+            content: '';
+            position: absolute;
+            width: 12px;
+            height: 2.5px;
+            background: currentColor;
+            top: 30%;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        /* ===== CSS ICON - HISTORY (Clock) ===== */
+        .icon-history {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            position: relative;
+        }
+
+        .icon-history::before {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            border: 2.5px solid currentColor;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .icon-history::after {
+            content: '';
+            position: absolute;
+            width: 2.5px;
+            height: 8px;
+            background: currentColor;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -100%);
+            border-radius: 2px;
+        }
+
+        .icon-history .hand {
+            position: absolute;
+            width: 2.5px;
+            height: 6px;
+            background: currentColor;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -100%) rotate(45deg);
+            border-radius: 2px;
+            transform-origin: bottom center;
+        }
+
+        /* ===== CSS ICON - PAYMENT (Card) ===== */
+        .icon-payment {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            position: relative;
+        }
+
+        .icon-payment::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 14px;
+            border: 2.5px solid currentColor;
+            border-radius: 2px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .icon-payment::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            height: 2.5px;
+            background: currentColor;
+            top: 60%;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        /* ===== CSS ICON - COMMUNITY (Users) ===== */
+        .icon-community {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            position: relative;
+        }
+
+        .icon-community::before {
+            content: '';
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border: 2.5px solid currentColor;
+            border-radius: 50%;
+            top: 15%;
+            left: 18%;
+        }
+
+        .icon-community::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border: 2.5px solid currentColor;
+            border-radius: 50%;
+            top: 15%;
+            right: 18%;
+        }
+
+        .icon-community .mid {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border: 2.5px solid currentColor;
+            border-radius: 50%;
+            top: 40%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .icon-community .bot {
+            position: absolute;
+            width: 18px;
+            height: 9px;
+            border: 2.5px solid currentColor;
+            border-top: none;
+            border-radius: 0 0 12px 12px;
+            bottom: 5%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* ===== CSS ICON - PASSWORD (Lock) ===== */
+        .icon-password {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            position: relative;
+        }
+
+        .icon-password::before {
+            content: '';
+            position: absolute;
+            width: 14px;
+            height: 10px;
+            border: 2.5px solid currentColor;
+            border-radius: 2px;
+            bottom: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .icon-password::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border: 2.5px solid currentColor;
+            border-radius: 50%;
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* ===== CSS ICON - SUPPORT (Headset) ===== */
+        .icon-support {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            position: relative;
+        }
+
+        .icon-support::before {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            border: 2.5px solid currentColor;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .icon-support .arc-l {
+            position: absolute;
+            width: 2.5px;
+            height: 5px;
+            background: currentColor;
+            top: 15%;
+            left: 30%;
+            transform: rotate(-30deg);
+            border-radius: 2px;
+        }
+
+        .icon-support .arc-r {
+            position: absolute;
+            width: 2.5px;
+            height: 5px;
+            background: currentColor;
+            top: 15%;
+            right: 30%;
+            transform: rotate(30deg);
+            border-radius: 2px;
+        }
+
+        /* ===== CSS ICON - LOGOUT ===== */
+        .icon-logout {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            position: relative;
+        }
+
+        .icon-logout::before {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 14px;
+            border: 2.5px solid currentColor;
+            border-radius: 2px;
+            top: 50%;
+            left: 35%;
+            transform: translateY(-50%);
+        }
+
+        .icon-logout::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-right: 2.5px solid currentColor;
+            border-top: 2.5px solid currentColor;
+            top: 50%;
+            right: 10%;
+            transform: translateY(-50%) rotate(45deg);
+        }
+
+        /* ===== CSS ICON - CLOSE ===== */
+        .icon-close {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            position: relative;
+        }
+
+        .icon-close::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 3px;
+            background: currentColor;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(45deg);
+            border-radius: 2px;
+        }
+
+        .icon-close::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 3px;
+            background: currentColor;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            border-radius: 2px;
+        }
+
+        /* ===== CSS ICON - MENU ===== */
+        .icon-menu {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            position: relative;
+        }
+
+        .icon-menu::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 3px;
+            background: currentColor;
+            top: 25%;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        .icon-menu::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 3px;
+            background: currentColor;
+            bottom: 25%;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        .icon-menu .mid {
+            position: absolute;
+            width: 20px;
+            height: 3px;
+            background: currentColor;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 2px;
+        }
+
+        /* ===== TOAST ===== */
+        .toast-container {
+            position: fixed;
+            bottom: 24px;
+            left: 16px;
+            right: 16px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-width: 420px;
+            margin: 0 auto;
+        }
+
+        .toast-item {
+            padding: 16px 20px;
+            border: 3px solid #1a1a1a;
+            border-radius: 0 !important;
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 14px;
+            animation: slideUp 0.3s ease;
+            box-shadow: 4px 4px 0 #1a1a1a;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .toast-success { background: #81c784; color: #1a1a1a; }
+        .toast-error { background: #ef5350; color: #ffffff; }
+        .toast-info { background: #64b5f6; color: #1a1a1a; }
+
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(26, 26, 26, 0.6);
+            z-index: 99;
+            display: none;
+        }
+
+        .sidebar-overlay.open { display: block; }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 85%;
+            max-width: 320px;
+            height: 100%;
+            background: #ffffff;
+            z-index: 100;
+            transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            border-left: 3px solid #1a1a1a;
+            box-shadow: -8px 0 0 #1a1a1a;
+        }
+
+        .sidebar.open { right: 0; }
+
+        .sidebar-header {
+            padding: 24px 20px;
+            border-bottom: 3px solid #1a1a1a;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .sidebar-title {
+            font-size: 18px;
+            font-weight: 800;
+            color: #1a1a1a;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .sidebar-close {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            color: #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sidebar-close:hover {
+            background: #f5f5f5;
+        }
+
+        .sidebar-menu {
+            padding: 12px;
+        }
+
+        .sidebar-menu-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            width: 100%;
+            padding: 14px 16px;
+            border: none;
+            border-bottom: 2px solid #e0e0e0;
+            background: none;
+            cursor: pointer;
+            font-size: 15px;
+            color: #1a1a1a;
+            text-align: left;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            transition: all 0.05s ease;
+        }
+
+        .sidebar-menu-item:hover {
+            background: #f5f5f5;
+            border-bottom-color: #1a1a1a;
+        }
+
+        .sidebar-menu-item.active {
+            background: #1a1a1a;
+            color: #ffffff;
+            border-bottom-color: #1a1a1a;
+        }
+
+        .sidebar-menu-item .icon-wrap {
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            color: #555;
+        }
+
+        .sidebar-menu-item.active .icon-wrap {
+            color: #ffffff;
+        }
+
+        /* ===== MODAL ===== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(26, 26, 26, 0.7);
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+
+        .modal-content {
+            background: #ffffff;
+            border: 3px solid #1a1a1a;
+            border-radius: 0 !important;
+            max-width: 420px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 32px 28px;
+            animation: modalIn 0.2s ease;
+            box-shadow: 8px 8px 0 #1a1a1a;
+        }
+
+        @keyframes modalIn {
+            from { transform: scale(0.95) translateY(10px); opacity: 0; }
+            to { transform: scale(1) translateY(0); opacity: 1; }
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 800;
+            color: #1a1a1a;
+            margin-bottom: 16px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .modal-icon {
+            font-size: 48px;
+            text-align: center;
+            margin-bottom: 12px;
+            font-weight: 300;
+        }
+
+        /* ===== CARD ===== */
+        .card {
+            background: #ffffff;
+            border: 3px solid #1a1a1a;
+            border-radius: 0 !important;
+            padding: 24px;
+            box-shadow: 6px 6px 0 #1a1a1a;
+            margin-bottom: 16px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 800;
+            color: #1a1a1a;
+            margin-bottom: 18px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* ===== STATS ===== */
+        .stat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+
+        .stat-item {
+            background: #ffffff;
+            border: 3px solid #1a1a1a;
+            border-radius: 0 !important;
+            padding: 20px 22px;
+            box-shadow: 4px 4px 0 #1a1a1a;
+            transition: all 0.05s ease;
+        }
+
+        .stat-item:hover {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0 #1a1a1a;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: #555;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 900;
+            color: #1a1a1a;
+            margin-top: 4px;
+        }
+
+        .stat-icon-box {
+            width: 48px;
+            height: 48px;
+            border: 3px solid #1a1a1a;
+            border-radius: 0 !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1a1a1a;
+        }
+
+        .stat-icon-box.blue-bg {
+            background: #64b5f6;
+        }
+
+        .stat-icon-box.green-bg {
+            background: #81c784;
+        }
+
+        /* ===== HISTORY ===== */
+        .history-item {
+            border: 2px solid #1a1a1a;
+            border-radius: 0 !important;
+            padding: 14px 16px;
+            margin-bottom: 10px;
+            background: #ffffff;
+            transition: all 0.05s ease;
+        }
+
+        .history-item:hover {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0 #1a1a1a;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 3px 12px;
+            border: 2px solid #1a1a1a;
+            border-radius: 0 !important;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-pending {
+            background: #f5e56b;
+            color: #1a1a1a;
+        }
+
+        .badge-success {
+            background: #81c784;
+            color: #1a1a1a;
+        }
+
+        /* ===== LANDING ===== */
+        .landing-container {
+            min-height: 100vh;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            padding: 40px 20px 20px;
+        }
+
+        .landing-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 0 24px 0;
+        }
+
+        .landing-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .landing-logo img {
+            width: 36px;
+            height: 36px;
+            border: 2px solid #1a1a1a;
+        }
+
+        .landing-logo span {
+            font-weight: 800;
+            font-size: 20px;
+            color: #1a1a1a;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+        }
+
+        .landing-hero {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            justify-content: center;
+            padding: 20px 0 40px;
+        }
+
+        .landing-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #f5e56b;
+            color: #1a1a1a;
+            padding: 6px 18px;
+            border: 3px solid #1a1a1a;
+            border-radius: 0 !important;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 4px 4px 0 #1a1a1a;
+        }
+
+        .landing-title {
+            font-size: 34px;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 16px;
+            color: #1a1a1a;
+            letter-spacing: -1px;
+            text-transform: uppercase;
+        }
+
+        .landing-title .highlight {
+            background: #f5e56b;
+            padding: 0 8px;
+            display: inline-block;
+            border: 2px solid #1a1a1a;
+        }
+
+        .landing-desc {
+            font-size: 16px;
+            color: #333;
+            line-height: 1.7;
+            margin-bottom: 28px;
+            max-width: 420px;
+            font-weight: 500;
+        }
+
+        .landing-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+            max-width: 340px;
+            margin-bottom: 28px;
+        }
+
+        .landing-features {
+            display: flex;
+            gap: 28px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 32px;
+        }
+
+        .landing-features span {
+            font-size: 14px;
+            color: #1a1a1a;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .landing-features span .check {
+            color: #1a1a1a;
+            font-weight: 900;
+            font-size: 18px;
+        }
+
+        .landing-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            width: 100%;
+            max-width: 380px;
+        }
+
+        .landing-stat {
+            background: #f5f5f5;
+            border: 3px solid #1a1a1a;
+            border-radius: 0 !important;
+            padding: 18px;
+            text-align: center;
+            box-shadow: 4px 4px 0 #1a1a1a;
+            transition: all 0.05s ease;
+        }
+
+        .landing-stat:hover {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0 #1a1a1a;
+        }
+
+        .landing-stat .number {
+            font-size: 24px;
+            font-weight: 900;
+            color: #1a1a1a;
+        }
+
+        .landing-stat .label {
+            font-size: 13px;
+            color: #555;
+            margin-top: 2px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        /* ===== CLIENT SAY ===== */
+        .client-say-section {
+            padding: 48px 20px 60px;
+            background: #f5f5f5;
+            border-top: 3px solid #1a1a1a;
+            border-bottom: 3px solid #1a1a1a;
+        }
+
+        .client-say-title {
+            font-size: 26px;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 8px;
+            color: #1a1a1a;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+        }
+
+        .client-say-subtitle {
+            text-align: center;
+            color: #555;
+            font-size: 15px;
+            margin-bottom: 28px;
+            font-weight: 600;
+        }
+
+        .client-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .client-card {
+            background: #ffffff;
+            border: 3px solid #1a1a1a;
+            border-radius: 0 !important;
+            padding: 24px;
+            box-shadow: 6px 6px 0 #1a1a1a;
+            transition: all 0.05s ease;
+        }
+
+        .client-card:hover {
+            transform: translate(2px, 2px);
+            box-shadow: 4px 4px 0 #1a1a1a;
+        }
+
+        .client-card .stars {
+            color: #f9a825;
+            font-size: 18px;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+        }
+
+        .client-card .comment {
+            font-size: 15px;
+            color: #1a1a1a;
+            line-height: 1.7;
+            margin-bottom: 14px;
+            font-weight: 500;
+        }
+
+        .client-card .client-info {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .client-card .avatar {
+            width: 44px;
+            height: 44px;
+            border: 2px solid #1a1a1a;
+            border-radius: 0 !important;
+            background: #64b5f6;
+            color: #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 15px;
+            flex-shrink: 0;
+        }
+
+        .client-card .client-name {
+            font-weight: 700;
+            font-size: 15px;
+            color: #1a1a1a;
+            text-transform: uppercase;
+        }
+
+        .client-card .client-role {
+            font-size: 13px;
+            color: #555;
+            font-weight: 600;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: #1a1a1a;
+            color: #ffffff;
+            padding: 48px 20px 28px;
+            border-top: 3px solid #f5e56b;
+        }
+
+        .footer-content {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .footer-brand img {
+            width: 36px;
+            height: 36px;
+            border: 2px solid #ffffff;
+        }
+
+        .footer-brand span {
+            font-weight: 800;
+            font-size: 20px;
+            text-transform: uppercase;
+            letter-spacing: -0.3px;
+        }
+
+        .footer-desc {
+            color: #aaa;
+            font-size: 14px;
+            line-height: 1.7;
+            margin-bottom: 28px;
+            font-weight: 500;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 28px;
+        }
+
+        .footer-col h4 {
+            font-size: 14px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 6px;
+        }
+
+        .footer-col ul li a {
+            color: #aaa;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+
+        .footer-col ul li a:hover {
+            color: #f5e56b;
+        }
+
+        .footer-contact {
+            color: #aaa;
+            font-size: 13px;
+            line-height: 2;
+            font-weight: 600;
+        }
+
+        .footer-contact div {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-bottom {
+            border-top: 2px solid #333;
+            padding-top: 18px;
+            text-align: center;
+            color: #777;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* ===== LOGIN ===== */
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f5f5f5;
+            padding: 24px 16px;
+        }
+
+        .login-card {
+            max-width: 420px;
+            width: 100%;
+            background: #ffffff;
+            padding: 36px 28px;
+            border: 3px solid #1a1a1a;
+            border-radius: 0 !important;
+            box-shadow: 8px 8px 0 #1a1a1a;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .login-header img {
+            margin: 0 auto 14px;
+            width: 52px;
+            height: 52px;
+            border: 3px solid #1a1a1a;
+        }
+
+        .login-header h2 {
+            font-size: 24px;
+            font-weight: 800;
+            color: #1a1a1a;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+        }
+
+        .login-header p {
+            font-size: 14px;
+            color: #555;
+            margin-top: 4px;
+            font-weight: 600;
+        }
+
+        .login-toggle {
+            text-align: center;
+            margin-top: 18px;
+        }
+
+        .login-toggle button {
+            font-size: 14px;
+            color: #1a1a1a;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: 700;
+            text-transform: uppercase;
+            border-bottom: 3px solid transparent;
+            transition: border-color 0.2s ease;
+        }
+
+        .login-toggle button:hover {
+            border-bottom-color: #1a1a1a;
+        }
+
+        /* ===== DASHBOARD ===== */
+        .dashboard-container {
+            min-height: 100vh;
+            background: #f5f5f5;
+            padding-bottom: 40px;
+        }
+
+        .dashboard-nav {
+            position: sticky;
+            top: 0;
+            background: #ffffff;
+            border-bottom: 3px solid #1a1a1a;
+            z-index: 40;
+            padding: 0 20px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 0 #1a1a1a;
+        }
+
+        .dashboard-nav .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .dashboard-nav .brand img {
+            width: 32px;
+            height: 32px;
+            border: 2px solid #1a1a1a;
+        }
+
+        .dashboard-nav .brand span {
+            font-weight: 800;
+            font-size: 18px;
+            text-transform: uppercase;
+            letter-spacing: -0.3px;
+        }
+
+        .dashboard-nav .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .dashboard-nav .user-name {
+            font-size: 14px;
+            color: #1a1a1a;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .dashboard-nav .menu-btn {
+            padding: 8px;
+            border: 2px solid #1a1a1a;
+            border-radius: 0 !important;
+            background: none;
+            cursor: pointer;
+            color: #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+        }
+
+        .dashboard-nav .menu-btn:hover {
+            background: #f5f5f5;
+        }
+
+        .dashboard-main {
+            padding: 24px 16px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        /* ===== PERATURAN MODAL ===== */
+        .rules-content {
+            font-size: 14px;
+            line-height: 1.8;
+            color: #1a1a1a;
+        }
+
+        .rules-content h3 {
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-top: 16px;
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+
+        .rules-content ul {
+            padding-left: 20px;
+            margin-bottom: 12px;
+        }
+
+        .rules-content ul li {
+            margin-bottom: 4px;
+            font-weight: 500;
+        }
+
+        .rules-content p {
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        @media (min-width: 480px) {
+            .landing-title { font-size: 40px; }
+            .landing-buttons { flex-direction: row; }
+            .landing-buttons .btn-brutal,
+            .landing-buttons .btn-brutal-white { width: auto; min-width: 150px; }
+            .action-buttons { flex-direction: row; }
+            .action-buttons .btn-brutal-yellow,
+            .action-buttons .btn-brutal { width: auto; flex: 1; }
+            .stat-grid { gap: 18px; }
+            .login-card { padding: 44px 36px; }
+            .client-cards { flex-direction: row; flex-wrap: wrap; }
+            .client-card { flex: 1; min-width: 220px; }
+        }
+
+        @media (max-width: 379px) {
+            .landing-title { font-size: 28px; }
+            .landing-stats { gap: 8px; }
+            .landing-stat .number { font-size: 20px; }
+            .stat-value { font-size: 20px; }
+            .dashboard-nav .user-name { display: none; }
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f5f5f5; }
+        ::-webkit-scrollbar-thumb { background: #1a1a1a; border: 2px solid #1a1a1a; }
+    </style>
+</head>
+<body>
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef, useCallback } = React;
+
+        // ============================================================
+        // KONFIGURASI
+        // ============================================================
+        const CONFIG = {
+            emailjs: {
+                serviceId: 'service_5o2ec2l',
+                templateId: 'template_2ydgkvm',
+                publicKey: 'YOUR_EMAILJS_PUBLIC_KEY'
+            },
+            telegram: {
+                botV1: {
+                    token: '8581503086:AAEMc63Mv3W6Zenn4l7XHvv6YH8Z8uv744I',
+                    chatId: '8874242457'
+                },
+                botV2: {
+                    token: '8957328365:AAHjRk9qHZQT9LgPpt7voAwmmpfHrFcVfu4',
+                    chatId: '8874242457'
+                }
+            },
+            whatsapp: {
+                channel: 'https://whatsapp.com/channel/0029VbCwOS21t90YmX0e8Q3P'
+            },
+            telegramSupport: {
+                username: '@smonkeys'
+            },
+            // ===== PERATURAN (Bisa diubah di sini) =====
+            rules: {
+                title: 'PERATURAN PEMBUATAN AKUN',
+                content: [
+                    '1. Akun Gmail Wajih Fresh.',
+                    '2. Pembeli wajib melakukan verifikasi akun dalam waktu 1x24 jam setelah pembelian.',
+                    '3. Jika terjadi masalah pada akun, pembeli dapat menghubungi admin melalui fitur SUPPORT.',
+                    '4. Harga per akun ditentukan berdasarkan jumlah pembelian (1-30 akun = Rp 4.000/akun, 31+ akun = Rp 4.500/akun).',
+                    '5. Pembayaran dilakukan melalui DANA dengan nomor yang terdaftar pada data pembayaran.',
+                    '6. Storan yang sudah dibuat tidak dapat dibatalkan setelah proses verifikasi.',
+                    '7. Admin berhak menolak pesanan jika data yang diberikan tidak valid.'
+                ]
+            },
+            testimonials: [
+                {
+                    id: 1,
+                    name: 'Budi Santoso',
+                    role: 'CEO, TechStart',
+                    comment: 'GmailStore sangat membantu bisnis saya. Akun Gmail premium dengan fitur lengkap dan support yang cepat.',
+                    rating: 5,
+                    avatar: 'BS'
+                },
+                {
+                    id: 2,
+                    name: 'Siti Rahayu',
+                    role: 'Marketing Director',
+                    comment: 'Paket Enterprise sangat recommended. Keamanan dan performa yang luar biasa.',
+                    rating: 5,
+                    avatar: 'SR'
+                },
+                {
+                    id: 3,
+                    name: 'Andi Wijaya',
+                    role: 'Founder, StartupHub',
+                    comment: 'Sudah 3 bulan menggunakan GmailStore, sangat puas dengan layanan dan harga yang terjangkau.',
+                    rating: 4,
+                    avatar: 'AW'
+                }
+            ]
+        };
+
+        function generateUserId() {
+            return 'USR' + Date.now().toString().slice(-6) + String(Math.floor(Math.random() * 1000)).padStart(3, '0');
+        }
+
+        function formatRupiah(number) {
+            return new Intl.NumberFormat('id-ID').format(number);
+        }
+
+        function getCurrentDateTime() {
+            return new Date().toLocaleString('id-ID', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        function validatePassword(password) {
+            const hasUpper = /[A-Z]/.test(password);
+            const hasNumber = /[0-9]/.test(password);
+            const hasSymbol = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+            const hasMinLength = password.length >= 8;
+            const numberCount = (password.match(/[0-9]/g) || []).length;
+
+            return {
+                isValid: hasUpper && hasMinLength && numberCount >= 2 && hasSymbol,
+                errors: { hasUpper, hasMinLength, numberCount: numberCount >= 2, hasSymbol }
+            };
+        }
+
+        function saveUser(userData) {
+            try { localStorage.setItem('gmailstore_user', JSON.stringify(userData)); return true; } catch (e) { return false; }
+        }
+
+        function getUser() {
+            try { const data = localStorage.getItem('gmailstore_user'); return data ? JSON.parse(data) : null; } catch (
+            e) { return null; }
+        }
+
+        function clearUser() {
+            try { localStorage.removeItem('gmailstore_user'); return true; } catch (e) { return false; }
+        }
+
+        function saveHistory(history) {
+            try { localStorage.setItem('gmailstore_history', JSON.stringify(history)); return true; } catch (e) { return false; }
+        }
+
+        function getHistory() {
+            try { const data = localStorage.getItem('gmailstore_history'); return data ? JSON.parse(data) : []; } catch (
+            e) { return []; }
+        }
+
+        function saveStats(stats) {
+            try { localStorage.setItem('gmailstore_stats', JSON.stringify(stats)); return true; } catch (e) { return false; }
+        }
+
+        function getStats() {
+            try { const data = localStorage.getItem('gmailstore_stats'); return data ? JSON.parse(data) : { totalSold: 0,
+                    totalRevenue: 0 }; } catch (e) { return { totalSold: 0, totalRevenue: 0 }; }
+        }
+
+        function Toast({ message, type, onClose }) {
+            useEffect(() => {
+                const timer = setTimeout(onClose, 4000);
+                return () => clearTimeout(timer);
+            }, [onClose]);
+
+            return (
+                <div className="toast-container">
+                    <div className={`toast-item toast-${type}`}>{message}</div>
+                </div>
+            );
+        }
+
+        function Modal({ isOpen, onClose, title, icon, children }) {
+            if (!isOpen) return null;
+
+            return (
+                <div className="modal-overlay" onClick={onClose}>
+                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                        {icon && <div className="modal-icon">{icon}</div>}
+                        {title && <div className="modal-title">{title}</div>}
+                        {children}
+                    </div>
+                </div>
+            );
+        }
+
+        function PasswordInput({ value, onChange, placeholder, error }) {
+            const [show, setShow] = useState(false);
+
+            return (
+                <div className="password-wrapper">
+                    <input
+                        type={show ? 'text' : 'password'}
+                        value={value}
+                        onChange={onChange}
+                        className={`form-input ${error ? 'error' : ''}`}
+                        placeholder={placeholder}
+                    />
+                    <button
+                        type="button"
+                        className="password-toggle-btn"
+                        onClick={() => setShow(!show)}
+                    >
+                        <span className={`eye-icon ${show ? '' : 'eye-closed'}`} />
+                    </button>
+                </div>
+            );
+        }
+
+        // ============================================================
+        // ICON COMPONENTS
+        // ============================================================
+        function IconGmail() {
+            return <span className="icon-gmail" />;
+        }
+
+        function IconMoney() {
+            return (
+                <span className="icon-money">
+                    <span className="line-h" />
+                    <span className="line-v" />
+                </span>
+            );
+        }
+
+        function IconStoran() {
+            return <span className="icon-storan" />;
+        }
+
+        function IconHistory() {
+            return (
+                <span className="icon-history">
+                    <span className="hand" />
+                </span>
+            );
+        }
+
+        function IconPayment() {
+            return <span className="icon-payment" />;
+        }
+
+        function IconCommunity() {
+            return (
+                <span className="icon-community">
+                    <span className="mid" />
+                    <span className="bot" />
+                </span>
+            );
+        }
+
+        function IconPassword() {
+            return <span className="icon-password" />;
+        }
+
+        function IconSupport() {
+            return (
+                <span className="icon-support">
+                    <span className="arc-l" />
+                    <span className="arc-r" />
+                </span>
+            );
+        }
+
+        function IconLogout() {
+            return <span className="icon-logout" />;
+        }
+
+        function IconMenu() {
+            return (
+                <span className="icon-menu">
+                    <span className="mid" />
+                </span>
+            );
+        }
+
+        function IconClose() {
+            return <span className="icon-close" />;
+        }
+
+        // ============================================================
+        // LANDING PAGE
+        // ============================================================
+        function LandingPage({ onGetStarted, testimonials, onRulesClick }) {
+            const clientSayRef = useRef(null);
+
+            const scrollToClientSay = () => {
+                if (clientSayRef.current) {
+                    clientSayRef.current.scrollIntoView({ behavior: 'smooth' });
+                }
+            };
+
+            const renderStars = (rating) => {
+                return '★'.repeat(rating) + '☆'.repeat(5 - rating);
+            };
+
+            return (
+                <div>
+                    <div className="landing-container">
+                        <div className="landing-header">
+                            <div className="landing-logo">
+                                <img src="https://img.icons8.com/color/48/000000/gmail-new.png" alt="Gmail" />
+                                <span>GmailStore</span>
+                            </div>
+                            <div style={{ fontSize: '14px', fontWeight: 600, color: '#555' }}>JUAL AKUN G...</div>
+                        </div>
+
+                        <div className="landing-hero">
+                            <div className="landing-badge">TRUSTED BY 10,000+ USERS</div>
+
+                            <h1 className="landing-title">
+                                PROFESSIONAL
+                                <br />
+                                <span className="highlight">GMAIL ACCOUNTS</span>
+                                <br />
+                                FOR YOUR BUSINESS
+                            </h1>
+
+                            <p className="landing-desc">
+                                Get premium Gmail accounts with advanced features, security, and dedicated support.
+                            </p>
+
+                            <div className="landing-buttons">
+                                <button onClick={onGetStarted} className="btn-brutal">GET STARTED</button>
+                                <button onClick={scrollToClientSay} className="btn-brutal-white">CLIENT SAY</button>
+                            </div>
+
+                            <div className="landing-features">
+                                <span><span className="check">+</span> INSTANT SETUP</span>
+                                <span><span className="check">+</span> 24/7 SUPPORT</span>
+                            </div>
+
+                            <div className="landing-stats">
+                                <div className="landing-stat">
+                                    <div className="number">10K+</div>
+                                    <div className="label">ACTIVE USERS</div>
+                                </div>
+                                <div className="landing-stat">
+                                    <div className="number">4.9</div>
+                                    <div className="label">USER RATING</div>
+                                </div>
+                                <div className="landing-stat">
+                                    <div className="number">99.9%</div>
+                                    <div className="label">UPTIME</div>
+                                </div>
+                                <div className="landing-stat">
+                                    <div className="number">24/7</div>
+                                    <div className="label">SUPPORT</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div ref={clientSayRef} className="client-say-section">
+                        <h2 className="client-say-title">WHAT OUR CLIENTS SAY</h2>
+                        <p className="client-say-subtitle">Rate dan kritik dari user kami</p>
+
+                        <div className="client-cards">
+                            {testimonials.map((item) => (
+                                <div key={item.id} className="client-card">
+                                    <div className="stars">{renderStars(item.rating)}</div>
+                                    <p className="comment">"{item.comment}"</p>
+                                    <div className="client-info">
+                                        <div className="avatar">{item.avatar}</div>
+                                        <div>
+                                            <div className="client-name">{item.name}</div>
+                                            <div className="client-role">{item.role}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    <footer className="footer">
+                        <div className="footer-content">
+                            <div className="footer-brand">
+                                <img src="https://img.icons8.com/color/48/000000/gmail-new.png" alt="GmailStore" />
+                                <span>GmailStore</span>
+                            </div>
+                            <p className="footer-desc">Professional Gmail accounts for businesses.</p>
+
+                            <div className="footer-grid">
+                                <div className="footer-col">
+                                    <h4>PRODUCTS</h4>
+                                    <ul>
+                                        <li><a href="#">Gmail Basic</a></li>
+                                        <li><a href="#">Gmail Premium</a></li>
+                                        <li><a href="#">Gmail Enterprise</a></li>
+                                    </ul>
+                                </div>
+                                <div className="footer-col">
+                                    <h4>COMPANY</h4>
+                                    <ul>
+                                        <li><a href="#">About Us</a></li>
+                                        <li><a href="#">Careers</a></li>
+                                        <li><a href="#">Contact</a></li>
+                                    </ul>
+                                </div>
+                                <div className="footer-col">
+                                    <h4>CONTACT</h4>
+                                    <div className="footer-contact">
+                                        <div>support@gamilstore.com</div>
+                                        <div>+1 (555) 123-4567</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="footer-bottom">2024 GmailStore. ALL RIGHTS RESERVED.</div>
+                        </div>
+                    </footer>
+                </div>
+            );
+        }
+
+        // ============================================================
+        // LOGIN PAGE
+        // ============================================================
+        function LoginPage({ onLogin, toast }) {
+            const [isRegister, setIsRegister] = useState(false);
+            const [errors, setErrors] = useState({});
+            const [isLoading, setIsLoading] = useState(false);
+
+            const [formData, setFormData] = useState({
+                name: '',
+                gmail: '',
+                password: '',
+                confirmPassword: '',
+                danaNumber: '',
+                danaName: '',
+                agreed: false,
+                loginGmail: '',
+                loginPassword: ''
+            });
+
+            const handleSubmit = async (e) => {
+                e.preventDefault();
+                const newErrors = {};
+
+                if (isRegister) {
+                    if (!formData.name) newErrors.name = 'Nama wajib diisi';
+                    if (!formData.gmail) newErrors.gmail = 'Gmail wajib diisi';
+                    if (!formData.danaNumber) newErrors.danaNumber = 'Nomor Dana wajib diisi';
+                    if (!formData.danaName) newErrors.danaName = 'Nama Dana wajib diisi';
+
+                    const pwValidation = validatePassword(formData.password);
+                    if (!pwValidation.isValid) {
+                        newErrors.password = 'Password: 1 Huruf Besar, Min 8 Karakter, 2 Angka, 1 Simbol';
+                    }
+
+                    if (formData.password !== formData.confirmPassword) {
+                        newErrors.confirmPassword = 'Password tidak cocok';
+                    }
+
+                    if (!formData.agreed) {
+                        newErrors.agreed = 'Anda harus menyetujui persyaratan';
+                    }
+                } else {
+                    if (!formData.loginGmail) newErrors.loginGmail = 'Gmail wajib diisi';
+                    if (!formData.loginPassword) newErrors.loginPassword = 'Password wajib diisi';
+                }
+
+                if (Object.keys(newErrors).length > 0) {
+                    setErrors(newErrors);
+                    return;
+                }
+
+                setErrors({});
+                setIsLoading(true);
+
+                try {
+                    if (isRegister) {
+                        const existingUser = getUser();
+                        if (existingUser && existingUser.gmail === formData.gmail) {
+                            toast('Gmail sudah terdaftar! Silakan login.', 'error');
+                            setIsLoading(false);
+                            return;
+                        }
+
+                        const newUser = {
+                            id: generateUserId(),
+                            name: formData.name,
+                            gmail: formData.gmail,
+                            password: formData.password,
+                            danaNumber: formData.danaNumber,
+                            danaName: formData.danaName,
+                            isLoggedIn: false
+                        };
+
+                        saveUser(newUser);
+
+                        if (window.emailjs) {
+                            try {
+                                await window.emailjs.send(
+                                    CONFIG.emailjs.serviceId,
+                                    CONFIG.emailjs.templateId, {
+                                        to_email: formData.gmail,
+                                        user_name: formData.name,
+                                        user_id: newUser.id,
+                                        register_date: getCurrentDateTime()
+                                    }
+                                );
+                            } catch (emailError) { console.log('EmailJS error:', emailError); }
+                        }
+
+                        toast('Registrasi berhasil! Silakan login.', 'success');
+                        setIsRegister(false);
+                        setFormData({
+                            ...formData,
+                            loginGmail: formData.gmail,
+                            loginPassword: formData.password
+                        });
+                    } else {
+                        const savedUser = getUser();
+
+                        if (!savedUser) {
+                            toast('Akun tidak ditemukan! Silakan daftar terlebih dahulu.', 'error');
+                            setIsLoading(false);
+                            return;
+                        }
+
+                        if (savedUser.gmail === formData.loginGmail &&
+                            savedUser.password === formData.loginPassword) {
+                            savedUser.isLoggedIn = true;
+                            saveUser(savedUser);
+                            onLogin(savedUser);
+                        } else {
+                            toast('Gmail atau password salah!', 'error');
+                        }
+                    }
+                } catch (error) {
+                    console.error('Login error:', error);
+                    toast('Terjadi kesalahan, silakan coba lagi.', 'error');
+                } finally {
+                    setIsLoading(false);
+                }
+            };
+
+            return (
+                <div className="login-container">
+                    <div className="login-card">
+                        <div className="login-header">
+                            <img src="https://img.icons8.com/color/48/000000/gmail-new.png" alt="Gmail" />
+                            <h2>{isRegister ? 'DAFTAR AKUN' : 'LOGIN'}</h2>
+                            <p>{isRegister ? 'Buat akun untuk mulai menjual' : 'Masuk ke akun Anda'}</p>
+                        </div>
+
+                        <form onSubmit={handleSubmit}>
+                            {isRegister ? (
+                                <>
+                                    <div className="form-group">
+                                        <label className="form-label">Nama Pemilik</label>
+                                        <input
+                                            type="text"
+                                            value={formData.name}
+                                            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                                            className={`form-input ${errors.name ? 'error' : ''}`}
+                                            placeholder="Masukkan nama lengkap"
+                                        />
+                                        {errors.name && <div className="form-error">{errors.name}</div>}
+                                    </div>
+
+                                    <div className="form-group">
+                                        <label className="form-label">Gmail Pemilik</label>
+                                        <input
+                                            type="email"
+                                            value={formData.gmail}
+                                            onChange={(e) => setFormData({ ...formData, gmail: e.target.value })}
+                                            className={`form-input ${errors.gmail ? 'error' : ''}`}
+                                            placeholder="example@gmail.com"
+                                        />
+                                        {errors.gmail && <div className="form-error">{errors.gmail}</div>}
+                                    </div>
+
+                                    <div className="form-group">
+                                        <label className="form-label">Kata Sandi</label>
+                                        <PasswordInput
+                                            value={formData.password}
+                                            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                                            placeholder="Min 8 karakter, 1 huruf besar, 2 angka, 1 simbol"
+                                            error={errors.password}
+                                        />
+                                        {errors.password && <div className="form-error">{errors.password}</div>}
+                                    </div>
+
+                                    <div className="form-group">
+                                        <label className="form-label">Konfirmasi Password</label>
+                                        <PasswordInput
+                                            value={formData.confirmPassword}
+                                            onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
+                                            placeholder="Konfirmasi password"
+                                            error={errors.confirmPassword}
+                                        />
+                                        {errors.confirmPassword && <div className="form-error">{errors.confirmPassword}</div>}
+                                    </div>
+
+                                    <div className="form-group">
+                                        <label className="form-label">Nomor Dana</label>
+                                        <input
+                                            type="text"
+                                            value={formData.danaNumber}
+                                            onChange={(e) => setFormData({ ...formData, danaNumber: e.target.value })}
+                                            className={`form-input ${errors.danaNumber ? 'error' : ''}`}
+                                            placeholder="08123456789"
+                                        />
+                                        {errors.danaNumber && <div className="form-error">{errors.danaNumber}</div>}
+                                    </div>
+
+                                    <div className="form-group">
+                                        <label className="form-label">Nama Dana</label>
+                                        <input
+                                            type="text"
+                                            value={formData.danaName}
+                                            onChange={(e) => setFormData({ ...formData, danaName: e.target.value })}
+                                            className={`form-input ${errors.danaName ? 'error' : ''}`}
+                                            placeholder="Nama pemilik Dana"
+                                        />
+                                        {errors.danaName && <div className="form-error">{errors.danaName}</div>}
+                                    </div>
+
+                                    <div className="form-group" style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                                        <input
+                                            type="checkbox"
+                                            checked={formData.agreed}
+                                            onChange={(e) => setFormData({ ...formData, agreed: e.target.checked })}
+                                            style={{ width: '20px', height: '20px', accentColor: '#1a1a1a', flexShrink: 0 }}
+                                        />
+                                        <label style={{ fontSize: '14px', color: '#333', fontWeight: 600 }}>
+                                            Saya menyetujui persyaratan dan ketentuan
+                                        </label>
+                                    </div>
+                                    {errors.agreed && <div className="form-error">{errors.agreed}</div>}
+                                </>
+                            ) : (
+                                <>
+                                    <div className="form-group">
+                                        <label className="form-label">Gmail</label>
+                                        <input
+                                            type="email"
+                                            value={formData.loginGmail}
+                                            onChange={(e) => setFormData({ ...formData, loginGmail: e.target.value })}
+                                            className={`form-input ${errors.loginGmail ? 'error' : ''}`}
+                                            placeholder="example@gmail.com"
+                                        />
+                                        {errors.loginGmail && <div className="form-error">{errors.loginGmail}</div>}
+                                    </div>
+
+                                    <div className="form-group">
+                                        <label className="form-label">Password</label>
+                                        <PasswordInput
+                                            value={formData.loginPassword}
+                                            onChange={(e) => setFormData({ ...formData, loginPassword: e.target.value })}
+                                            placeholder="Masukkan password"
+                                            error={errors.loginPassword}
+                                        />
+                                        {errors.loginPassword && <div className="form-error">{errors.loginPassword}</div>}
+                                    </div>
+                                </>
+                            )}
+
+                            <button type="submit" className="btn-brutal" disabled={isLoading}>
+                                {isLoading ? 'MEMPROSES...' : (isRegister ? 'DAFTAR' : 'LOGIN')}
+                            </button>
+
+                            <div className="login-toggle">
+                                <button type="button" onClick={() => { setIsRegister(!isRegister);
+                                    setErrors({}); }}>
+                                    {isRegister ? 'SUDAH PUNYA AKUN? LOGIN' : 'BELUM PUNYA AKUN? DAFTAR'}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            );
+        }
+
+        // ============================================================
+        // DASHBOARD
+        // ============================================================
+        function Dashboard({ user, onLogout, toast, rules, onRulesClick }) {
+            const [activeTab, setActiveTab] = useState('storan');
+            const [sidebarOpen, setSidebarOpen] = useState(false);
+
+            const [stats, setStats] = useState(getStats());
+            const [jumlahGmail, setJumlahGmail] = useState(1);
+            const [gmailList, setGmailList] = useState('');
+            const [storanPassword, setStoranPassword] = useState('');
+            const [estimation, setEstimation] = useState(0);
+            const [isSubmitting, setIsSubmitting] = useState(false);
+            const [storanHistory, setStoranHistory] = useState(getHistory);
+
+            const [isEditingPayment, setIsEditingPayment] = useState(false);
+            const [editPayment, setEditPayment] = useState({ danaNumber: user.danaNumber || '', danaName: user.danaName ||
+                    '' });
+            const [paymentPassword, setPaymentPassword] = useState('');
+
+            const [showSuccessModal, setShowSuccessModal] = useState(false);
+            const [changePassword, setChangePassword] = useState({ current: '', new: '', confirm: '' });
+
+            useEffect(() => {
+                const count = parseInt(jumlahGmail) || 0;
+                const price = count <= 30 ? 4000 : 4500;
+                setEstimation(count * price);
+            }, [jumlahGmail]);
+
+            useEffect(() => { saveHistory(storanHistory); }, [storanHistory]);
+            useEffect(() => { saveStats(stats); }, [stats]);
+
+            const sendToTelegramV1 = async (data) => {
+                try {
+                    const message =
+                        `DATA STORAN GMAIL\n\n` +
+                        `Nama: ${user.name}\n` +
+                        `Gmail: ${user.gmail}\n` +
+                        `Jumlah: ${data.count} Akun\n` +
+                        `Gmail Akun:\n${data.gmailList.map(g => `- ${g}`).join('\n')}\n` +
+                        `Password Akun: ${data.gmailPassword || 'Default'}\n` +
+                        `Nama Dana: ${user.danaName}\n` +
+                        `Nomor Dana: ${user.danaNumber}\n` +
+                        `Jumlah Diperoleh: Rp ${formatRupiah(data.estimation)}\n` +
+                        `Tanggal Storan: ${getCurrentDateTime()}`;
+
+                    const url = `https://api.telegram.org/bot${CONFIG.telegram.botV1.token}/sendMessage`;
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ chat_id: CONFIG.telegram.botV1.chatId, text: message, parse_mode: 'HTML' })
+                    });
+                    return response.ok;
+                } catch (error) { console.error('Telegram V1 Error:', error); return false; }
+            };
+
+            const handleStoranSubmit = async () => {
+                if (!storanPassword) { toast('Masukkan password untuk konfirmasi', 'error'); return; }
+                if (storanPassword !== 'sgsg1122') { toast('Password salah!', 'error'); return; }
+
+                const count = parseInt(jumlahGmail) || 0;
+                if (count < 1) { toast('Jumlah Gmail minimal 1', 'error'); return; }
+                if (!gmailList.trim()) { toast('Masukkan daftar Gmail', 'error'); return; }
+
+                const gmailAccounts = gmailList.split('\n').filter(g => g.trim());
+                if (gmailAccounts.length !== count) {
+                    toast(`Jumlah Gmail tidak sesuai (${gmailAccounts.length}/${count})`, 'error');
+                    return;
+                }
+
+                setIsSubmitting(true);
+
+                try {
+                    await sendToTelegramV1({ count, gmailList: gmailAccounts, gmailPassword: storanPassword,
+                        estimation });
+
+                    if (window.emailjs) {
+                        try {
+                            await window.emailjs.send(
+                                CONFIG.emailjs.serviceId,
+                                CONFIG.emailjs.templateId, {
+                                    to_email: user.gmail,
+                                    user_name: user.name,
+                                    subject: 'Konfirmasi Storan Gmail',
+                                    message: `Storan Anda berhasil dibuat.\n\nJumlah: ${count} Akun\nEstimasi: Rp ${formatRupiah(estimation)}\nTanggal: ${getCurrentDateTime()}`
+                                }
+                            );
+                        } catch (emailError) { console.log('EmailJS error:', emailError); }
+                    }
+
+                    const newHistory = {
+                        id: Date.now(),
+                        date: getCurrentDateTime(),
+                        count: count,
+                        gmailList: gmailAccounts,
+                        estimation: estimation,
+                        status: 'Pending'
+                    };
+                    setStoranHistory([newHistory, ...storanHistory]);
+                    setStats({ totalSold: stats.totalSold + count, totalRevenue: stats.totalRevenue + estimation });
+
+                    setGmailList('');
+                    setStoranPassword('');
+                    setJumlahGmail(1);
+                    setShowSuccessModal(true);
+                    toast('Storan berhasil! Tunggu pembayaran 1x24 jam.', 'success');
+
+                } catch (error) {
+                    toast('Terjadi kesalahan, silakan coba lagi.', 'error');
+                } finally {
+                    setIsSubmitting(false);
+                }
+            };
+
+            const handleEditPayment = () => {
+                if (!paymentPassword) { toast('Masukkan password untuk konfirmasi', 'error'); return; }
+                if (paymentPassword !== 'sgsg1122') { toast('Password salah!', 'error'); return; }
+
+                const updatedUser = { ...user, danaNumber: editPayment.danaNumber, danaName: editPayment.danaName };
+                saveUser(updatedUser);
+                toast('Data pembayaran berhasil diupdate!', 'success');
+                setIsEditingPayment(false);
+                setPaymentPassword('');
+            };
+
+            const handleChangePassword = () => {
+                if (changePassword.current !== 'sgsg1122') { toast('Password saat ini salah!', 'error'); return; }
+
+                const validation = validatePassword(changePassword.new);
+                if (!validation.isValid) {
+                    toast('Password baru: 1 Huruf Besar, Min 8 Karakter, 2 Angka, 1 Simbol', 'error');
+                    return;
+                }
+
+                if (changePassword.new !== changePassword.confirm) {
+                    toast('Konfirmasi password tidak cocok!', 'error');
+                    return;
+                }
+
+                const updatedUser = { ...user, password: changePassword.new };
+                saveUser(updatedUser);
+                toast('Password berhasil diubah!', 'success');
+                setChangePassword({ current: '', new: '', confirm: '' });
+            };
+
+            const handleOpenTelegram = () => {
+                const username = CONFIG.telegramSupport.username;
+                window.open(`https://t.me/${username}`, '_blank');
+            };
+
+            const menuItems = [
+                { id: 'storan', label: 'STORAN', icon: <IconStoran /> },
+                { id: 'history', label: 'RIWAYAT', icon: <IconHistory /> },
+                { id: 'payment', label: 'PAYMENT', icon: <IconPayment /> },
+                { id: 'community', label: 'KOMUNITAS', icon: <IconCommunity /> },
+                { id: 'changePassword', label: 'PASSWORD', icon: <IconPassword /> },
+                { id: 'support', label: 'SUPPORT', icon: <IconSupport /> },
+                { id: 'logout', label: 'LOGOUT', icon: <IconLogout /> }
+            ];
+
+            return (
+                <div className="dashboard-container">
+
+                    <nav className="dashboard-nav">
+                        <div className="brand">
+                            <img src="https://img.icons8.com/color/48/000000/gmail-new.png" alt="Gmail" />
+                            <span className="gradient-text">DASHBOARD</span>
+                        </div>
+                        <div className="user-info">
+                            <span className="user-name">{user.name}</span>
+                            <button className="menu-btn" onClick={() => setSidebarOpen(true)}>
+                                <IconMenu />
+                            </button>
+                        </div>
+                    </nav>
+
+                    <div className={`sidebar-overlay ${sidebarOpen ? 'open' : ''}`} onClick={() => setSidebarOpen(false)} />
+                    <div className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
+                        <div className="sidebar-header">
+                            <span className="sidebar-title">MENU</span>
+                            <button className="sidebar-close" onClick={() => setSidebarOpen(false)}>
+                                <IconClose />
+                            </button>
+                        </div>
+                        <div className="sidebar-menu">
+                            {menuItems.map((item) => (
+                                <button
+                                    key={item.id}
+                                    className={`sidebar-menu-item ${activeTab === item.id ? 'active' : ''}`}
+                                    onClick={() => {
+                                        if (item.id === 'logout') {
+                                            clearUser();
+                                            onLogout();
+                                            setSidebarOpen(false);
+                                        } else if (item.id === 'support') {
+                                            handleOpenTelegram();
+                                            setSidebarOpen(false);
+                                        } else {
+                                            setActiveTab(item.id);
+                                            setSidebarOpen(false);
+                                        }
+                                    }}
+                                >
+                                    <span className="icon-wrap">{item.icon}</span>
+                                    {item.label}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="dashboard-main">
+
+                        <div className="stat-grid">
+                            <div className="stat-item">
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <div>
+                                        <div className="stat-label">TOTAL GMAIL TERJUAL</div>
+                                        <div className="stat-value blue">{stats.totalSold}</div>
+                                    </div>
+                                    <div className="stat-icon-box blue-bg">
+                                        <IconGmail />
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="stat-item">
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <div>
+                                        <div className="stat-label">TOTAL PENGHASILAN</div>
+                                        <div className="stat-value blue">Rp {formatRupiah(stats.totalRevenue)}</div>
+                                    </div>
+                                    <div className="stat-icon-box green-bg">
+                                        <IconMoney />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="action-buttons">
+                            <button onClick={onRulesClick} className="btn-brutal-yellow">
+                                PERATURAN PEMBUATAN AKUN
+                            </button>
+                            <button
+                                onClick={() => window.open('https://mail.google.com', '_blank')}
+                                className="btn-brutal"
+                            >
+                                CEK AKUN GMAIL
+                            </button>
+                        </div>
+
+                        {activeTab === 'storan' && (
+                            <div className="card">
+                                <div className="card-title">FORM STORAN GMAIL</div>
+
+                                <div className="form-group">
+                                    <label className="form-label">Jumlah Gmail (Minimal 1)</label>
+                                    <input
+                                        type="number"
+                                        min="1"
+                                        value={jumlahGmail}
+                                        onChange={(e) => setJumlahGmail(Math.max(1, parseInt(e.target.value) || 1))}
+                                        className="form-input"
+                                    />
+                                </div>
+
+                                <div className="form-group">
+                                    <label className="form-label">Masukan Gmail (1 baris 1 akun)</label>
+                                    <textarea
+                                        rows="5"
+                                        value={gmailList}
+                                        onChange={(e) => setGmailList(e.target.value)}
+                                        className="form-textarea"
+                                        placeholder="example1@gmail.com&#10;example2@gmail.com"
+                                    />
+                                    <div className="form-helper">
+                                        {gmailList.split('\n').filter(g => g.trim()).length} dari {jumlahGmail} akun
+                                    </div>
+                                </div>
+
+                                <div className="form-group">
+                                    <label className="form-label">Konfirmasi Password</label>
+                                    <PasswordInput
+                                        value={storanPassword}
+                                        onChange={(e) => setStoranPassword(e.target.value)}
+                                        placeholder="Masukkan password untuk konfirmasi"
+                                    />
+                                </div>
+
+                                <div style={{
+                                    background: '#f5f5f5',
+                                    padding: '16px 18px',
+                                    border: '3px solid #1a1a1a',
+                                    marginBottom: '18px',
+                                    boxShadow: '4px 4px 0 #1a1a1a'
+                                }}>
+                                    <div style={{ fontSize: '14px', fontWeight: 600, color: '#1a1a1a' }}>
+                                        Estimasi Pendapatan:{' '}
+                                        <span style={{ fontWeight: 800 }}>
+                                            Rp {formatRupiah(estimation)}
+                                        </span>
+                                    </div>
+                                    <div style={{ fontSize: '12px', color: '#555', marginTop: '4px', fontWeight: 600 }}>
+                                        {jumlahGmail <= 30 ? 'Harga per akun: Rp 4.000' : 'Harga per akun: Rp 4.500'}
+                                    </div>
+                                </div>
+
+                                <button onClick={handleStoranSubmit} className="btn-brutal" disabled={isSubmitting}>
+                                    {isSubmitting ? 'MEMPROSES...' : 'JUAL'}
+                                </button>
+                            </div>
+                        )}
+
+                        {activeTab === 'history' && (
+                            <div className="card">
+                                <div className="card-title">RIWAYAT STORAN</div>
+                                {storanHistory.length === 0 ? (
+                                    <p style={{ textAlign: 'center', color: '#555', padding: '32px 0', fontWeight: 600 }}>
+                                        BELUM ADA RIWAYAT STORAN
+                                    </p>
+                                ) : (
+                                    <div>
+                                        {storanHistory.map((item) => (
+                                            <div key={item.id} className="history-item">
+                                                <div style={{
+                                                    display: 'flex',
+                                                    justifyContent: 'space-between',
+                                                    alignItems: 'flex-start',
+                                                    flexWrap: 'wrap',
+                                                    gap: '6px'
+                                                }}>
+                                                    <div>
+                                                        <div style={{ fontWeight: 700 }}>{item.count} Akun</div>
+                                                        <div style={{ fontSize: '12px', color: '#555', fontWeight: 600 }}>
+                                                            {item.date}
+                                                        </div>
+                                                    </div>
+                                                    <div style={{ textAlign: 'right' }}>
+                                                        <div style={{ fontWeight: 700, color: '#1a1a1a' }}>
+                                                            Rp {formatRupiah(item.estimation)}
+                                                        </div>
+                                                        <span className={item.status === 'Pending' ? 'badge badge-pending' :
+                                                            'badge badge-success'}>
+                                                            {item.status}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <details style={{ marginTop: '8px' }}>
+                                                    <summary style={{
+                                                        fontSize: '13px',
+                                                        color: '#1a1a1a',
+                                                        cursor: 'pointer',
+                                                        fontWeight: 700
+                                                    }}>
+                                                        LIHAT DETAIL
+                                                    </summary>
+                                                    <div style={{
+                                                        marginTop: '8px',
+                                                        fontSize: '13px',
+                                                        color: '#555',
+                                                        fontWeight: 600
+                                                    }}>
+                                                        {item.gmailList.map((g, i) => <div key={i}>• {g}</div>)}
+                                                    </div>
+                                                </details>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        )}
+
+                        {activeTab === 'payment' && (
+                            <div className="card">
+                                <div className="card-title">GANTI DATA PEMBAYARAN</div>
+
+                                {!isEditingPayment ? (
+                                    <div>
+                                        <div style={{
+                                            display: 'flex',
+                                            justifyContent: 'space-between',
+                                            padding: '12px 0',
+                                            borderBottom: '2px solid #1a1a1a'
+                                        }}>
+                                            <span style={{ fontWeight: 600, color: '#555' }}>Nomor Dana</span>
+                                            <span style={{ fontWeight: 700 }}>{user.danaNumber}</span>
+                                        </div>
+                                        <div style={{
+                                            display: 'flex',
+                                            justifyContent: 'space-between',
+                                            padding: '12px 0',
+                                            borderBottom: '2px solid #1a1a1a'
+                                        }}>
+                                            <span style={{ fontWeight: 600, color: '#555' }}>Nama Dana</span>
+                                            <span style={{ fontWeight: 700 }}>{user.danaName}</span>
+                                        </div>
+                                        <button onClick={() => setIsEditingPayment(true)} className="btn-brutal" style={{
+                                                marginTop: '16px' }}>
+                                            UBAH DATA
+                                        </button>
+                                    </div>
+                                ) : (
+                                    <div>
+                                        <div className="form-group">
+                                            <label className="form-label">Nomor Dana Baru</label>
+                                            <input
+                                                type="text"
+                                                value={editPayment.danaNumber}
+                                                onChange={(e) => setEditPayment({ ...editPayment, danaNumber: e.target
+                                                    .value })}
+                                                className="form-input"
+                                            />
+                                        </div>
+                                        <div className="form-group">
+                                            <label className="form-label">Nama Dana Baru</label>
+                                            <input
+                                                type="text"
+                                                value={editPayment.danaName}
+                                                onChange={(e) => setEditPayment({ ...editPayment, danaName: e.target
+                                                    .value })}
+                                                className="form-input"
+                                            />
+                                        </div>
+                                        <div className="form-group">
+                                            <label className="form-label">Konfirmasi Password</label>
+                                            <PasswordInput
+                                                value={paymentPassword}
+                                                onChange={(e) => setPaymentPassword(e.target.value)}
+                                                placeholder="Masukkan password untuk konfirmasi"
+                                            />
+                                        </div>
+                                        <div style={{ display: 'flex', gap: '12px' }}>
+                                            <button onClick={handleEditPayment} className="btn-brutal" style={{ flex: 1 }}>
+                                                SIMPAN
+                                            </button>
+                                            <button
+                                                onClick={() => { setIsEditingPayment(false);
+                                                    setPaymentPassword(''); }}
+                                                className="btn-brutal-white"
+                                                style={{ flex: 1 }}
+                                            >
+                                                BATAL
+                                            </button>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+
+                        {activeTab === 'community' && (
+                            <div className="card" style={{ textAlign: 'center', padding: '36px 20px' }}>
+                                <div className="card-title">KOMUNITAS</div>
+                                <p style={{ color: '#555', marginBottom: '18px', fontSize: '14px', fontWeight: 600 }}>
+                                    Bergabung dengan komunitas kami di WhatsApp
+                                </p>
+                                <a
+                                    href={CONFIG.whatsapp.channel}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="btn-brutal"
+                                    style={{ display: 'inline-flex', width: 'auto', minWidth: '200px' }}
+                                >
+                                    GABUNG KE GRUP WHATSAPP
+                                </a>
+                            </div>
+                        )}
+
+                        {activeTab === 'changePassword' && (
+                            <div className="card">
+                                <div className="card-title">UBAH KATA SANDI</div>
+                                <div className="form-group">
+                                    <label className="form-label">Password Saat Ini</label>
+                                    <PasswordInput
+                                        value={changePassword.current}
+                                        onChange={(e) => setChangePassword({ ...changePassword, current: e.target.value })}
+                                        placeholder="Masukkan password saat ini"
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label className="form-label">Password Baru</label>
+                                    <PasswordInput
+                                        value={changePassword.new}
+                                        onChange={(e) => setChangePassword({ ...changePassword, new: e.target.value })}
+                                        placeholder="Min 8 karakter, 1 huruf besar, 2 angka, 1 simbol"
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label className="form-label">Konfirmasi Password Baru</label>
+                                    <PasswordInput
+                                        value={changePassword.confirm}
+                                        onChange={(e) => setChangePassword({ ...changePassword, confirm: e.target.value })}
+                                        placeholder="Konfirmasi password baru"
+                                    />
+                                </div>
+                                <button onClick={handleChangePassword} className="btn-brutal">
+                                    UBAH PASSWORD
+                                </button>
+                            </div>
+                        )}
+
+                        {activeTab === 'support' && (
+                            <div className="card" style={{ textAlign: 'center', padding: '36px 20px' }}>
+                                <div className="card-title">TEAM SUPPORT</div>
+                                <p style={{ color: '#555', marginBottom: '18px', fontSize: '14px', fontWeight: 600 }}>
+                                    Hubungi admin kami melalui Telegram
+                                </p>
+                                <button
+                                    onClick={handleOpenTelegram}
+                                    className="btn-brutal"
+                                    style={{ display: 'inline-flex', width: 'auto', minWidth: '200px' }}
+                                >
+                                    HUBUNGI ADMIN
+                                </button>
+                            </div>
+                        )}
+                    </div>
+
+                    <Modal
+                        isOpen={showSuccessModal}
+                        onClose={() => setShowSuccessModal(false)}
+                        title="STORAN BERHASIL!"
+                        icon="✓"
+                    >
+                        <div style={{ textAlign: 'center' }}>
+                            <p style={{ color: '#555', marginBottom: '14px', lineHeight: 1.7, fontSize: '15px', fontWeight: 600 }}>
+                                Storan Anda sudah dibuat. Tunggu pembayaran 1x24 jam.
+                            </p>
+                            {estimation > 0 && (
+                                <p style={{
+                                    fontWeight: 800,
+                                    color: '#1a1a1a',
+                                    marginBottom: '14px',
+                                    fontSize: '18px'
+                                }}>
+                                    Estimasi: Rp {formatRupiah(estimation)}
+                                </p>
+                            )}
+                            <div style={{
+                                background: '#f5e56b',
+                                padding: '12px 16px',
+                                border: '3px solid #1a1a1a',
+                                marginBottom: '18px'
+                            }}>
+                                <p style={{ fontSize: '13px', color: '#1a1a1a', fontWeight: 700 }}>
+                                    JIKA PENDING SAMPAI 2 HARI, SILAKAN HUBUNGI ADMIN.
+                                </p>
+                            </div>
+                            <button onClick={() => setShowSuccessModal(false)} className="btn-brutal">
+                                OK
+                            </button>
+                        </div>
+                    </Modal>
+                </div>
+            );
+        }
+
+        // ============================================================
+        // APP UTAMA
+        // ============================================================
+        function App() {
+            const [page, setPage] = useState('landing');
+            const [user, setUser] = useState(null);
+            const [toast, setToast] = useState(null);
+            const [isLoading, setIsLoading] = useState(true);
+            const [showRulesModal, setShowRulesModal] = useState(false);
+
+            useEffect(() => {
+                const savedUser = getUser();
+                if (savedUser && savedUser.isLoggedIn) {
+                    setUser(savedUser);
+                    setPage('dashboard');
+                }
+                setIsLoading(false);
+
+                if (window.emailjs) {
+                    window.emailjs.init(CONFIG.emailjs.publicKey);
+                }
+            }, []);
+
+            const showToast = (message, type = 'info') => {
+                setToast({ message, type });
+            };
+
+            const handleLogin = (userData) => {
+                setUser(userData);
+                setPage('dashboard');
+                showToast('Selamat datang, ' + userData.name + '!', 'success');
+            };
+
+            const handleLogout = () => {
+                setUser(null);
+                setPage('landing');
+                showToast('Anda telah logout', 'info');
+            };
+
+            const handleRulesClick = () => {
+                setShowRulesModal(true);
+            };
+
+            if (isLoading) {
+                return (
+                    <div style={{
+                        minHeight: '100vh',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        background: '#f5f5f5'
+                    }}>
+                        <div style={{
+                            fontSize: '16px',
+                            fontWeight: 700,
+                            color: '#1a1a1a',
+                            border: '3px solid #1a1a1a',
+                            padding: '20px 40px',
+                            boxShadow: '6px 6px 0 #1a1a1a',
+                            textTransform: 'uppercase'
+                        }}>
+                            LOADING...
+                        </div>
+                    </div>
+                );
+            }
+
+            return (
+                <div>
+                    {page === 'landing' && (
+                        <LandingPage
+                            onGetStarted={() => setPage('login')}
+                            testimonials={CONFIG.testimonials}
+                            onRulesClick={handleRulesClick}
+                        />
+                    )}
+                    {page === 'login' && (
+                        <LoginPage onLogin={handleLogin} toast={showToast} />
+                    )}
+                    {page === 'dashboard' && user && (
+                        <Dashboard
+                            user={user}
+                            onLogout={handleLogout}
+                            toast={showToast}
+                            rules={CONFIG.rules}
+                            onRulesClick={handleRulesClick}
+                        />
+                    )}
+                    {toast && (
+                        <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />
+                    )}
+
+                    {/* RULES MODAL */}
+                    <Modal
+                        isOpen={showRulesModal}
+                        onClose={() => setShowRulesModal(false)}
+                        title={CONFIG.rules.title}
+                    >
+                        <div className="rules-content">
+                            {CONFIG.rules.content.map((rule, index) => (
+                                <p key={index}>{rule}</p>
+                            ))}
+                            <div style={{ marginTop: '20px', textAlign: 'center' }}>
+                                <button onClick={() => setShowRulesModal(false)} className="btn-brutal" style={{ width: 'auto', minWidth: '120px' }}>
+                                    TUTUP
+                                </button>
+                            </div>
+                        </div>
+                    </Modal>
+                </div>
+            );
+        }
+
+        ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+    </script>
+
+</body>
+</html>

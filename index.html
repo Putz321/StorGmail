@@ -343,7 +343,7 @@
         <div class="lg:col-span-7 relative z-10">
           <div class="inline-flex items-center gap-2 px-4 py-2 brutal-border bg-[var(--yellow)] brutal-shadow-sm font-bold text-xs mb-6 tilt-left">
             <span class="w-2.5 h-2.5 bg-[var(--green)] rounded-full blink"></span>
-            MARKETPLACE TERPERCAYA // 12,840 PENJUAL AKTIF
+            MARKETPLACE TERPERCAYA // 12,840 PENJUAL AKTIF // OPEN 07:00 // CLOSE 17:00
           </div>
           <h1 class="font-display text-5xl md:text-7xl lg:text-8xl leading-[0.95] mb-6">
             JUAL<br><span class="strike-word">GMAIL</span><br>FRESH<br><span class="text-[var(--accent)]">DI SINI.</span>
@@ -458,7 +458,7 @@
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           <div class="brutal-border bg-white p-6 brutal-shadow rotate-card">
             <div class="w-14 h-14 bg-[var(--accent)] brutal-border flex items-center justify-center mb-4"><i class="fa-solid fa-robot text-2xl text-white"></i></div>
-            <h3 class="font-display text-2xl mb-2">BOT TELEGRAM</h3>
+            <h3 class="font-display text-2xl mb-2">JAMINAN</h3>
             <p class="font-medium opacity-80">Data GMail + DANA Di Proses Admin Utama!</p>
           </div>
           <div class="brutal-border bg-[var(--yellow)] p-6 brutal-shadow rotate-card">
@@ -731,6 +731,8 @@
         <div class="peraturan-item"><div class="peraturan-num">1</div><div><div class="font-bold text-sm">PASSWORD WAJIB sgsg1122</div><p class="text-xs opacity-80 mt-1">Semua akun HARUS menggunakan password <strong>sgsg1122</strong>.</p></div></div>
         <div class="peraturan-item"><div class="peraturan-num">2</div><div><div class="font-bold text-sm">AKUN FRESH / BARU</div><p class="text-xs opacity-80 mt-1">Akun harus baru dibuat, belum pernah digunakan.</p></div></div>
         <div class="peraturan-item"><div class="peraturan-num">3</div><div><div class="font-bold text-sm">NO RECOVERY</div><p class="text-xs opacity-80 mt-1">Tidak boleh terhubung nomor HP / email recovery.</p></div></div>
+        <div class="peraturan-item"><div class="peraturan-num">3</div><div><div class="font-bold text-sm">OPEN / CLOSE</div><p class="text-xs opacity-80 mt-1">OPEN DI JAM 07:00 // CLOSE JAM 17:00.</p></div></div>
+        <div class="peraturan-item"><div class="peraturan-num">3</div><div><div class="font-bold text-sm">PERATURAN LAINNYA</div><p class="text-xs opacity-80 mt-1">Nama wajib orang Indonesia, Angka maksimal 2, Tidak ada unsur kasar.</p></div></div>
         <button onclick="closeModal('peraturanModal')" class="w-full mt-5 px-5 py-3 brutal-border bg-[var(--green)] text-white btn-brutal font-display"><i class="fa-solid fa-check mr-1"></i> SAYA MENGERTI</button>
       </div>
     </div>
@@ -1082,7 +1084,7 @@
       if (p !== "sgsg1122") return showToast('ERROR', 'Pass Gmail wajib sgsg1122', true);
 
       const invoice = 'INV-' + Date.now().toString().slice(-6);
-      const pendapatan = parseInt(j) * 2500;
+      const pendapatan = parseInt(j) * 4300;
 
       const orderData = {
         invoice: invoice,
@@ -1128,9 +1130,9 @@
             reply_markup: inlineKeyboard
           })
         });
-        showToast('BERHASIL', 'Pesanan terkirim ke Admin!');
+        showToast('BERHASIL', 'Pesanan Diterima!');
       } catch (err) {
-        showToast('ERROR', 'Gagal kirim ke Admin', true);
+        showToast('ERROR', 'Gagal!', true);
       }
 
       riwayat.push({

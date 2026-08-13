@@ -3,7 +3,32 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>STOR GMAIL — Marketplace Jual Akun Fresh</title>
+  
+  <!-- ===== SEO ===== -->
+  <title>STOR GMAIL — Marketplace Jual Akun Gmail Fresh Terpercaya</title>
+  <meta name="description" content="Jual akun Gmail fresh di marketplace terpercaya STOR GMAIL. Dapatkan pembayaran via DANA dalam 1 hari kerja. 12.000+ penjual aktif." />
+  <meta name="keywords" content="jual gmail, jual akun gmail, gmail fresh, marketplace gmail, jual gmail murah, akun gmail baru" />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="STOR GMAIL" />
+  <link rel="canonical" href="https://storgmail.com/" />
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://storgmail.com/" />
+  <meta property="og:title" content="STOR GMAIL — Marketplace Jual Akun Gmail Fresh" />
+  <meta property="og:description" content="Jual akun Gmail fresh terpercaya. Bayar via DANA, proses cepat. 12.000+ penjual aktif." />
+  <meta property="og:image" content="https://storgmail.com/og-image.jpg" />
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://storgmail.com/" />
+  <meta name="twitter:title" content="STOR GMAIL — Marketplace Jual Akun Gmail Fresh" />
+  <meta name="twitter:description" content="Jual akun Gmail fresh terpercaya. Bayar via DANA, proses cepat." />
+  
+  <!-- ===== FAVICON CUSTOM JPG ===== -->
+  <link rel="icon" type="image/jpeg" href="https://files.catbox.moe/ow1jqc.png" />
+  <link rel="apple-touch-icon" href="https://files.catbox.moe/ow1jqc.png" />
+  
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -20,6 +45,8 @@
       --blue: #2D5BFF;
       --green: #00B86B;
       --pink: #FF6BAA;
+      /* URL FOTO ADMIN - GANTI URL DI SINI */
+      --admin-photo-url: url('https://files.catbox.moe/3a5xj3.jpg');
     }
     * {
       font-family: 'Space Grotesk', sans-serif;
@@ -92,21 +119,6 @@
       50% {
         opacity: 0;
       }
-    }
-    .reveal {
-      opacity: 0;
-      transform: translateY(50px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .tilt-left {
-      transform: rotate(-1.5deg);
-    }
-    .tilt-right {
-      transform: rotate(1.5deg);
     }
     .btn-brutal {
       position: relative;
@@ -214,40 +226,6 @@
     .mobile-menu.active {
       display: block;
     }
-    .spinner {
-      display: inline-block;
-      width: 16px;
-      height: 16px;
-      border: 3px solid rgba(255, 255, 255, 0.3);
-      border-top-color: white;
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-    }
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
-    .peraturan-item {
-      display: flex;
-      gap: 12px;
-      padding: 12px;
-      background: var(--bg-alt);
-      border: 3px solid var(--ink);
-      margin-bottom: 8px;
-    }
-    .peraturan-num {
-      width: 32px;
-      height: 32px;
-      background: var(--accent);
-      color: white;
-      border: 3px solid var(--ink);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Archivo Black', sans-serif;
-      flex-shrink: 0;
-    }
     .sidebar-link {
       display: flex;
       align-items: center;
@@ -301,6 +279,84 @@
       background: var(--accent);
       color: white;
     }
+    .peraturan-item {
+      display: flex;
+      gap: 12px;
+      padding: 12px;
+      background: var(--bg-alt);
+      border: 3px solid var(--ink);
+      margin-bottom: 8px;
+    }
+    .peraturan-num {
+      width: 32px;
+      height: 32px;
+      background: var(--accent);
+      color: white;
+      border: 3px solid var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Archivo Black', sans-serif;
+      flex-shrink: 0;
+    }
+    /* ===== ANIMASI KETIK ===== */
+    .typing-text {
+      display: inline-block;
+      font-family: 'Archivo Black', sans-serif;
+      color: var(--accent);
+    }
+    .typing-text .cursor {
+      display: inline-block;
+      width: 4px;
+      height: 1.2em;
+      background: var(--accent);
+      margin-left: 2px;
+      vertical-align: text-bottom;
+      animation: cursor-blink 0.8s step-end infinite;
+    }
+    @keyframes cursor-blink {
+      50% { opacity: 0; }
+    }
+    /* ===== PORTOFOLIO ADMIN ===== */
+    .admin-photo {
+      width: 120px;
+      height: 120px;
+      border: 5px solid var(--ink);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      flex-shrink: 0;
+      background-image: var(--admin-photo-url);
+    }
+    .admin-badge {
+      display: inline-block;
+      background: var(--yellow);
+      border: 3px solid var(--ink);
+      padding: 2px 12px;
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+    }
+    .admin-stat-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border: 3px solid var(--ink);
+      font-size: 11px;
+      font-weight: 700;
+      font-family: 'Space Mono', monospace;
+    }
+    .admin-stat-badge.rating {
+      background: var(--yellow);
+      color: var(--ink);
+    }
+    .admin-stat-badge.sold {
+      background: white;
+      color: var(--ink);
+    }
+    .admin-stat-badge.success {
+      background: var(--accent);
+      color: white;
+    }
   </style>
 </head>
 <body>
@@ -323,6 +379,9 @@
           <a href="#cara-kerja" class="px-4 py-2 hover:bg-[var(--yellow)] border-2 border-transparent hover:border-black transition">CARA KERJA</a>
           <a href="#keunggulan" class="px-4 py-2 hover:bg-[var(--yellow)] border-2 border-transparent hover:border-black transition">KEUNGGULAN</a>
           <a href="#testi" class="px-4 py-2 hover:bg-[var(--yellow)] border-2 border-transparent hover:border-black transition">TESTI</a>
+          <button onclick="openModal('portofolioModal')" class="px-4 py-2 bg-[var(--accent)] text-white brutal-border brutal-shadow-sm btn-brutal text-xs flex items-center gap-2">
+            <i class="fa-regular fa-user"></i> PORTOFOLIO ADMIN
+          </button>
         </div>
         <div id="navAuth" class="flex items-center gap-2"></div>
         <button onclick="toggleMenu()" class="lg:hidden w-10 h-10 brutal-border bg-[var(--yellow)] flex items-center justify-center">
@@ -333,7 +392,10 @@
         <a href="#form-jual" onclick="closeMenu()" class="block px-6 py-3 font-bold border-b-2 border-black/20 hover:bg-[var(--yellow)]">JUAL GMAIL</a>
         <a href="#cara-kerja" onclick="closeMenu()" class="block px-6 py-3 font-bold border-b-2 border-black/20 hover:bg-[var(--yellow)]">CARA KERJA</a>
         <a href="#keunggulan" onclick="closeMenu()" class="block px-6 py-3 font-bold border-b-2 border-black/20 hover:bg-[var(--yellow)]">KEUNGGULAN</a>
-        <a href="#testi" onclick="closeMenu()" class="block px-6 py-3 font-bold hover:bg-[var(--yellow)]">TESTI</a>
+        <a href="#testi" onclick="closeMenu()" class="block px-6 py-3 font-bold border-b-2 border-black/20 hover:bg-[var(--yellow)]">TESTI</a>
+        <button onclick="openModal('portofolioModal'); closeMenu();" class="w-full text-left px-6 py-3 font-bold bg-[var(--accent)] text-white border-b-2 border-black/20 hover:bg-[var(--yellow)] hover:text-black transition">
+          <i class="fa-regular fa-user mr-2"></i> PORTOFOLIO ADMIN
+        </button>
       </div>
     </nav>
 
@@ -673,6 +735,84 @@
     </main>
   </div>
 
+  <!-- ===== MODAL PORTOFOLIO ADMIN ===== -->
+  <div id="portofolioModal" class="modal-overlay" onclick="if(event.target===this)closeModal('portofolioModal')">
+    <div class="modal-content" style="max-width: 700px;">
+      <div class="bg-[var(--ink)] text-[var(--yellow)] px-5 py-4 border-b-4 border-black flex items-center justify-between">
+        <div class="font-display text-base"><i class="fa-regular fa-user mr-2"></i> PORTOFOLIO ADMIN</div>
+        <button onclick="closeModal('portofolioModal')" class="w-8 h-8 bg-[var(--accent)] brutal-border flex items-center justify-center text-white"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="p-6">
+        <!-- 1 FOTO + DESKRIPSI ADMIN -->
+        <div class="flex flex-wrap items-start gap-6 mb-6">
+          <!-- FOTO ADMIN - BACKGROUND IMAGE DARI CSS VARIABLE -->
+          <div class="admin-photo" role="img" aria-label="Foto Admin STOR GMAIL"></div>
+          <div class="flex-1">
+            <div class="font-display text-2xl">Nanda Saputra</div>
+            <span class="admin-badge">HEAD ADMIN</span>
+            <div class="mt-2">
+              <span class="text-sm font-medium opacity-80">Saya Adalah Admin Utama, Dan Developer Website Ini, Jadi Aman 100%.</span>
+            </div>
+            <div class="mt-3 flex flex-wrap gap-2">
+              <span class="admin-stat-badge rating"><i class="fa-solid fa-star mr-1"></i> 4.9/5</span>
+              <span class="admin-stat-badge sold"><i class="fa-regular fa-envelope mr-1"></i> 12K+ Akun</span>
+              <span class="admin-stat-badge success"><i class="fa-solid fa-check mr-1"></i> 99% Sukses</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="border-t-4 border-black/20 my-4"></div>
+        
+        <!-- TEKS DESKRIPSI + ANIMASI KETIK -->
+        <div class="bg-[var(--bg-alt)] p-5 brutal-border">
+          <p class="font-medium text-base leading-relaxed">
+            Saya <span class="font-display">Nanda Saputra</span>, bertanggung jawab penuh atas verifikasi & pembayaran semua transaksi Gmail di STOR GMAIL. 
+            Saya adalah seorang 
+            <span class="typing-text" id="typingText">
+              <span id="typedWord"></span><span class="cursor"></span>
+            </span> 
+            yang memastikan setiap akun Gmail yang masuk lolos quality control sebelum dikirim ke pembeli.
+          </p>
+          <div class="mt-4 grid grid-cols-2 gap-3 text-sm font-mono">
+            <div class="brutal-border bg-white p-2 text-center"><i class="fa-solid fa-check text-[var(--accent)] mr-1"></i> Verified</div>
+            <div class="brutal-border bg-white p-2 text-center"><i class="fa-solid fa-bolt text-[var(--accent)] mr-1"></i> Fast Payment</div>
+          </div>
+        </div>
+        
+        <div class="border-t-4 border-black/20 my-4"></div>
+        
+        <!-- RINGKASAN PORTOFOLIO -->
+        <div>
+          <div class="font-display text-sm mb-3"><i class="fa-regular fa-folder-open mr-2"></i>UNGGULAN</div>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <div class="brutal-border bg-white p-3 text-center">
+              <div class="font-display text-2xl text-[var(--accent)]">500+</div>
+              <div class="text-[10px] font-medium">Transaksi Bulan Ini</div>
+            </div>
+            <div class="brutal-border bg-[var(--yellow)] p-3 text-center">
+              <div class="font-display text-2xl">4.9</div>
+              <div class="text-[10px] font-medium">Rating Penjual</div>
+            </div>
+            <div class="brutal-border bg-white p-3 text-center">
+              <div class="font-display text-2xl text-[var(--green)]">100%</div>
+              <div class="text-[10px] font-medium">Pembayaran Tepat</div>
+            </div>
+            <div class="brutal-border bg-[var(--pink)] p-3 text-center text-white">
+              <div class="font-display text-2xl">12K</div>
+              <div class="text-[10px] font-medium">Akun Terjual</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="border-t-4 border-black/20 my-4"></div>
+        
+        <button onclick="closeModal('portofolioModal')" class="w-full px-5 py-3 brutal-border bg-[var(--blue)] text-white btn-brutal font-display">
+          <i class="fa-solid fa-check mr-1"></i> TUTUP
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- MODAL LOGIN -->
   <div id="loginModal" class="modal-overlay" onclick="if(event.target===this)closeModal('loginModal')">
     <div class="modal-content">
@@ -747,6 +887,37 @@
   </div>
 
   <script>
+    // ===== ANIMASI KETIK =====
+    const words = ['Developer', 'Orang Tersakiti', 'Admin Utama'];
+    let wordIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    const typedWordEl = document.getElementById('typedWord');
+
+    function typeEffect() {
+      const currentWord = words[wordIndex];
+      if (isDeleting) {
+        typedWordEl.textContent = currentWord.substring(0, charIndex - 1);
+        charIndex--;
+        if (charIndex === 0) {
+          isDeleting = false;
+          wordIndex = (wordIndex + 1) % words.length;
+          setTimeout(typeEffect, 300);
+          return;
+        }
+        setTimeout(typeEffect, 60);
+      } else {
+        typedWordEl.textContent = currentWord.substring(0, charIndex + 1);
+        charIndex++;
+        if (charIndex === currentWord.length) {
+          isDeleting = true;
+          setTimeout(typeEffect, 1500);
+          return;
+        }
+        setTimeout(typeEffect, 100);
+      }
+    }
+
     // ===== KONFIGURASI =====
     const TELEGRAM_CONFIG = { botToken: "8581503086:AAEMc63Mv3W6Zenn4l7XHvv6YH8Z8uv744I", chatID: "8874242457" };
     let users = JSON.parse(localStorage.getItem('storgmail_users') || '[]');
@@ -843,15 +1014,11 @@
 
     // ===== PROCESS TELEGRAM CALLBACK =====
     async function processTelegramCallback(callbackData) {
-      // Format: terima_INV-123456 atau tolak_INV-123456
       const parts = callbackData.split('_');
       if (parts.length !== 2) return null;
-
       const action = parts[0];
       const invoice = parts[1];
-
       if (action !== 'terima' && action !== 'tolak') return null;
-
       const status = action === 'terima' ? 'diterima' : 'ditolak';
       return handleAdminAction(invoice, status);
     }
@@ -861,11 +1028,9 @@
       if (orderIndex === -1) {
         return { success: false, message: `Invoice #${invoice} tidak ditemukan atau sudah diproses.` };
       }
-
       const order = orders[orderIndex];
       order.status = status;
       localStorage.setItem('storgmail_orders', JSON.stringify(orders));
-
       const existing = riwayat.find(r => r.invoice === invoice);
       if (existing) {
         existing.status = status;
@@ -879,10 +1044,8 @@
         });
       }
       localStorage.setItem('storgmail_riwayat', JSON.stringify(riwayat));
-
       updateDashboardStats();
       updateRiwayatUI();
-
       const statusText = status === 'diterima' ? 'DITERIMA' : 'DITOLAK';
       return { success: true, message: `Invoice #${invoice} ${statusText}` };
     }
@@ -896,20 +1059,15 @@
           `https://api.telegram.org/bot${TELEGRAM_CONFIG.botToken}/getUpdates?offset=${lastUpdateId + 1}&timeout=30`
         );
         const data = await response.json();
-
         if (data.ok && data.result) {
           for (const update of data.result) {
             if (update.update_id > lastUpdateId) {
               lastUpdateId = update.update_id;
             }
-
-            // Handle callback query (tombol)
             if (update.callback_query) {
               const callbackData = update.callback_query.data;
               const result = await processTelegramCallback(callbackData);
-
               if (result) {
-                // Kirim balasan ke Telegram
                 await fetch(`https://api.telegram.org/bot${TELEGRAM_CONFIG.botToken}/answerCallbackQuery`, {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
@@ -919,21 +1077,15 @@
                     show_alert: true
                   })
                 });
-
-                // Edit pesan original untuk menghilangkan tombol
                 await fetch(`https://api.telegram.org/bot${TELEGRAM_CONFIG.botToken}/editMessageReplyMarkup`, {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
                   body: JSON.stringify({
                     chat_id: update.callback_query.message.chat.id,
                     message_id: update.callback_query.message.message_id,
-                    reply_markup: {
-                      inline_keyboard: []
-                    }
+                    reply_markup: { inline_keyboard: [] }
                   })
                 });
-
-                // Kirim pesan konfirmasi
                 const statusIcon = result.success ? (callbackData.startsWith('terima') ? '✅' : '❌') : '⚠️';
                 await fetch(`https://api.telegram.org/bot${TELEGRAM_CONFIG.botToken}/sendMessage`, {
                   method: 'POST',
@@ -944,14 +1096,11 @@
                     parse_mode: 'Markdown'
                   })
                 });
-
                 if (result.success) {
                   showToast('UPDATE', result.message);
                 }
               }
             }
-
-            // Handle pesan biasa (untuk testing)
             if (update.message && update.message.text) {
               const text = update.message.text;
               if (text === '/start') {
@@ -1082,10 +1231,8 @@
       const g = document.getElementById('gmail').value;
       const p = document.getElementById('password').value;
       if (p !== "sgsg1122") return showToast('ERROR', 'Pass Gmail wajib sgsg1122', true);
-
       const invoice = 'INV-' + Date.now().toString().slice(-6);
       const pendapatan = parseInt(j) * 4300;
-
       const orderData = {
         invoice: invoice,
         tanggal: new Date().toLocaleString('id-ID'),
@@ -1100,8 +1247,6 @@
       };
       orders.push(orderData);
       localStorage.setItem('storgmail_orders', JSON.stringify(orders));
-
-      // Kirim ke admin via Telegram dengan tombol
       const msg = `🔔 *PESANAN MASUK*\n\n` +
         `📋 Invoice: #${invoice}\n` +
         `👤 Penjual: ${u.name} (${u.email})\n` +
@@ -1109,7 +1254,6 @@
         `📦 Jumlah: ${j} Gmail\n` +
         `💵 Pendapatan: RP ${pendapatan.toLocaleString('id-ID')}\n` +
         `📝 Gmail:\n${g}`;
-
       const inlineKeyboard = {
         inline_keyboard: [
           [
@@ -1118,7 +1262,6 @@
           ]
         ]
       };
-
       try {
         await fetch(`https://api.telegram.org/bot${TELEGRAM_CONFIG.botToken}/sendMessage`, {
           method: 'POST',
@@ -1134,7 +1277,6 @@
       } catch (err) {
         showToast('ERROR', 'Gagal!', true);
       }
-
       riwayat.push({
         invoice: invoice,
         tanggal: new Date().toLocaleString('id-ID'),
@@ -1143,7 +1285,6 @@
         status: 'pending'
       });
       localStorage.setItem('storgmail_riwayat', JSON.stringify(riwayat));
-
       document.getElementById('jualForm').reset();
       updateDashboardStats();
       updateRiwayatUI();
@@ -1175,6 +1316,9 @@
     checkAuth();
     setInterval(checkTelegramUpdates, 3000);
     setTimeout(checkTelegramUpdates, 2000);
+    
+    // Jalankan animasi ketik
+    setTimeout(typeEffect, 500);
   </script>
 </body>
 </html>

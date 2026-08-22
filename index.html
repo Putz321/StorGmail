@@ -6,6 +6,10 @@
 <meta name="theme-color" content="#050505" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<link rel="icon" type="image/png" sizes="32x32" href="https://files.catbox.moe/qrom9l.jpg" />
+<link rel="icon" type="image/png" sizes="16x16" href="https://files.catbox.moe/qrom9l.jpg" />
+<link rel="apple-touch-icon" href="https://files.catbox.moe/qrom9l.jpg" />
+<link rel="shortcut icon" href="https://files.catbox.moe/qrom9l.jpg" />
 <title>StorGmail — Sell Account</title>
 <style>
 /* === FONT iOS BOLD (SF Pro Display) === */
@@ -144,7 +148,7 @@ svg { width: 100%; height: 100%; display: block; }
   100% { opacity:1; transform:scale(1); }
 }
 @keyframes fadeUp {
-  from { opacity:0; transform:translateY(8px); }
+  from { opacity:0; transform:translateY(12px); }
   to { opacity:1; transform:translateY(0); }
 }
 @keyframes loadingSlide {
@@ -179,6 +183,299 @@ svg { width: 100%; height: 100%; display: block; }
   from { opacity:0; transform:translateY(8px); }
   to { opacity:1; transform:translateY(0); }
 }
+
+/* ===== WELCOME SCREEN ===== */
+.screen-welcome {
+  padding: 0;
+  overflow-y: auto;
+  background: radial-gradient(ellipse at 0% 0%, rgba(74,140,255,0.12), transparent 60%), linear-gradient(180deg, #050505 0%, #0a0a0a 100%);
+}
+.welcome-hero {
+  padding: 60px 24px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  gap: 16px;
+  min-height: auto;
+}
+.welcome-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: rgba(74,140,255,0.1);
+  border: 1px solid rgba(74,140,255,0.25);
+  border-radius: 99px;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+  animation: fadeUp 0.8s ease both;
+}
+.welcome-badge svg { width: 14px; height: 14px; color: currentColor; }
+
+.welcome-logo {
+  width: 76px; height: 76px;
+  border-radius: 20px;
+  border: 2px solid rgba(74,140,255,0.25);
+  box-shadow: 0 0 30px var(--accent-glow);
+  animation: fadeUp 0.8s 0.1s ease both;
+}
+.welcome-title {
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 1.25;
+  background: linear-gradient(135deg, #fff 30%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: fadeUp 0.8s 0.2s ease both;
+}
+.welcome-desc {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
+  max-width: 100%;
+  animation: fadeUp 0.8s 0.3s ease both;
+}
+
+.laptop-hero-card {
+  width: 100%;
+  background: linear-gradient(135deg, rgba(20,20,20,0.8), rgba(12,12,12,0.9));
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 8px;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+  animation: fadeUp 0.8s 0.35s ease both;
+}
+.laptop-hero-card::before {
+  content: '';
+  position: absolute;
+  top: -50%; right: -50%;
+  width: 150px; height: 150px;
+  background: var(--accent-glow);
+  filter: blur(40px);
+  pointer-events: none;
+}
+.laptop-icon-wrap {
+  width: 60px; height: 60px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(74,140,255,0.2), rgba(26,92,255,0.05));
+  border: 1px solid rgba(74,140,255,0.3);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--accent);
+  flex-shrink: 0;
+  box-shadow: 0 0 20px rgba(74,140,255,0.15);
+}
+.laptop-icon-wrap svg { width: 32px; height: 32px; }
+.laptop-card-text h4 { color: #fff; font-size: 15px; margin-bottom: 2px; }
+.laptop-card-text p { color: var(--muted); font-size: 12px; line-height: 1.4; }
+
+.btn-start {
+  margin-top: 8px;
+  padding: 0 32px;
+  height: 52px;
+  font-size: 15px;
+  border-radius: 99px;
+  animation: fadeUp 0.8s 0.4s ease both;
+  width: 100% !important;
+  justify-content: center;
+}
+
+.btn-download-welcome {
+  margin-top: 4px;
+  padding: 0 32px;
+  height: 52px;
+  font-size: 15px;
+  border-radius: 99px;
+  animation: fadeUp 0.8s 0.45s ease both;
+  width: 100% !important;
+  justify-content: center;
+  background: linear-gradient(135deg, #10b981, #059669);
+  box-shadow: 0 8px 24px rgba(16,185,129,0.3), inset 0 1px 0 rgba(255,255,255,0.2);
+}
+.btn-download-welcome:active {
+  transform: scale(.97);
+  box-shadow: 0 4px 12px rgba(16,185,129,0.3);
+}
+.btn-download-welcome .btn-icon {
+  width: 20px;
+  height: 20px;
+}
+.btn-download-welcome svg {
+  width: 20px;
+  height: 20px;
+}
+
+.welcome-section {
+  padding: 36px 24px;
+  text-align: left;
+  background: rgba(255,255,255,0.015);
+  border-top: 1px solid var(--border);
+}
+.welcome-section.anim-1 { animation: fadeUp 0.8s 0.5s ease both; }
+.welcome-section.anim-2 { animation: fadeUp 0.8s 0.6s ease both; }
+.welcome-section.anim-3 { animation: fadeUp 0.8s 0.7s ease both; }
+
+.welcome-section h2 {
+  font-size: 19px;
+  color: #fff;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.welcome-section h2 svg {
+  width: 22px; height: 22px;
+  color: var(--accent);
+}
+.welcome-section p {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.feature-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 16px; }
+.feature-card {
+  background: rgba(12,12,12,0.7);
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+.feature-icon {
+  width: 42px; height: 42px;
+  background: rgba(74,140,255,0.1);
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+.feature-icon svg { width: 20px; height: 20px; }
+.feature-card h4 { color: #fff; font-size: 14px; margin-bottom: 4px; }
+.feature-card p { font-size: 12px; color: var(--muted); line-height: 1.4; }
+
+.testi-grid { display: flex; flex-direction: column; gap: 12px; margin-top: 16px; }
+.testi-card {
+  background: linear-gradient(135deg, rgba(18,18,18,0.9), rgba(12,12,12,0.95));
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+}
+.testi-head { display: flex; gap: 10px; align-items: center; margin-bottom: 8px; }
+.testi-avatar {
+  width: 36px; height: 36px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  color: #fff; font-weight: bold; font-size: 13px;
+  box-shadow: 0 0 12px var(--accent-glow);
+}
+.testi-name { color: #fff; font-size: 14px; font-weight: 800; }
+.testi-role { color: var(--muted-2); font-size: 11px; font-weight: 600; }
+.testi-star { color: var(--warning); display: flex; gap: 2px; margin-left: auto; }
+.testi-star svg { width: 13px; height: 13px; color: currentColor; }
+.testi-text { color: var(--muted); font-size: 13px; line-height: 1.5; font-style: italic; }
+
+.welcome-footer {
+  padding: 40px 24px 80px;
+  text-align: left;
+  background: #040404;
+  border-top: 1px solid var(--border-strong);
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.footer-logo-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.footer-logo-img {
+  width: 32px; height: 32px;
+  border-radius: 8px;
+}
+.footer-brand-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -.2px;
+}
+.footer-desc {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+  max-width: 320px;
+}
+.footer-badges {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+.footer-badge-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--muted);
+  font-size: 11px;
+}
+.footer-badge-item svg { width: 12px; height: 12px; color: var(--accent); }
+
+.footer-nav-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+.footer-col h4 {
+  color: #fff;
+  font-size: 14px;
+  font-weight: 800;
+  margin-bottom: 12px;
+  letter-spacing: .2px;
+}
+.footer-col ul { list-style: none; padding: 0; }
+.footer-col ul li {
+  color: var(--muted);
+  font-size: 12px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.footer-col ul li:hover { color: var(--accent); }
+
+.footer-bottom {
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: var(--muted-2);
+  font-size: 11px;
+}
+.footer-bottom-links {
+  display: flex;
+  gap: 14px;
+}
+.footer-bottom-links a { color: var(--muted); font-size: 11px; }
 
 /* ===== AUTH ===== */
 .screen-auth {
@@ -345,7 +642,7 @@ svg { width: 100%; height: 100%; display: block; }
 }
 .auth-secure svg { width:13px; height:13px; color:currentColor; }
 
-/* ===== HEADER ===== */
+/* ===== HEADER & PAGES ===== */
 .app-header {
   display: flex;
   align-items: center;
@@ -418,10 +715,15 @@ svg { width: 100%; height: 100%; display: block; }
   font-weight: 800;
   letter-spacing: -.2px;
 }
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
 .icon-btn {
-  width: 42px;
-  height: 42px;
-  border-radius: 14px;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
   background: rgba(255,255,255,0.04);
   border: 1px solid var(--border);
   display: flex;
@@ -433,20 +735,47 @@ svg { width: 100%; height: 100%; display: block; }
   backdrop-filter: blur(4px);
 }
 .icon-btn:active { transform:scale(.92); }
-.icon-btn svg { width:20px; height:20px; color:currentColor; }
+.icon-btn svg { 
+  width: 18px; 
+  height: 18px; 
+  color: currentColor;
+}
 .icon-btn .dot {
   position: absolute;
-  top: 9px;
-  right: 9px;
-  width: 7px;
-  height: 7px;
+  top: 8px;
+  right: 8px;
+  width: 6px;
+  height: 6px;
   background: var(--danger);
   border-radius: 50%;
   box-shadow: 0 0 8px var(--danger);
 }
-.back-btn svg { width:22px; height:22px; }
+.back-btn svg { width:20px; height:20px; }
 
-/* ===== PAGE SCROLL ===== */
+.icon-btn-download {
+  background: rgba(16,185,129,0.12);
+  border-color: rgba(16,185,129,0.25);
+  color: #10b981;
+}
+.icon-btn-download svg { 
+  width: 18px; 
+  height: 18px; 
+  color: #10b981;
+}
+.icon-btn-download:active { background: rgba(16,185,129,0.2); }
+
+.icon-btn-rules {
+  background: rgba(255,159,10,0.1);
+  border-color: rgba(255,159,10,0.2);
+  color: #ff9f0a;
+}
+.icon-btn-rules svg { 
+  width: 18px; 
+  height: 18px; 
+  color: #ff9f0a;
+}
+.icon-btn-rules:active { background: rgba(255,159,10,0.18); }
+
 .page-scroll {
   flex: 1;
   overflow-y: auto;
@@ -459,152 +788,34 @@ svg { width: 100%; height: 100%; display: block; }
   justify-content: space-between;
   margin: 24px 0 12px;
 }
-.section-title h3 {
-  font-size: 14px;
-  font-weight: 800;
-  color: #fff;
-  letter-spacing: .2px;
-}
-.section-title a {
-  color: var(--accent);
-  font-size: 13px;
-  font-weight: 800;
-}
+.section-title h3 { font-size: 14px; font-weight: 800; color: #fff; letter-spacing: .2px; }
+.section-title a { color: var(--accent); font-size: 13px; font-weight: 800; }
 
-/* ===== STATS ===== */
-.stats-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-top: 8px;
-}
-.stat-card {
-  background: rgba(16,16,16,0.6);
-  backdrop-filter: blur(12px);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 14px;
-  position: relative;
-  overflow: hidden;
-  transition: transform var(--transition);
-  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
-}
+.stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 8px; }
+.stat-card { background: rgba(16,16,16,0.6); backdrop-filter: blur(12px); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; box-shadow: 0 4px 16px rgba(0,0,0,0.3); transition: transform var(--transition); }
 .stat-card:active { transform:scale(.98); }
-.stat-primary {
-  background: rgba(74,140,255,0.10);
-  border-color: rgba(74,140,255,0.2);
-  box-shadow: 0 0 30px rgba(74,140,255,0.05);
-}
-.stat-top {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 8px;
-}
-.stat-icon {
-  width: 22px;
-  height: 22px;
-  border-radius: 8px;
-  background: rgba(255,255,255,0.06);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--accent);
-}
+.stat-primary { background: rgba(74,140,255,0.10); border-color: rgba(74,140,255,0.2); box-shadow: 0 0 30px rgba(74,140,255,0.05); }
+.stat-top { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.stat-icon { width: 22px; height: 22px; border-radius: 8px; background: rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: center; color: var(--accent); }
 .stat-icon svg { width:14px; height:14px; color:currentColor; }
-.stat-label {
-  color: var(--muted);
-  font-size: 11px;
-  letter-spacing: .4px;
-  text-transform: uppercase;
-  font-weight: 700;
-}
-.stat-value {
-  font-size: 22px;
-  font-weight: 800;
-  letter-spacing: -.5px;
-  margin-bottom: 2px;
-}
+.stat-label { color: var(--muted); font-size: 11px; letter-spacing: .4px; text-transform: uppercase; font-weight: 700; }
+.stat-value { font-size: 22px; font-weight: 800; letter-spacing: -.5px; margin-bottom: 2px; }
 .status-active { color: var(--success); font-size:14px; letter-spacing:1px; }
 .stat-meta { color: var(--muted-2); font-size:11px; font-weight:600; }
 
-/* ===== QUICK ACTIONS ===== */
-.quick-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-}
-.quick-card {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  background: rgba(20,20,20,0.5);
-  backdrop-filter: blur(12px);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 16px 14px;
-  text-align: left;
-  transition: all var(--transition);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-}
+.quick-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.quick-card { display: flex; flex-direction: column; gap: 6px; background: rgba(20,20,20,0.5); backdrop-filter: blur(12px); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 16px 14px; text-align: left; transition: all var(--transition); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
 .quick-card:active { transform:scale(.97); border-color:rgba(255,255,255,0.1); }
-.quick-primary {
-  background: rgba(74,140,255,0.10);
-  border-color: rgba(74,140,255,0.2);
-}
-.quick-icon {
-  width: 36px;
-  height: 36px;
-  border-radius: 11px;
-  background: rgba(255,255,255,0.06);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--accent);
-  margin-bottom: 4px;
-}
-.quick-primary .quick-icon {
-  background: rgba(74,140,255,0.15);
-  color: var(--accent);
-}
+.quick-primary { background: rgba(74,140,255,0.10); border-color: rgba(74,140,255,0.2); }
+.quick-icon { width: 36px; height: 36px; border-radius: 11px; background: rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: center; color: var(--accent); margin-bottom: 4px; }
+.quick-primary .quick-icon { background: rgba(74,140,255,0.15); color: var(--accent); }
 .quick-icon svg { width:18px; height:18px; color:currentColor; }
-.quick-label {
-  color: #fff;
-  font-weight: 800;
-  font-size: 14px;
-}
-.quick-sub {
-  color: var(--muted);
-  font-size: 11px;
-  font-weight: 600;
-}
-.quick-wa-wrap {
-  grid-column: 1 / -1;
-  margin-top: 4px;
-}
-.quick-wa {
-  background: rgba(74,140,255,0.08);
-  border-color: rgba(74,140,255,0.2);
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 14px;
-  padding: 16px 20px;
-  width: 100%;
-  border-radius: var(--radius-sm);
-  transition: all var(--transition);
-  text-align: left;
-}
+.quick-label { color: #fff; font-weight: 800; font-size: 14px; }
+.quick-sub { color: var(--muted); font-size: 11px; font-weight: 600; }
+.quick-wa-wrap { grid-column: 1 / -1; margin-top: 4px; }
+.quick-wa { background: rgba(74,140,255,0.08); border-color: rgba(74,140,255,0.2); display: flex; flex-direction: row; align-items: center; gap: 14px; padding: 16px 20px; width: 100%; border-radius: var(--radius-sm); transition: all var(--transition); text-align: left; }
 .quick-wa:active { transform:scale(.98); border-color:rgba(74,140,255,0.3); }
-.quick-wa .quick-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  background: rgba(74,140,255,0.12);
-  color: var(--accent);
-  flex-shrink: 0;
-  margin-bottom: 0;
-}
+.quick-wa .quick-icon { width: 44px; height: 44px; border-radius: 12px; background: rgba(74,140,255,0.12); color: var(--accent); flex-shrink: 0; margin-bottom: 0; }
 .quick-wa .quick-icon svg { width:22px; height:22px; }
 .quick-wa .quick-content { flex:1; display:flex; flex-direction:column; gap:2px; }
 .quick-wa .quick-label { font-size:15px; color: var(--accent); }
@@ -615,153 +826,32 @@ svg { width: 100%; height: 100%; display: block; }
 .recent-list { display:flex; flex-direction:column; gap:10px; }
 
 /* ===== FORM ===== */
-.form-hero {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  background: rgba(74,140,255,0.08);
-  border: 1px solid rgba(74,140,255,0.2);
-  border-radius: var(--radius);
-  padding: 18px;
-  margin-top: 4px;
-  backdrop-filter: blur(8px);
-}
-.form-hero-icon {
-  width: 48px;
-  height: 48px;
-  border-radius: 14px;
-  background: linear-gradient(135deg, var(--accent), var(--accent-2));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  box-shadow: 0 8px 20px rgba(74,140,255,0.25);
-}
+.form-hero { display: flex; align-items: center; gap: 14px; background: rgba(74,140,255,0.08); border: 1px solid rgba(74,140,255,0.2); border-radius: var(--radius); padding: 18px; margin-top: 4px; backdrop-filter: blur(8px); }
+.form-hero-icon { width: 48px; height: 48px; border-radius: 14px; background: linear-gradient(135deg, var(--accent), var(--accent-2)); display: flex; align-items: center; justify-content: center; color: #fff; box-shadow: 0 8px 20px rgba(74,140,255,0.25); }
 .form-hero-icon svg { width:24px; height:24px; color:currentColor; }
 .form-hero-label { color:#fff; font-size:13px; font-weight:800; }
-.form-hero-price {
-  color: var(--accent);
-  font-size: 20px;
-  font-weight: 800;
-  letter-spacing: -.3px;
-}
+.form-hero-price { color: var(--accent); font-size: 20px; font-weight: 800; letter-spacing: -.3px; }
 .form-hero-price span { color:var(--muted); font-size:13px; font-weight:700; }
 
-.card {
-  background: rgba(18,18,18,0.6);
-  backdrop-filter: blur(16px);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 16px;
-  margin-top: 12px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
-}
-.card-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
-.label {
-  display: block;
-  color: var(--muted);
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: .4px;
-  text-transform: uppercase;
-  margin-bottom: 10px;
-}
-.badge {
-  background: rgba(74,140,255,0.15);
-  color: var(--accent);
-  font-size: 11px;
-  font-weight: 800;
-  padding: 4px 10px;
-  border-radius: 99px;
-  letter-spacing: .3px;
-}
-.qty-wrap {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.qty-btn {
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  font-size: 18px;
-  transition: all var(--transition);
-}
-.qty-btn:active {
-  transform: scale(.9);
-  background: rgba(74,140,255,0.15);
-  color: var(--accent);
-}
+.card { background: rgba(18,18,18,0.6); backdrop-filter: blur(16px); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 16px; margin-top: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
+.card-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.label { display: block; color: var(--muted); font-size: 11px; font-weight: 800; letter-spacing: .4px; text-transform: uppercase; margin-bottom: 10px; }
+.badge { background: rgba(74,140,255,0.15); color: var(--accent); font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 99px; letter-spacing: .3px; }
+.qty-wrap { display: flex; align-items: center; gap: 10px; }
+.qty-btn { width: 44px; height: 44px; border-radius: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 18px; transition: all var(--transition); }
+.qty-btn:active { transform: scale(.9); background: rgba(74,140,255,0.15); color: var(--accent); }
 .qty-btn svg { width:16px; height:16px; color:currentColor; }
-.qty-wrap input {
-  flex: 1;
-  height: 44px;
-  text-align: center;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  font-size: 18px;
-  font-weight: 800;
-  color: #fff;
-}
+.qty-wrap input { flex: 1; height: 44px; text-align: center; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 12px; font-size: 18px; font-weight: 800; color: #fff; }
 .hint { color: var(--muted-2); font-size:11px; margin-top:8px; font-weight:600; }
 
 .gmail-list { display:flex; flex-direction:column; gap:10px; }
-.gmail-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 0 12px;
-  height: 48px;
-  animation: fadeUp .3s ease both;
-}
-.gmail-num {
-  width: 26px;
-  height: 26px;
-  border-radius: 8px;
-  background: linear-gradient(135deg, var(--accent), var(--accent-2));
-  color: #fff;
-  font-weight: 800;
-  font-size: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-.gmail-item input {
-  flex: 1;
-  background: none;
-  border: none;
-  outline: none;
-  color: #fff;
-  font-size: 14px;
-  height: 100%;
-  font-weight: 700;
-}
+.gmail-item { display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 12px; padding: 0 12px; height: 48px; animation: fadeUp .3s ease both; }
+.gmail-num { width: 26px; height: 26px; border-radius: 8px; background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #fff; font-weight: 800; font-size: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.gmail-item input { flex: 1; background: none; border: none; outline: none; color: #fff; font-size: 14px; height: 100%; font-weight: 700; }
 .gmail-item.invalid { border-color: var(--danger); box-shadow:0 0 0 2px rgba(255,69,58,0.15); }
 
-.confirm-field {
-  background: rgba(52,199,89,0.05);
-  border-color: rgba(52,199,89,0.15);
-}
-.confirm-field:focus-within {
-  border-color: rgba(52,199,89,0.4);
-  box-shadow: 0 0 0 3px rgba(52,199,89,0.1);
-}
+.confirm-field { background: rgba(52,199,89,0.05); border-color: rgba(52,199,89,0.15); }
+.confirm-field:focus-within { border-color: rgba(52,199,89,0.4); box-shadow: 0 0 0 3px rgba(52,199,89,0.1); }
 .confirm-field .field-icon { color: var(--success); }
 .confirm-field .field-toggle { color: var(--success); }
 .confirm-field .field-toggle:hover { background:rgba(52,199,89,0.1); color:var(--success); }
@@ -770,341 +860,79 @@ svg { width: 100%; height: 100%; display: block; }
 .confirm-hint.show { display:block; }
 
 .price-card { background: rgba(16,16,16,0.5); }
-.price-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 6px 0;
-  color: var(--muted);
-  font-size: 13px;
-  font-weight: 600;
-}
+.price-row { display: flex; align-items: center; justify-content: space-between; padding: 6px 0; color: var(--muted); font-size: 13px; font-weight: 600; }
 .price-row span:last-child { color:#fff; font-weight:800; }
-.price-total {
-  border-top: 1px dashed var(--border);
-  margin-top: 6px;
-  padding-top: 10px;
-}
+.price-total { border-top: 1px dashed var(--border); margin-top: 6px; padding-top: 10px; }
 .price-total span:first-child { color:#fff; font-weight:800; font-size:14px; }
 .price-total span:last-child { color: var(--accent); font-size:18px; font-weight:800; }
 
-.pay-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.pay-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
-  background: rgba(255,255,255,0.06);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--accent);
-  flex-shrink: 0;
-}
+.pay-row { display: flex; align-items: center; gap: 12px; }
+.pay-icon { width: 40px; height: 40px; border-radius: 12px; background: rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: center; color: var(--accent); flex-shrink: 0; }
 .pay-icon svg { width:20px; height:20px; color:currentColor; }
 .pay-text { flex:1; min-width:0; }
 .pay-number { color:#fff; font-weight:800; font-size:14px; }
 .pay-name { color:var(--muted); font-size:12px; font-weight:600; }
 
-#btnConfirmOrder {
-  margin-top: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  background: linear-gradient(135deg, var(--accent), var(--accent-2));
-  box-shadow: 0 8px 24px rgba(74,140,255,0.3);
-}
+#btnConfirmOrder { margin-top: 14px; display: flex; align-items: center; justify-content: center; gap: 8px; background: linear-gradient(135deg, var(--accent), var(--accent-2)); box-shadow: 0 8px 24px rgba(74,140,255,0.3); }
 #btnConfirmOrder svg { width:20px; height:20px; color:#fff; }
 
-.filter-chips {
-  display: flex;
-  gap: 8px;
-  overflow-x: auto;
-  padding: 4px 0 6px;
-}
-.chip {
-  padding: 8px 16px;
-  border-radius: 99px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid var(--border);
-  color: var(--muted);
-  font-size: 13px;
-  font-weight: 800;
-  white-space: nowrap;
-  transition: all var(--transition);
-}
+.filter-chips { display: flex; gap: 8px; overflow-x: auto; padding: 4px 0 6px; }
+.chip { padding: 8px 16px; border-radius: 99px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); color: var(--muted); font-size: 13px; font-weight: 800; white-space: nowrap; transition: all var(--transition); }
 .chip:active { transform:scale(.95); }
-.chip.active {
-  background: linear-gradient(135deg, var(--accent), var(--accent-2));
-  color: #fff;
-  border-color: transparent;
-  box-shadow: 0 0 20px rgba(74,140,255,0.2);
-}
+.chip.active { background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #fff; border-color: transparent; box-shadow: 0 0 20px rgba(74,140,255,0.2); }
 
 .history-list { display:flex; flex-direction:column; gap:12px; margin-top:8px; }
-.order-card {
-  background: rgba(18,18,18,0.6);
-  backdrop-filter: blur(16px);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 16px;
-  position: relative;
-  overflow: hidden;
-  animation: fadeUp .4s ease both;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
-}
-.order-card::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 3px;
-  background: linear-gradient(180deg, var(--accent), var(--accent-2));
-}
-.order-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 12px;
-}
-.order-id {
-  font-size: 13px;
-  font-weight: 800;
-  color: #fff;
-  letter-spacing: .3px;
-}
-.order-status {
-  font-size: 10px;
-  font-weight: 800;
-  padding: 4px 10px;
-  border-radius: 99px;
-  letter-spacing: .4px;
-}
+.order-card { background: rgba(18,18,18,0.6); backdrop-filter: blur(16px); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 16px; position: relative; overflow: hidden; animation: fadeUp .4s ease both; box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
+.order-card::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, var(--accent), var(--accent-2)); }
+.order-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.order-id { font-size: 13px; font-weight: 800; color: #fff; letter-spacing: .3px; }
+.order-status { font-size: 10px; font-weight: 800; padding: 4px 10px; border-radius: 99px; letter-spacing: .4px; }
 .status-success { background:rgba(52,199,89,0.15); color:var(--success); }
 .status-pending { background:rgba(255,159,10,0.18); color:var(--warning); }
 .status-failed { background:rgba(255,69,58,0.15); color:var(--danger); }
-.order-meta {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px 14px;
-  margin-bottom: 12px;
-}
-.meta-row {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-}
-.meta-label {
-  color: var(--muted);
-  font-size: 10px;
-  letter-spacing: .3px;
-  text-transform: uppercase;
-  font-weight: 700;
-}
-.meta-value {
-  color: #fff;
-  font-size: 13px;
-  font-weight: 800;
-  word-break: break-all;
-}
-.order-gmails {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 10px 12px;
-  margin-bottom: 12px;
-}
-.gmail-line {
-  font-size: 12px;
-  color: var(--muted);
-  word-break: break-all;
-  padding: 2px 0;
-  font-weight: 600;
-}
-.order-total-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-top: 12px;
-  border-top: 1px dashed var(--border);
-}
+.order-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 14px; margin-bottom: 12px; }
+.meta-row { display: flex; flex-direction: column; gap: 1px; }
+.meta-label { color: var(--muted); font-size: 10px; letter-spacing: .3px; text-transform: uppercase; font-weight: 700; }
+.meta-value { color: #fff; font-size: 13px; font-weight: 800; word-break: break-all; }
+.order-gmails { background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; margin-bottom: 12px; }
+.gmail-line { font-size: 12px; color: var(--muted); word-break: break-all; padding: 2px 0; font-weight: 600; }
+.order-total-row { display: flex; align-items: center; justify-content: space-between; padding-top: 12px; border-top: 1px dashed var(--border); }
 .order-total-label { color:var(--muted); font-size:12px; font-weight:700; }
 .order-total-value { color:var(--accent); font-weight:800; font-size:16px; }
 .order-actions { display:flex; gap:8px; margin-top:12px; }
-.btn-ghost {
-  flex: 1;
-  height: 38px;
-  border-radius: 10px;
-  background: rgba(255,69,58,0.08);
-  border: 1px solid rgba(255,69,58,0.18);
-  color: var(--danger);
-  font-weight: 800;
-  font-size: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  transition: all var(--transition);
-}
+.btn-ghost { flex: 1; height: 38px; border-radius: 10px; background: rgba(255,69,58,0.08); border: 1px solid rgba(255,69,58,0.18); color: var(--danger); font-weight: 800; font-size: 12px; display: flex; align-items: center; justify-content: center; gap: 6px; transition: all var(--transition); }
 .btn-ghost:active { transform:scale(.96); }
 .btn-ghost svg { width:14px; height:14px; color:currentColor; }
 
-.empty-state {
-  text-align: center;
-  padding: 60px 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 14px;
-}
-.empty-icon {
-  width: 64px;
-  height: 64px;
-  border-radius: 20px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--muted);
-}
+.empty-state { text-align: center; padding: 60px 20px; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.empty-icon { width: 64px; height: 64px; border-radius: 20px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--muted); }
 .empty-icon svg { width:30px; height:30px; color:currentColor; }
 .empty-title { font-size:16px; font-weight:800; color:#fff; }
 .empty-sub { font-size:13px; color:var(--muted); max-width:220px; font-weight:600; }
 
 /* ===== PROFILE ===== */
-.profile-head {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  background: rgba(74,140,255,0.06);
-  border-radius: var(--radius);
-  padding: 20px 18px;
-  margin-top: 4px;
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(74,140,255,0.06);
-}
-.profile-avatar {
-  width: 72px;
-  height: 72px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #222, #151515);
-  border: 2px solid var(--border-strong);
-  overflow: hidden;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--accent);
-  font-weight: 800;
-  font-size: 26px;
-  position: relative;
-  cursor: pointer;
-  box-shadow: 0 0 24px rgba(74,140,255,0.15);
-}
+.profile-head { display: flex; align-items: center; gap: 16px; background: rgba(74,140,255,0.06); border-radius: var(--radius); padding: 20px 18px; margin-top: 4px; backdrop-filter: blur(8px); border: 1px solid rgba(74,140,255,0.06); }
+.profile-avatar { width: 72px; height: 72px; border-radius: 50%; background: linear-gradient(135deg, #222, #151515); border: 2px solid var(--border-strong); overflow: hidden; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: var(--accent); font-weight: 800; font-size: 26px; position: relative; cursor: pointer; box-shadow: 0 0 24px rgba(74,140,255,0.15); }
 .profile-avatar:hover { opacity:.8; }
 .profile-avatar img { width:100%; height:100%; object-fit:cover; }
-.profile-avatar .avatar-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity var(--transition);
-  font-size: 11px;
-  color: #fff;
-  font-weight: 800;
-  border-radius: 50%;
-}
+.profile-avatar .avatar-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity var(--transition); font-size: 11px; color: #fff; font-weight: 800; border-radius: 50%; }
 .profile-avatar:hover .avatar-overlay { opacity:1; }
 .profile-info { flex:1; min-width:0; }
-.profile-info h2 {
-  font-size: 18px;
-  font-weight: 800;
-  letter-spacing: -.2px;
-  margin-bottom: 2px;
-}
+.profile-info h2 { font-size: 18px; font-weight: 800; letter-spacing: -.2px; margin-bottom: 2px; }
 .profile-info p { color:var(--muted); font-size:13px; word-break:break-all; font-weight:600; }
-.profile-status {
-  display: inline-block;
-  margin-top: 6px;
-  background: rgba(52,199,89,0.15);
-  color: var(--success);
-  padding: 3px 10px;
-  border-radius: 99px;
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: .5px;
-}
+.profile-status { display: inline-block; margin-top: 6px; background: rgba(52,199,89,0.15); color: var(--success); padding: 3px 10px; border-radius: 99px; font-size: 10px; font-weight: 800; letter-spacing: .5px; }
 .info-card { padding:6px 16px; }
-.info-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 0;
-  border-bottom: 1px solid var(--border);
-  gap: 14px;
-}
+.info-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border); gap: 14px; }
 .info-row:last-child { border-bottom:none; }
-.info-label {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: var(--muted);
-  font-size: 13px;
-  font-weight: 600;
-}
+.info-label { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: 13px; font-weight: 600; }
 .info-label svg { width:16px; height:16px; color:currentColor; }
-.info-value {
-  color: #fff;
-  font-weight: 800;
-  font-size: 13px;
-  text-align: right;
-  word-break: break-all;
-}
+.info-value { color: #fff; font-weight: 800; font-size: 13px; text-align: right; word-break: break-all; }
 .menu-list { display:flex; flex-direction:column; gap:8px; }
-.menu-item {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  background: rgba(18,18,18,0.5);
-  backdrop-filter: blur(12px);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 14px 16px;
-  width: 100%;
-  text-align: left;
-  transition: all var(--transition);
-}
-.menu-item:active {
-  transform: scale(.98);
-  background: rgba(30,30,30,0.5);
-}
-.menu-icon {
-  width: 36px;
-  height: 36px;
-  border-radius: 11px;
-  background: rgba(255,255,255,0.06);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--accent);
-  flex-shrink: 0;
-}
+.menu-item { display: flex; align-items: center; gap: 14px; background: rgba(18,18,18,0.5); backdrop-filter: blur(12px); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px 16px; width: 100%; text-align: left; transition: all var(--transition); }
+.menu-item:active { transform: scale(.98); background: rgba(30,30,30,0.5); }
+.menu-icon { width: 36px; height: 36px; border-radius: 11px; background: rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: center; color: var(--accent); flex-shrink: 0; }
 .menu-icon svg { width:18px; height:18px; color:currentColor; }
-.menu-text {
-  flex: 1;
-  color: #fff;
-  font-size: 14px;
-  font-weight: 800;
-}
+.menu-text { flex: 1; color: #fff; font-size: 14px; font-weight: 800; }
 .menu-arrow { color: var(--muted-2); width:18px; height:18px; }
 .menu-arrow svg { width:18px; height:18px; color:currentColor; }
 .menu-danger .menu-icon { background:rgba(255,69,58,0.12); color:var(--danger); }
@@ -1150,285 +978,156 @@ svg { width: 100%; height: 100%; display: block; }
 .tab-item svg { width:22px; height:22px; color:currentColor; }
 .tab-item.active { color: var(--accent); }
 .tab-item.active .tab-icon { filter: drop-shadow(0 0 12px var(--accent-glow)); }
-.tab-center .tab-icon {
-  width: 32px;
-  height: 32px;
-  background: linear-gradient(135deg, var(--accent), var(--accent-2));
-  border-radius: 11px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  box-shadow: 0 6px 14px rgba(74,140,255,0.4);
-}
+.tab-center .tab-icon { width: 32px; height: 32px; background: linear-gradient(135deg, var(--accent), var(--accent-2)); border-radius: 11px; display: flex; align-items: center; justify-content: center; color: #fff; box-shadow: 0 6px 14px rgba(74,140,255,0.4); }
 .tab-center .tab-icon svg { width:18px; height:18px; color:#fff; }
 .tab-center.active .tab-icon { filter:none; }
-.tab-indicator {
-  position: absolute;
-  top: 6px;
-  bottom: 6px;
-  width: 38px;
-  background: rgba(74,140,255,0.08);
-  border: 1px solid rgba(74,140,255,0.1);
-  border-radius: 18px;
-  transition: left .42s cubic-bezier(.34,1.4,.64,1);
-  pointer-events: none;
-  z-index: -1;
-  opacity: 0;
-}
+.tab-indicator { position: absolute; top: 6px; bottom: 6px; width: 38px; background: rgba(74,140,255,0.08); border: 1px solid rgba(74,140,255,0.1); border-radius: 18px; transition: left .42s cubic-bezier(.34,1.4,.64,1); pointer-events: none; z-index: -1; opacity: 0; }
 
-/* ===== MODAL ===== */
-.modal-root {
-  position: fixed;
-  inset: 0;
-  z-index: 200;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-  background: rgba(0,0,0,0.7);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-}
+/* ===== MODAL & TOAST ===== */
+.modal-root { position: fixed; inset: 0; z-index: 200; display: none; align-items: center; justify-content: center; padding: 24px; background: rgba(0,0,0,0.7); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
 .modal-root.active { display: flex; animation:fadeIn .25s ease both; }
 @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-.modal-card {
-  width: 100%;
-  max-width: 380px;
-  background: rgba(16,16,16,0.85);
-  backdrop-filter: blur(32px);
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius);
-  padding: 24px 20px;
-  box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,0.06);
-  animation: modalIn .42s var(--spring) both;
-  max-height: 90vh;
-  overflow-y: auto;
-}
-@keyframes modalIn {
-  from { opacity:0; transform:scale(.9) translateY(20px); }
-  to { opacity:1; transform:scale(1) translateY(0); }
-}
-.modal-icon {
-  width: 54px;
-  height: 54px;
-  border-radius: 18px;
-  margin: 0 auto 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+.modal-card { width: 100%; max-width: 380px; background: rgba(16,16,16,0.85); backdrop-filter: blur(32px); border: 1px solid var(--border-strong); border-radius: var(--radius); padding: 24px 20px; box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,0.06); animation: modalIn .42s var(--spring) both; max-height: 90vh; overflow-y: auto; }
+@keyframes modalIn { from { opacity:0; transform:scale(.9) translateY(20px); } to { opacity:1; transform:scale(1) translateY(0); } }
+.modal-icon { width: 54px; height: 54px; border-radius: 18px; margin: 0 auto 14px; display: flex; align-items: center; justify-content: center; }
 .modal-icon svg { width:26px; height:26px; color:currentColor; }
 .modal-icon.success { background:rgba(52,199,89,0.15); color:var(--success); }
 .modal-icon.error { background:rgba(255,69,58,0.15); color:var(--danger); }
 .modal-icon.warning { background:rgba(255,159,10,0.15); color:var(--warning); }
 .modal-icon.info { background:rgba(74,140,255,0.15); color:var(--accent); }
 .modal-icon.confirm { background:rgba(74,140,255,0.15); color:var(--accent); }
-.modal-title {
-  text-align: center;
-  font-size: 18px;
-  font-weight: 800;
-  letter-spacing: -.2px;
-  margin-bottom: 6px;
-}
-.modal-desc {
-  text-align: center;
-  color: var(--muted);
-  font-size: 13px;
-  line-height: 1.5;
-  margin-bottom: 18px;
-  font-weight: 600;
-  white-space: pre-line;
-}
-.modal-body { margin-bottom:18px; }
+.modal-title { text-align: center; font-size: 18px; font-weight: 800; letter-spacing: -.2px; margin-bottom: 6px; }
+.modal-desc { text-align: center; color: var(--muted); font-size: 13px; line-height: 1.5; margin-bottom: 18px; font-weight: 600; white-space: pre-line; }
+.modal-body { margin-bottom: 18px; }
 .modal-actions { display:flex; gap:10px; }
-.btn-modal {
-  flex: 1;
-  height: 46px;
-  border-radius: 12px;
-  font-weight: 800;
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  transition: transform var(--transition);
-}
+.btn-modal { flex: 1; height: 46px; border-radius: 12px; font-weight: 800; font-size: 14px; display: flex; align-items: center; justify-content: center; gap: 6px; transition: transform var(--transition); }
 .btn-modal:active { transform:scale(.96); }
-.btn-modal.btn-cancel {
-  background: rgba(255,255,255,0.05);
-  border: 1px solid var(--border);
-  color: #fff;
-}
-.btn-modal.btn-confirm {
-  background: linear-gradient(135deg, var(--accent), var(--accent-2));
-  color: #fff;
-  box-shadow: 0 6px 18px rgba(74,140,255,0.3);
-}
-.btn-modal.btn-danger {
-  background: linear-gradient(135deg, #ff5a52, #ff3b30);
-  color: #fff;
-  box-shadow: 0 6px 18px rgba(255,69,58,0.3);
-}
+.btn-modal.btn-cancel { background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: #fff; }
+.btn-modal.btn-confirm { background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #fff; box-shadow: 0 6px 18px rgba(74,140,255,0.3); }
+.btn-modal.btn-danger { background: linear-gradient(135deg, #ff5a52, #ff3b30); color: #fff; box-shadow: 0 6px 18px rgba(255,69,58,0.3); }
 .btn-modal svg { width:16px; height:16px; color:currentColor; }
-.btn-modal:disabled { opacity:.6; transform:scale(1); }
-.modal-field {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: rgba(20,20,20,0.6);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 0 14px;
-  height: 46px;
-  margin-bottom: 10px;
-  backdrop-filter: blur(4px);
-}
-.modal-field:focus-within {
-  border-color: rgba(74,140,255,0.4);
-  box-shadow: 0 0 0 3px rgba(74,140,255,0.12);
-}
-.modal-field input {
-  flex: 1;
-  background: none;
-  border: none;
-  outline: none;
-  color: #fff;
-  font-size: 14px;
-  width: 100%;
-  height: 100%;
-  font-weight: 700;
-}
-.modal-field-icon { width:18px; height:18px; color:var(--muted); flex-shrink:0; }
-.modal-field-icon svg { color:currentColor; }
-.summary-row {
-  display: flex;
-  justify-content: space-between;
-  padding: 8px 0;
-  border-bottom: 1px dashed var(--border);
-  font-size: 13px;
-}
-.summary-row:last-child { border-bottom:none; }
-.summary-row span:first-child { color:var(--muted); font-weight:600; }
-.summary-row span:last-child { color:#fff; font-weight:800; text-align:right; word-break:break-all; }
-.summary-row.total span:first-child { color:#fff; font-weight:800; }
-.summary-row.total span:last-child { color:var(--accent); font-size:16px; font-weight:800; }
-.gmail-preview {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 10px 12px;
-  margin: 8px 0 14px;
-  max-height: 140px;
-  overflow-y: auto;
-}
-.gmail-preview p { font-size:12px; color:#fff; padding:2px 0; word-break:break-all; font-weight:600; }
 
-/* ===== TOAST ===== */
-.toast-root {
-  position: fixed;
-  top: 16px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 300;
-  width: calc(100% - 32px);
-  max-width: 380px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  pointer-events: none;
-  padding-top: max(16px, env(safe-area-inset-top));
-}
-.toast {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  background: rgba(16,16,16,0.85);
-  backdrop-filter: blur(24px);
-  border: 1px solid var(--border-strong);
-  border-radius: 14px;
-  padding: 12px 14px;
-  box-shadow: var(--shadow);
-  pointer-events: auto;
-  animation: toastIn .42s var(--spring) both;
-}
+.toast-root { position: fixed; top: 16px; left: 50%; transform: translateX(-50%); z-index: 300; width: calc(100% - 32px); max-width: 380px; display: flex; flex-direction: column; gap: 8px; pointer-events: none; padding-top: max(16px, env(safe-area-inset-top)); }
+.toast { display: flex; align-items: center; gap: 12px; background: rgba(16,16,16,0.85); backdrop-filter: blur(24px); border: 1px solid var(--border-strong); border-radius: 14px; padding: 12px 14px; box-shadow: var(--shadow); pointer-events: auto; animation: toastIn .42s var(--spring) both; }
 .toast.hide { animation: toastOut .35s ease both; }
-@keyframes toastIn {
-  from { opacity:0; transform:translateY(-30px) scale(.9); }
-  to { opacity:1; transform:translateY(0) scale(1); }
-}
-@keyframes toastOut {
-  to { opacity:0; transform:translateY(-20px) scale(.95); }
-}
-.toast-icon {
-  width: 30px;
-  height: 30px;
-  border-radius: 9px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
+@keyframes toastIn { from { opacity:0; transform:translateY(-30px) scale(.9); } to { opacity:1; transform:translateY(0) scale(1); } }
+@keyframes toastOut { to { opacity:0; transform:translateY(-20px) scale(.95); } }
+.toast-icon { width: 30px; height: 30px; border-radius: 9px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .toast-icon svg { width:16px; height:16px; color:currentColor; }
 .toast.success .toast-icon { background:rgba(52,199,89,0.15); color:var(--success); }
 .toast.error .toast-icon { background:rgba(255,69,58,0.15); color:var(--danger); }
-.toast.warning .toast-icon { background:rgba(255,159,10,0.15); color:var(--warning); }
 .toast.info .toast-icon { background:rgba(74,140,255,0.15); color:var(--accent); }
 .toast-text { flex:1; min-width:0; }
 .toast-title { color:#fff; font-weight:800; font-size:13px; }
 .toast-msg { color:var(--muted); font-size:12px; margin-top:1px; font-weight:600; word-break:break-word; }
 
-/* ===== WHATSAPP BUTTON ===== */
-.whatsapp-btn {
-  display: inline-flex;
+/* ===== CLOSED STORAGE NOTIFICATION ===== */
+.storage-closed-banner {
+  background: rgba(255,69,58,0.08);
+  border: 1px solid rgba(255,69,58,0.25);
+  border-radius: var(--radius-sm);
+  padding: 16px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 12px 0 0;
+  backdrop-filter: blur(6px);
+}
+.storage-closed-banner .closed-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255,69,58,0.15);
+  display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  background: #25D366;
-  color: #fff;
-  padding: 10px 20px;
-  border-radius: 12px;
-  font-weight: 800;
-  font-size: 14px;
-  text-decoration: none;
-  margin-top: 10px;
-  width: 100%;
-  transition: transform var(--transition), box-shadow var(--transition);
+  color: var(--danger);
+  flex-shrink: 0;
 }
-.whatsapp-btn:hover { transform:scale(1.02); box-shadow:0 6px 20px rgba(37,211,102,0.3); }
-.whatsapp-btn:active { transform:scale(.97); }
-.whatsapp-btn svg { width:20px; height:20px; color:#fff; }
+.storage-closed-banner .closed-icon svg { width:20px; height:20px; }
+.storage-closed-banner .closed-text h4 {
+  color: var(--danger);
+  font-size: 14px;
+  font-weight: 800;
+}
+.storage-closed-banner .closed-text p {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.4;
+  font-weight: 600;
+}
 
-/* ===== RESPONSIVE ===== */
+.input-group {
+  margin-bottom: 12px;
+}
+.input-group label {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  letter-spacing: .3px;
+}
+.input-group input {
+  width: 100%;
+  height: 44px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0 14px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  transition: all var(--transition);
+}
+.input-group input:focus {
+  border-color: rgba(74,140,255,0.4);
+  box-shadow: 0 0 0 3px rgba(74,140,255,0.1);
+}
+.input-group .helper {
+  color: var(--muted-2);
+  font-size: 11px;
+  margin-top: 4px;
+  font-weight: 600;
+}
+
+/* ===== RULES MODAL ===== */
+.rules-content {
+  padding: 4px 0;
+}
+.rules-content h4 {
+  color: var(--accent);
+  font-size: 14px;
+  margin: 14px 0 6px;
+  font-weight: 800;
+}
+.rules-content h4:first-child { margin-top: 0; }
+.rules-content p, .rules-content li {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+  font-weight: 600;
+}
+.rules-content ul {
+  padding-left: 20px;
+  margin: 6px 0;
+}
+.rules-content ul li {
+  margin-bottom: 4px;
+}
+.rules-content .highlight {
+  color: var(--warning);
+  font-weight: 800;
+}
+
 @media(min-width:768px) {
-  .app {
-    min-height: 100vh;
-    min-height: 100dvh;
-    margin-top: 24px;
-    margin-bottom: 24px;
-    border-radius: 32px;
-    border: 1px solid var(--border);
-    overflow: hidden;
-    box-shadow: 0 40px 120px rgba(0,0,0,0.6), 0 0 60px rgba(74,140,255,0.05);
-  }
-  body {
-    background: #000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
-  }
+  .app { min-height: 100vh; min-height: 100dvh; margin-top: 24px; margin-bottom: 24px; border-radius: 32px; border: 1px solid var(--border); overflow: hidden; box-shadow: 0 40px 120px rgba(0,0,0,0.6), 0 0 60px rgba(74,140,255,0.05); }
+  body { background: #000; display: flex; align-items: center; justify-content: center; padding: 24px; }
   .loading-screen { background:#000; }
   .tabbar { position:fixed; bottom:32px; }
 }
-@media (prefers-reduced-motion: reduce) {
-  * { animation-duration:.01ms !important; transition-duration:.01ms !important; }
-}
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
+@media (prefers-reduced-motion: reduce) { * { animation-duration:.01ms !important; transition-duration:.01ms !important; } }
+input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
 input[type=number] { -moz-appearance:textfield; }
 </style>
 </head>
@@ -1438,7 +1137,7 @@ input[type=number] { -moz-appearance:textfield; }
 <div id="loadingScreen" class="loading-screen">
   <div class="loading-inner">
     <div class="loading-logo">
-      <img src="https://via.placeholder.com/96/4a8cff/ffffff?text=LOGO" alt="Store Gmail Logo" id="loadingLogo" />
+      <img src="https://files.catbox.moe/qrom9l.jpg" alt="Store Gmail Logo" id="loadingLogo" />
     </div>
     <div class="loading-text">STOREGMAIL</div>
     <div class="loading-bar"><span></span></div>
@@ -1448,12 +1147,170 @@ input[type=number] { -moz-appearance:textfield; }
 <!-- APP SHELL -->
 <div id="app" class="app" aria-hidden="true">
 
+  <!-- WELCOME SCREEN -->
+  <section id="screen-welcome" class="screen screen-welcome active" data-screen="welcome">
+    <div class="welcome-hero">
+      <div class="welcome-badge">
+        <span data-svg="laptop"></span> Digital Store Provider
+      </div>
+      <img src="https://files.catbox.moe/qrom9l.jpg" alt="Logo" class="welcome-logo" id="welcomeLogo" />
+      <h1 class="welcome-title">Platform Stor Gmail Terpercaya</h1>
+      <p class="welcome-desc">Layanan penjualan akun Gmail terverifikasi, aman, dan terpercaya 100% Dibayar. Ayo Stor Gmail Sekarang!.</p>
+      
+      <div class="laptop-hero-card">
+        <div class="laptop-icon-wrap">
+          <span data-svg="laptop"></span>
+        </div>
+        <div class="laptop-card-text">
+          <h4>Butuh Dana? Stor Sekarang</h4>
+          <p>Sistem Pembayaran Transparan, Join Dan Hasilkan Uang Sekarang!.</p>
+        </div>
+      </div>
+
+      <button class="btn-primary btn-start" onclick="navigate('auth'); showAuth('login');">
+        <span>Mulai Sekarang</span><span class="btn-icon" data-svg="arrow"></span>
+      </button>
+      
+      <button class="btn-primary btn-download-welcome" id="btnDownloadWelcome">
+        <span class="btn-icon" data-svg="download"></span>
+        <span>Download Aplikasi</span>
+      </button>
+    </div>
+
+    <div class="welcome-section anim-1">
+      <h2><span data-svg="info"></span> Latar Belakang Website</h2>
+      <p>Jual akun Gmail Fresh dengan mudah dan praktis di GmailKu. Kirim akun sesuai ketentuan, lakukan proses verifikasi, dan dapatkan pembayaran setelah akun berhasil diterima. Proses dirancang sederhana, cepat, dan transparan untuk memudahkan setiap penjual.</p>
+    </div>
+
+    <div class="welcome-section anim-2">
+      <h2><span data-svg="settings"></span> Keunggulan & Layanan</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon" data-svg="bag"></div>
+          <div>
+            <h4>Proses Instan & Otomatis</h4>
+            <p>Sistem otomatis memproses Penjualan Anda secara instan begitu konfirmasi dilakukan.</p>
+          </div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" data-svg="shield"></div>
+          <div>
+            <h4>Keamanan</h4>
+            <p>Semua akun telah dites secara cermat untuk memastikan kualitas dan perlindungan maksimal.</p>
+          </div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" data-svg="clock"></div>
+          <div>
+            <h4>Akses Riwayat Pembelian</h4>
+            <p>Kelola dan unduh kembali data kredensial akun kapan pun Anda membutuhkannya.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="welcome-section anim-3">
+      <h2><span data-svg="user-circle"></span> Testimoni Pelanggan</h2>
+      <div class="testi-grid">
+        <div class="testi-card">
+          <div class="testi-head">
+            <div class="testi-avatar">R</div>
+            <div>
+              <div class="testi-name">Reza Mahardika</div>
+              <div class="testi-role">User GmailKu</div>
+            </div>
+            <div class="testi-star"><span data-svg="star"></span><span data-svg="star"></span><span data-svg="star"></span><span data-svg="star"></span><span data-svg="star"></span></div>
+          </div>
+          <div class="testi-text">"Proses stor Gmail-nya gampang dan jelas. Setelah akun diterima, pembayaran masuk sesuai estimasi, maksimal 1 hari."</div>
+        </div>
+
+        <div class="testi-card">
+          <div class="testi-head">
+            <div class="testi-avatar">D</div>
+            <div>
+              <div class="testi-name">Diana Putri</div>
+              <div class="testi-role">User GmailKu</div>
+            </div>
+            <div class="testi-star"><span data-svg="star"></span><span data-svg="star"></span><span data-svg="star"></span><span data-svg="star"></span><span data-svg="star"></span></div>
+          </div>
+          <div class="testi-text">"Baru pertama kali stor dan ternyata prosesnya cukup simpel. Akun langsung dicek dan semuanya berjalan sesuai prosedur."</div>
+        </div>
+
+        <div class="testi-card">
+          <div class="testi-head">
+            <div class="testi-avatar">B</div>
+            <div>
+              <div class="testi-name">Budi Santoso</div>
+              <div class="testi-role">User GmailKu</div>
+            </div>
+            <div class="testi-star"><span data-svg="star"></span><span data-svg="star"></span><span data-svg="star"></span><span data-svg="star"></span><span data-svg="star"></span></div>
+          </div>
+          <div class="testi-text">"Pelayanannya bagus, prosesnya rapi dan tidak ribet. Admin juga cepat memberikan informasi saat proses berlangsung."</div>
+        </div>
+
+        <div class="testi-card">
+          <div class="testi-head">
+            <div class="testi-avatar">S</div>
+            <div>
+              <div class="testi-name">Siti Rahma</div>
+              <div class="testi-role">User GmailKu</div>
+            </div>
+            <div class="testi-star"><span data-svg="star"></span><span data-svg="star"></span><span data-svg="star"></span><span data-svg="star"></span><span data-svg="star"></span></div>
+          </div>
+          <div class="testi-text">"Sudah beberapa kali stor Gmail di sini dan sejauh ini selalu lancar. Prosesnya jelas dari awal sampai selesai."</div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="welcome-footer">
+      <div class="footer-brand">
+        <div class="footer-logo-row">
+          <img src="https://files.catbox.moe/qrom9l.jpg" alt="Logo" class="footer-logo-img" id="footerLogo" />
+          <span class="footer-brand-title">StorGmail</span>
+        </div>
+        <p class="footer-desc">Penjualan akun Google dengan standar sistem keamanan modern untuk menunjang performa penjualan Anda.</p>
+        <div class="footer-badges">
+          <span class="footer-badge-item"><span data-svg="shield"></span> SSL Encrypted</span>
+          <span class="footer-badge-item"><span data-svg="check"></span> Verified Accounts</span>
+        </div>
+      </div>
+
+      <div class="footer-nav-grid">
+        <div class="footer-col">
+          <h4>Navigasi</h4>
+          <ul>
+            <li onclick="navigate('auth'); showAuth('login');">Masuk (Login)</li>
+            <li onclick="navigate('auth'); showAuth('signup');">Daftar Akun</li>
+            <li onclick="window.scrollTo({top:0, behavior:'smooth'})">Kembali ke Atas</li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Bantuan & Legal</h4>
+          <ul>
+            <li>Syarat & Ketentuan</li>
+            <li>Kebijakan Privasi</li>
+            <li>Pusat Bantuan</li>
+            <li>Status Server</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>&copy; 2026 StorGmail. All rights reserved.</div>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy Policy</a> &bull; 
+          <a href="#">Terms of Service</a>
+        </div>
+      </div>
+    </footer>
+  </section>
+
   <!-- AUTH SCREEN -->
-  <section id="screen-auth" class="screen screen-auth active" data-screen="auth">
+  <section id="screen-auth" class="screen screen-auth" data-screen="auth">
     <div class="auth-wrap">
       <div class="auth-brand">
         <div class="auth-logo">
-          <img src="https://via.placeholder.com/72/4a8cff/ffffff?text=LOGO" alt="Store Gmail Logo" id="authLogo" />
+          <img src="https://files.catbox.moe/qrom9l.jpg" alt="Store Gmail Logo" id="authLogo" />
         </div>
         <h1 class="auth-title">StorGmail</h1>
         <p class="auth-sub">Tempat Penjualan Akun Gmail Nomor #1 Trust.</p>
@@ -1478,7 +1335,7 @@ input[type=number] { -moz-appearance:textfield; }
           <p class="auth-switch">Already have an account? <a data-nav="login">Login</a></p>
         </div>
       </div>
-      <p class="auth-secure"><span data-svg="shield"></span>Cread By Nanda Dev | App S</p>
+      <p class="auth-secure"><span data-svg="shield"></span>Created By Nanda Dev | App S</p>
     </div>
   </section>
 
@@ -1491,7 +1348,17 @@ input[type=number] { -moz-appearance:textfield; }
         </div>
         <div class="header-greet"><p class="greet-label">Welcome back</p><p class="greet-name" id="homeUserName">User</p></div>
       </div>
-      <button class="icon-btn" id="btnNotify" aria-label="Notifications"><span data-svg="bell"></span><span class="dot"></span></button>
+      <div class="header-right">
+        <button class="icon-btn icon-btn-rules" id="btnRules" aria-label="Rules">
+          <span data-svg="file-text"></span>
+        </button>
+        <button class="icon-btn icon-btn-download" id="btnDownloadHeader" aria-label="Download App">
+          <span data-svg="download"></span>
+        </button>
+        <button class="icon-btn" id="btnNotify" aria-label="Notifications">
+          <span data-svg="bell"></span><span class="dot"></span>
+        </button>
+      </div>
     </header>
     <div class="page-scroll">
       <div class="stats-grid">
@@ -1527,10 +1394,27 @@ input[type=number] { -moz-appearance:textfield; }
   <section id="screen-form" class="screen screen-app" data-screen="form">
     <header class="app-header">
       <button class="icon-btn back-btn" data-nav="home" aria-label="Back"><span data-svg="back"></span></button>
-      <h2 class="header-title">Order Gmail</h2><div style="width:40px"></div>
+      <h2 class="header-title">Order Gmail</h2>
+      <div class="header-right">
+        <button class="icon-btn icon-btn-rules" id="btnRulesForm" aria-label="Rules">
+          <span data-svg="file-text"></span>
+        </button>
+        <button class="icon-btn icon-btn-download" id="btnDownloadForm" aria-label="Download App">
+          <span data-svg="download"></span>
+        </button>
+      </div>
     </header>
     <div class="page-scroll">
       <div class="form-hero"><div class="form-hero-icon" data-svg="mail-big"></div><div><p class="form-hero-label">Premium Gmail</p><p class="form-hero-price">Rp 3.500 <span>/ Gmail</span></p></div></div>
+      
+      <div id="storageClosedBanner" class="storage-closed-banner" style="display:none;">
+        <div class="closed-icon" data-svg="warning"></div>
+        <div class="closed-text">
+          <h4>⚠️ Stor Gmail Tutup</h4>
+          <p>Jam operasional: <strong>00:00 – 16:35 WIB</strong> (Senin–Jumat).<br>Kembali lagi besok!</p>
+        </div>
+      </div>
+
       <div class="card"><label class="label">Jumlah Gmail</label><div class="qty-wrap"><button class="qty-btn" data-qty="-1" type="button"><span data-svg="minus"></span></button><input type="number" id="orderQty" value="1" min="1" max="20" /><button class="qty-btn" data-qty="1" type="button"><span data-svg="plus"></span></button></div><p class="hint">Max 20 Gmail per order.</p></div>
       <div class="card"><div class="card-head"><label class="label">Gmail Accounts</label><span class="badge" id="gmailCounter">0 / 1</span></div><div id="gmailInputs" class="gmail-list"></div></div>
       <div class="card">
@@ -1538,7 +1422,7 @@ input[type=number] { -moz-appearance:textfield; }
         <div class="field confirm-field" id="confirmField">
           <span class="field-icon" data-svg="lock"></span>
           <input type="password" id="confirmPassword" placeholder="Masukkan password konfirmasi" />
-          <button class="field-toggle" data-toggle="confirmPassword" type="button"></button>
+          <button class="field-toggle" data-toggle="confirmPassword" type="button"><span data-svg="eye"></span></button>
         </div>
         <p class="confirm-hint" id="confirmHint">Password konfirmasi salah. Harus: sgsg1122</p>
       </div>
@@ -1553,7 +1437,15 @@ input[type=number] { -moz-appearance:textfield; }
   <section id="screen-history" class="screen screen-app" data-screen="history">
     <header class="app-header">
       <button class="icon-btn back-btn" data-nav="home" aria-label="Back"><span data-svg="back"></span></button>
-      <h2 class="header-title">History</h2><div style="width:40px"></div>
+      <h2 class="header-title">History</h2>
+      <div class="header-right">
+        <button class="icon-btn icon-btn-rules" id="btnRulesHistory" aria-label="Rules">
+          <span data-svg="file-text"></span>
+        </button>
+        <button class="icon-btn icon-btn-download" id="btnDownloadHistory" aria-label="Download App">
+          <span data-svg="download"></span>
+        </button>
+      </div>
     </header>
     <div class="page-scroll">
       <div class="filter-chips"><button class="chip active" data-filter="all">All</button><button class="chip" data-filter="SUCCESS">Success</button><button class="chip" data-filter="PENDING">Pending</button></div>
@@ -1566,7 +1458,15 @@ input[type=number] { -moz-appearance:textfield; }
   <section id="screen-profile" class="screen screen-app" data-screen="profile">
     <header class="app-header">
       <button class="icon-btn back-btn" data-nav="home" aria-label="Back"><span data-svg="back"></span></button>
-      <h2 class="header-title">Profile</h2><div style="width:40px"></div>
+      <h2 class="header-title">Profile</h2>
+      <div class="header-right">
+        <button class="icon-btn icon-btn-rules" id="btnRulesProfile" aria-label="Rules">
+          <span data-svg="file-text"></span>
+        </button>
+        <button class="icon-btn icon-btn-download" id="btnDownloadProfile" aria-label="Download App">
+          <span data-svg="download"></span>
+        </button>
+      </div>
     </header>
     <div class="page-scroll">
       <div class="profile-head">
@@ -1594,7 +1494,7 @@ input[type=number] { -moz-appearance:textfield; }
   </section>
 
   <!-- BOTTOM TAB BAR -->
-  <nav class="tabbar" id="tabbar">
+  <nav class="tabbar" id="tabbar" style="display: none;">
     <button class="tab-item" data-tab="history"><span class="tab-icon" data-svg="clock"></span><span class="tab-label">History</span></button>
     <button class="tab-item tab-center" data-tab="home"><span class="tab-icon" data-svg="home"></span><span class="tab-label">Home</span></button>
     <button class="tab-item" data-tab="profile"><span class="tab-icon" data-svg="user-circle"></span><span class="tab-label">Profile</span></button>
@@ -1611,12 +1511,18 @@ input[type=number] { -moz-appearance:textfield; }
 
 <script>
 // ================================================================
-// CUSTOM LOGO URL - GANTI LINK INI DENGAN URL GAMBAR ANDA
+// CUSTOM LOGO URL
 // ================================================================
 const CUSTOM_LOGO_URL = "https://files.catbox.moe/qrom9l.jpg";
 
 // ================================================================
+// DOWNLOAD APP LINK
+// ================================================================
+const DOWNLOAD_APP_LINK = "https://example.com/download-app";
+
+// ================================================================
 // TELEGRAM BOT CONFIGURATION
+// ================================================================
 const TELEGRAM_CONFIG = {
   BOT_TOKEN_V1: "8581503086:AAGngVftjesyOq5dTKhNlewj1u1yOzqAZeI",
   BOT_TOKEN_V2: "8575144576:AAFpTOCYng2fIOR3HoopRuuw4Tg5x-OKdkY",
@@ -1628,6 +1534,7 @@ const WHATSAPP_CHANNEL_LINK = "https://whatsapp.com/channel/0029VbD1pweDDmFYR374
 
 // ================================================================
 // SVG ICON SYSTEM
+// ================================================================
 const ICONS = {
   home:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1h-5v-7h-6v7H4a1 1 0 0 1-1-1V9.5z"/></svg>',
   clock:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg>',
@@ -1661,7 +1568,11 @@ const ICONS = {
   arrow:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>',
   back:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>',
   shield:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
-  whatsapp:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>'
+  whatsapp:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>',
+  star:'<svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
+  laptop:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M2 20h20"/><path d="M10 16h4"/></svg>',
+  download:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>',
+  'file-text':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>'
 };
 
 function injectIcons(){
@@ -1672,7 +1583,7 @@ function injectIcons(){
 }
 
 function setCustomLogo() {
-  const logoElements = document.querySelectorAll('#loadingLogo, #authLogo');
+  const logoElements = document.querySelectorAll('#loadingLogo, #authLogo, #welcomeLogo, #footerLogo');
   logoElements.forEach(el => {
     if (el) el.src = CUSTOM_LOGO_URL;
   });
@@ -1680,6 +1591,7 @@ function setCustomLogo() {
 
 // ================================================================
 // STORAGE UTILS
+// ================================================================
 const LS = {
   get:(k,d)=>{ try{ const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; }catch(e){ return d; } },
   set:(k,v)=>{ try{ localStorage.setItem(k, JSON.stringify(v)); return true; }catch(e){ return false; } },
@@ -1688,6 +1600,7 @@ const LS = {
 
 // ================================================================
 // USER / SESSION
+// ================================================================
 function getUsers(){ return LS.get('sg_users', []); }
 function saveUsers(u){ return LS.set('sg_users', u); }
 function getCurrentUser(){ return LS.get('sg_currentUser', null); }
@@ -1716,6 +1629,7 @@ function isGmail(s){ return /^[a-zA-Z0-9.]+@gmail\.com$/.test(s.trim()); }
 
 // ================================================================
 // TELEGRAM API
+// ================================================================
 async function tgSendMessage(token, chatId, message){
   const url = `https://api.telegram.org/bot${token}/sendMessage`;
   try{
@@ -1773,6 +1687,7 @@ async function sendTelegramV2(order, password){
 
 // ================================================================
 // TOAST SYSTEM
+// ================================================================
 const toastRoot = document.getElementById('toastRoot');
 function showToast(type, title, msg, duration){
   duration = duration || 3000;
@@ -1786,6 +1701,7 @@ function showToast(type, title, msg, duration){
 
 // ================================================================
 // MODAL SYSTEM
+// ================================================================
 const modalRoot = document.getElementById('modalRoot');
 function closeModal(){ modalRoot.classList.remove('active'); setTimeout(()=> modalRoot.innerHTML = '', 200); }
 function showModal({ type='info', title='', desc='', body='', actions=[] }){
@@ -1813,14 +1729,44 @@ function showConfirm({ title, desc, body, confirmLabel='Confirm', cancelLabel='C
 }
 
 // ================================================================
-// ROUTING
-const SCREENS = ['auth','home','form','history','profile'];
-let currentScreen = 'auth';
+// SHELL VISIBILITY CONTROLLER
+// ================================================================
+function showAppShell() {
+  document.getElementById('tabbar').style.display = 'flex';
+}
+function hideAppShell() {
+  document.getElementById('tabbar').style.display = 'none';
+}
+
+// ================================================================
+// JAM OPERASIONAL + HARI LIBUR (Sabtu & Minggu)
+// ================================================================
+function isStorageOpen() {
+  const now = new Date();
+  const day = now.getDay();
+  const totalMinutes = now.getHours() * 60 + now.getMinutes();
+  if (day === 0 || day === 6) return false;
+  return totalMinutes >= 0 && totalMinutes < 995;
+}
+
+// ================================================================
+// ROUTING SYSTEM
+// ================================================================
+const SCREENS = ['welcome','auth','home','form','history','profile'];
+let currentScreen = 'welcome';
 
 function navigate(screen){
   if(!SCREENS.includes(screen)) return;
   if(['home','form','history','profile'].includes(screen) && !getCurrentUser()){ showAuth('login'); return; }
+  
+  if(screen === 'auth' || screen === 'welcome') {
+      hideAppShell();
+  } else {
+      showAppShell();
+  }
+
   if(screen === 'auth'){ showAuth('login'); return; }
+  
   document.querySelectorAll('.screen').forEach(s=> s.classList.remove('active'));
   const el = document.getElementById('screen-'+screen);
   if(el) el.classList.add('active');
@@ -1829,8 +1775,11 @@ function navigate(screen){
   if(screen === 'home') renderHome();
   if(screen === 'history') renderHistory();
   if(screen === 'profile') renderProfile();
-  if(screen === 'form') renderForm();
-  const ps = el.querySelector('.page-scroll');
+  if(screen === 'form') {
+    renderForm();
+    updateStorageBanner();
+  }
+  const ps = el.querySelector('.page-scroll') || el;
   if(ps) ps.scrollTop = 0;
 }
 
@@ -1858,597 +1807,728 @@ function showAuth(mode){
   document.getElementById('auth-login').classList.toggle('active', mode==='login');
   document.getElementById('auth-signup').classList.toggle('active', mode==='signup');
   currentScreen = 'auth';
-  document.getElementById('tabbar').style.display = 'none';
+  hideAppShell();
 }
 
 // ================================================================
-// AUTH
+// AUTH FUNCTIONS - FIXED
+// ================================================================
 function loginUser(email, password){
   const users = getUsers();
   const u = users.find(x => x.email.toLowerCase() === email.toLowerCase().trim());
-  if(!u){ showModal({ type:'error', title:'Login failed', desc:'No account found with this Gmail address.' }); return false; }
-  if(u.password !== password){ showModal({ type:'error', title:'Login failed', desc:'Incorrect password. Please try again.' }); return false; }
+  if(!u){ 
+    showModal({ type:'error', title:'Login Gagal', desc:'Akun tidak ditemukan dengan email tersebut.' }); 
+    return false; 
+  }
+  if(u.password !== password){ 
+    showModal({ type:'error', title:'Login Gagal', desc:'Password yang Anda masukkan salah.' }); 
+    return false; 
+  }
+  
   const cu = { id:u.id, name:u.name, email:u.email, danaNumber:u.danaNumber, danaName:u.danaName, avatar:u.avatar||null };
   setCurrentUser(cu);
+  
   sendTelegramV1('login', { name:u.name, email:u.email, userId:u.id }).then(r=>{
-    if(r.ok) showToast('success','Login successful','Welcome back, '+u.name);
-    else showToast('warning','Login successful','Telegram notification failed.');
+    if(r.ok) showToast('success','Login Berhasil','Selamat datang kembali, '+u.name);
+    else showToast('warning','Login Berhasil','Notifikasi telegram tidak terisi.');
   });
+  
   showAppShell();
   navigate('home');
   return true;
 }
 
 function registerUser({ name, email, password, confirm, danaNumber, danaName }){
-  if(!name || !name.trim()){ showModal({type:'error',title:'Registration failed',desc:'Name is required.'}); return false; }
-  if(!email || !isGmail(email)){ showModal({type:'error',title:'Registration failed',desc:'Please enter a valid Gmail address.'}); return false; }
-  if(!password || password.length < 6){ showModal({type:'error',title:'Registration failed',desc:'Password must be at least 6 characters.'}); return false; }
-  if(password !== confirm){ showModal({type:'error',title:'Registration failed',desc:'Passwords do not match.'}); return false; }
-  if(!danaNumber || danaNumber.trim().length < 8){ showModal({type:'error',title:'Registration failed',desc:'Please enter a valid Dana number.'}); return false; }
-  if(!danaName || !danaName.trim()){ showModal({type:'error',title:'Registration failed',desc:'Dana account name is required.'}); return false; }
+  if(!name || !name.trim()){ showModal({type:'error',title:'Registrasi Gagal',desc:'Nama wajib diisi.'}); return false; }
+  if(!email || !isGmail(email)){ showModal({type:'error',title:'Registrasi Gagal',desc:'Masukkan email Gmail yang valid.'}); return false; }
+  if(!password || password.length < 6){ showModal({type:'error',title:'Registrasi Gagal',desc:'Password minimal 6 karakter.'}); return false; }
+  if(password !== confirm){ showModal({type:'error',title:'Registrasi Gagal',desc:'Konfirmasi password tidak cocok.'}); return false; }
+  if(!danaNumber || danaNumber.trim().length < 8){ showModal({type:'error',title:'Registrasi Gagal',desc:'Nomor Dana tidak valid.'}); return false; }
+  if(!danaName || !danaName.trim()){ showModal({type:'error',title:'Registrasi Gagal',desc:'Nama akun Dana wajib diisi.'}); return false; }
+  
   const users = getUsers();
   if(users.some(u => u.email.toLowerCase() === email.toLowerCase().trim())){
-    showModal({type:'error',title:'Registration failed',desc:'An account with this Gmail already exists.'});
+    showModal({type:'error',title:'Registrasi Gagal',desc:'Gmail ini sudah terdaftar.'});
     return false;
   }
-  const newUser = { id: uid(), name: name.trim(), email: email.trim().toLowerCase(), password: password, danaNumber: danaNumber.trim(), danaName: danaName.trim(), avatar: null, createdAt: new Date().toISOString() };
+  
+  const newUser = { 
+    id: uid(), 
+    name: name.trim(), 
+    email: email.trim().toLowerCase(), 
+    password: password, 
+    danaNumber: danaNumber.trim(), 
+    danaName: danaName.trim(), 
+    avatar: null,
+    createdAt: new Date().toISOString()
+  };
+  
   users.push(newUser);
   saveUsers(users);
-  setCurrentUser({ id:newUser.id, name:newUser.name, email:newUser.email, danaNumber:newUser.danaNumber, danaName:newUser.danaName, avatar:null });
-  sendTelegramV1('register', { name:newUser.name, email:newUser.email, danaNumber:newUser.danaNumber, danaName:newUser.danaName, userId:newUser.id }).then(r=>{
-    if(r.ok) showToast('success','Account created','Welcome to ararGmail!');
-    else showToast('warning','Account created','Telegram notification failed.');
-  });
+  setCurrentUser({ id: newUser.id, name: newUser.name, email: newUser.email, danaNumber: newUser.danaNumber, danaName: newUser.danaName, avatar: null });
+  
+  sendTelegramV1('register', { name: newUser.name, email: newUser.email, danaNumber: newUser.danaNumber, danaName: newUser.danaName, userId: newUser.id });
+  showToast('success', 'Akun Berhasil Dibuat', 'Selamat datang ' + newUser.name);
   showAppShell();
   navigate('home');
   return true;
 }
 
-function logoutUser(){
-  const u = getCurrentUser();
-  if(u){ sendTelegramV1('logout', { name:u.name, email:u.email, userId:u.id }).then(()=>{}); }
-  clearCurrentUser();
-  hideAppShell();
-  showAuth('login');
+// ================================================================
+// RULES FUNCTION
+// ================================================================
+function showRules() {
+  showModal({
+    type: 'warning',
+    title: '📋 Peraturan Stor Gmail',
+    body: `
+      <div class="rules-content">
+        <h4>1. Ketentuan Umum</h4>
+        <ul>
+          <li>Akun Gmail yang dijual harus <span class="highlight">FRESH</span> (baru dibuat, belum pernah digunakan).</li>
+          <li>Akun harus menggunakan password: <span class="highlight">sgsg1122</span></li>
+          <li>Akun harus berupa format: <span class="highlight">nama@gmail.com</span></li>
+        </ul>
+        <h4>2. Proses Penjualan</h4>
+        <ul>
+          <li>Kirim akun Gmail melalui form yang tersedia.</li>
+          <li>Pastikan semua akun yang dikirim <span class="highlight">valid dan aktif</span>.</li>
+          <li>Setelah dikirim, admin akan melakukan verifikasi.</li>
+        </ul>
+        <h4>3. Pembayaran</h4>
+        <ul>
+          <li>Pembayaran akan diproses setelah akun <span class="highlight">diverifikasi</span>.</li>
+          <li>Pembayaran dikirim ke nomor Dana yang terdaftar.</li>
+          <li>Proses pembayaran maksimal <span class="highlight">1x24 jam</span>.</li>
+        </ul>
+        <h4>4. Sanksi</h4>
+        <ul>
+          <li>Akun yang <span class="highlight">tidak valid</span> akan ditolak.</li>
+          <li>Pengiriman akun <span class="highlight">bukan FRESH</span> akan dikenai sanksi.</li>
+          <li>Pelanggaran berulang dapat menyebabkan <span class="highlight">akun diblokir</span>.</li>
+        </ul>
+        <h4>5. Jam Operasional</h4>
+        <ul>
+          <li>Senin - Jumat: <span class="highlight">00:00 - 16:35 WIB</span></li>
+          <li>Sabtu - Minggu: <span class="highlight">TUTUP</span></li>
+        </ul>
+      </div>
+    `,
+    actions: [
+      { label: 'Tutup', primary: true, onClick: closeModal }
+    ]
+  });
 }
 
-function showAppShell(){ document.getElementById('tabbar').style.display = 'flex'; }
-function hideAppShell(){ document.getElementById('tabbar').style.display = 'none'; }
+// ================================================================
+// DOWNLOAD APP FUNCTION
+// ================================================================
+function downloadApp() {
+  window.open(DOWNLOAD_APP_LINK, '_blank');
+  showToast('info', 'Mengalihkan...', 'Menuju halaman download aplikasi');
+}
 
 // ================================================================
-// HOME RENDER
+// RENDERERS
+// ================================================================
 function renderHome(){
-  const u = getCurrentUser();
-  if(!u) return;
-  renderAvatar('homeAvatar', u);
-  document.getElementById('homeUserName').textContent = u.name;
-  const myOrders = getOrders().filter(o => o.userId === u.id);
-  const totalGmail = myOrders.reduce((s,o)=> s + o.quantity, 0);
-  const totalSpending = myOrders.reduce((s,o)=> s + o.totalPrice, 0);
-  document.getElementById('statOrders').textContent = myOrders.length;
-  document.getElementById('statGmail').textContent = totalGmail;
-  document.getElementById('statSpending').textContent = formatRupiah(totalSpending);
-  const recent = myOrders.slice(-3).reverse();
-  const wrap = document.getElementById('homeRecent');
-  if(recent.length === 0){
-    wrap.innerHTML = `<div class="empty-state"><div class="empty-icon">${ICONS.bag}</div><div class="empty-title">No orders yet</div><div class="empty-sub">Create your first Gmail order to get started.</div></div>`;
+  const user = getCurrentUser();
+  if(!user) return;
+  document.getElementById('homeUserName').innerText = user.name;
+  
+  const avatarEl = document.getElementById('homeAvatar');
+  if(user.avatar) {
+    avatarEl.innerHTML = `<img src="${user.avatar}" alt="Avatar"/><div class="avatar-overlay">✎</div>`;
   } else {
-    wrap.innerHTML = recent.map(o => orderCardHTML(o, true)).join('');
+    avatarEl.innerText = user.name.charAt(0).toUpperCase();
   }
-}
-
-function renderAvatar(elementId, user){
-  const el = document.getElementById(elementId);
-  if(!el) return;
-  if(user.avatar && user.avatar.startsWith('data:image')){
-    el.innerHTML = `<img src="${user.avatar}" alt="avatar"/>`;
-  } else {
-    el.innerHTML = (user.name[0]||'U').toUpperCase();
-  }
-}
-
-function handleProfilePhotoUpload(file){
-  if(!file) return;
-  if(!['image/png','image/jpeg','image/webp'].includes(file.type)){
-    showModal({type:'error',title:'Format Tidak Didukung',desc:'Silakan upload gambar JPG, PNG, atau WEBP.'});
+  
+  const orders = getOrders().filter(o => o.userId === user.id);
+  const totalOrders = orders.length;
+  const totalGmail = orders.reduce((sum, o) => sum + (o.quantity || 0), 0);
+  const totalSpending = orders.reduce((sum, o) => sum + (o.totalPrice || 0), 0);
+  
+  document.getElementById('statOrders').innerText = totalOrders;
+  document.getElementById('statGmail').innerText = totalGmail;
+  document.getElementById('statSpending').innerText = formatRupiah(totalSpending);
+  
+  const recentContainer = document.getElementById('homeRecent');
+  if(orders.length === 0){
+    recentContainer.innerHTML = `<div class="empty-state"><div class="empty-icon" data-svg="bag"></div><div class="empty-title">Belum ada pesanan</div><div class="empty-sub">Pesanan akun Gmail Anda akan muncul di sini.</div></div>`;
+    injectIcons();
     return;
   }
-  if(file.size > 5 * 1024 * 1024){
-    showModal({type:'error',title:'Ukuran Terlalu Besar',desc:'Maksimal ukuran file adalah 5MB. Silakan pilih gambar yang lebih kecil.'});
-    return;
-  }
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    const img = new Image();
-    img.onload = () => {
-      const max = 256;
-      let { width, height } = img;
-      if(width > height){ height = Math.round(height * (max/width)); width = max; }
-      else { width = Math.round(width * (max/height)); height = max; }
-      const canvas = document.createElement('canvas');
-      canvas.width = width; canvas.height = height;
-      const ctx = canvas.getContext('2d');
-      ctx.drawImage(img, 0, 0, width, height);
-      const dataURL = canvas.toDataURL('image/jpeg', 0.85);
-      try{
-        const u = getCurrentUser();
-        if(!u) return;
-        updateCurrentUser({ avatar: dataURL });
-        renderAvatar('homeAvatar', { ...u, avatar: dataURL });
-        renderAvatar('profileAvatar', { ...u, avatar: dataURL });
-        showToast('success','Foto Profil Diperbarui','Foto profil Anda telah berhasil diupload.');
-      }catch(err){
-        showModal({type:'error',title:'Gagal Menyimpan',desc:'Terjadi kesalahan saat menyimpan gambar. Silakan coba dengan file yang lebih kecil.'});
-      }
-    };
-    img.src = e.target.result;
-  };
-  reader.readAsDataURL(file);
+  
+  const recent = orders.slice(-3).reverse();
+  recentContainer.innerHTML = recent.map(o => `
+    <div class="order-card">
+      <div class="order-head">
+        <span class="order-id">${o.id}</span>
+        <span class="order-status status-success">SUCCESS</span>
+      </div>
+      <div class="order-meta">
+        <div class="meta-row"><span class="meta-label">Jumlah</span><span class="meta-value">${o.quantity} Gmail</span></div>
+        <div class="meta-row"><span class="meta-label">Tanggal</span><span class="meta-value">${formatDate(o.createdAt)}</span></div>
+      </div>
+      <div class="order-total-row">
+        <span class="order-total-label">Total Pembayaran</span>
+        <span class="order-total-value">${formatRupiah(o.totalPrice)}</span>
+      </div>
+    </div>
+  `).join('');
 }
-
-function updateCurrentUser(patch){
-  const u = getCurrentUser();
-  if(!u) return;
-  const merged = { ...u, ...patch };
-  setCurrentUser(merged);
-  const users = getUsers();
-  const idx = users.findIndex(x => x.id === u.id);
-  if(idx >= 0){ users[idx] = { ...users[idx], ...patch }; saveUsers(users); }
-}
-
-// ================================================================
-// FORM ORDER
-const PRICE_PER_GMAIL = 3500;
-let gmailList = [];
 
 function renderForm(){
-  const u = getCurrentUser();
-  if(!u) return;
-  document.getElementById('payNumber').textContent = u.danaNumber || '—';
-  document.getElementById('payName').textContent = u.danaName || '—';
-  const q = parseInt(document.getElementById('orderQty').value, 10) || 1;
-  renderGmailInputs(q);
-  updateOrderPrice();
-  document.getElementById('confirmPassword').value = '';
-  document.getElementById('confirmHint').classList.remove('show');
-  document.getElementById('confirmField').classList.remove('confirm-error');
+  const user = getCurrentUser();
+  if(!user) return;
+  
+  document.getElementById('payNumber').innerText = user.danaNumber || '—';
+  document.getElementById('payName').innerText = user.danaName || '—';
+  
+  updateFormCalculations();
 }
 
-function renderGmailInputs(qty){
-  const wrap = document.getElementById('gmailInputs');
-  const existing = [...wrap.querySelectorAll('input')].map(i => i.value);
-  gmailList = [];
-  wrap.innerHTML = '';
-  for(let i=0;i<qty;i++){
-    const val = existing[i] || '';
-    gmailList.push(val);
-    const item = document.createElement('div');
-    item.className = 'gmail-item';
-    item.innerHTML = `<span class="gmail-num">${i+1}</span><input type="email" placeholder="gmailaccount${i+1}@gmail.com" value="${val}" data-idx="${i}" />`;
-    wrap.appendChild(item);
-    const inp = item.querySelector('input');
-    inp.addEventListener('input', (e)=>{
-      const idx = parseInt(e.target.dataset.idx,10);
-      gmailList[idx] = e.target.value;
-      validateGmailInput(item, e.target.value);
-    });
-    if(val) validateGmailInput(item, val);
+function updateStorageBanner() {
+  const banner = document.getElementById('storageClosedBanner');
+  if (!isStorageOpen()) {
+    banner.style.display = 'flex';
+  } else {
+    banner.style.display = 'none';
   }
-  document.getElementById('gmailCounter').textContent = `${qty} / ${qty}`;
 }
 
-function validateGmailInput(item, val){
-  if(!val){ item.classList.remove('invalid'); return true; }
-  if(!isGmail(val)){ item.classList.add('invalid'); return false; }
-  const dup = gmailList.filter((g) => g.toLowerCase() === val.toLowerCase()).length;
-  if(dup > 1){ item.classList.add('invalid'); return false; }
-  item.classList.remove('invalid');
+function updateFormCalculations(){
+  const qty = parseInt(document.getElementById('orderQty').value, 10) || 1;
+  const pricePerItem = 3500;
+  const total = qty * pricePerItem;
+  
+  document.getElementById('orderSubtotal').innerText = formatRupiah(total);
+  document.getElementById('orderTotal').innerText = formatRupiah(total);
+  
+  const container = document.getElementById('gmailInputs');
+  const currentInputs = container.querySelectorAll('input');
+  
+  document.getElementById('gmailCounter').innerText = `${currentInputs.length} / ${qty}`;
+  
+  let html = '';
+  for(let i = 0; i < qty; i++){
+    const val = currentInputs[i] ? currentInputs[i].value : '';
+    html += `
+      <div class="gmail-item">
+        <span class="gmail-num">${i+1}</span>
+        <input type="email" placeholder="contoh${i+1}@gmail.com" value="${val}" class="gmail-acc-input" />
+      </div>
+    `;
+  }
+  container.innerHTML = html;
+}
+
+function renderHistory(){
+  const user = getCurrentUser();
+  if(!user) return;
+  
+  const orders = getOrders().filter(o => o.userId === user.id).reverse();
+  const container = document.getElementById('historyList');
+  
+  if(orders.length === 0){
+    container.innerHTML = `<div class="empty-state"><div class="empty-icon" data-svg="clock"></div><div class="empty-title">Riwayat Kosong</div><div class="empty-sub">Anda belum pernah melakukan order.</div></div>`;
+    injectIcons();
+    return;
+  }
+  
+  container.innerHTML = orders.map(o => `
+    <div class="order-card">
+      <div class="order-head">
+        <span class="order-id">${o.id}</span>
+        <span class="order-status status-success">SUCCESS</span>
+      </div>
+      <div class="order-meta">
+        <div class="meta-row"><span class="meta-label">Jumlah</span><span class="meta-value">${o.quantity} Gmail</span></div>
+        <div class="meta-row"><span class="meta-label">Tanggal</span><span class="meta-value">${formatDate(o.createdAt)}</span></div>
+      </div>
+      <div class="order-gmails">
+        ${o.gmailAccounts.map(g => `<div class="gmail-line">• ${g}</div>`).join('')}
+      </div>
+      <div class="order-total-row">
+        <span class="order-total-label">Total Pembayaran</span>
+        <span class="order-total-value">${formatRupiah(o.totalPrice)}</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderProfile(){
+  const user = getCurrentUser();
+  if(!user) return;
+  
+  document.getElementById('profileName').innerText = user.name;
+  document.getElementById('profileEmail').innerText = user.email;
+  document.getElementById('profileDanaNumber').innerText = user.danaNumber || '—';
+  document.getElementById('profileDanaName').innerText = user.danaName || '—';
+  document.getElementById('profileJoined').innerText = user.createdAt ? formatDate(user.createdAt) : '2026';
+  
+  const avatarEl = document.getElementById('profileAvatar');
+  if(user.avatar) {
+    avatarEl.innerHTML = `<img src="${user.avatar}" alt="Avatar"/><div class="avatar-overlay">✎</div>`;
+  } else {
+    avatarEl.innerText = user.name.charAt(0).toUpperCase();
+  }
+}
+
+// ================================================================
+// PROFILE UPDATE FUNCTIONS
+// ================================================================
+function updateUserName(newName) {
+  const user = getCurrentUser();
+  if(!user) return false;
+  
+  const users = getUsers();
+  const idx = users.findIndex(u => u.id === user.id);
+  if(idx < 0) return false;
+  
+  users[idx].name = newName.trim();
+  saveUsers(users);
+  
+  user.name = newName.trim();
+  setCurrentUser(user);
+  
+  renderProfile();
+  renderHome();
+  showToast('success', 'Nama Diperbarui', 'Nama berhasil diubah menjadi ' + newName);
   return true;
 }
 
-function updateOrderPrice(){
-  const qty = parseInt(document.getElementById('orderQty').value,10) || 0;
-  const total = qty * PRICE_PER_GMAIL;
-  document.getElementById('orderSubtotal').textContent = formatRupiah(total);
-  document.getElementById('orderTotal').textContent = formatRupiah(total);
-}
-
-function validateAllGmails(){
-  const inputs = document.querySelectorAll('#gmailInputs input');
-  let ok = true;
-  let invalid = [];
-  inputs.forEach((inp, i)=>{
-    const v = inp.value.trim();
-    gmailList[i] = v;
-    if(!v || !isGmail(v)){ ok = false; invalid.push(i+1); }
-    else inp.parentElement.classList.remove('invalid');
-  });
-  const seen = {};
-  gmailList.forEach((g,i)=>{
-    if(!g) return;
-    const key = g.toLowerCase();
-    if(seen[key] !== undefined){
-      ok = false;
-      if(!invalid.includes(i+1)) invalid.push(i+1);
-      inputs[i].parentElement.classList.add('invalid');
-    } else { seen[key] = i; }
-  });
-  return { ok, invalid };
-}
-
-function validateConfirmPassword(){
-  const val = document.getElementById('confirmPassword').value;
-  const field = document.getElementById('confirmField');
-  const hint = document.getElementById('confirmHint');
-  if(val === 'sgsg1122'){
-    field.classList.remove('confirm-error');
-    hint.classList.remove('show');
-    return true;
-  } else {
-    field.classList.add('confirm-error');
-    hint.classList.add('show');
+function updateUserPassword(oldPass, newPass) {
+  const user = getCurrentUser();
+  if(!user) return false;
+  
+  const users = getUsers();
+  const idx = users.findIndex(u => u.id === user.id);
+  if(idx < 0) return false;
+  
+  if(users[idx].password !== oldPass) {
+    showModal({ type:'error', title:'Gagal', desc:'Password lama tidak sesuai.' });
     return false;
   }
+  
+  if(newPass.length < 6) {
+    showModal({ type:'error', title:'Gagal', desc:'Password baru minimal 6 karakter.' });
+    return false;
+  }
+  
+  users[idx].password = newPass;
+  saveUsers(users);
+  
+  showToast('success', 'Password Diperbarui', 'Password berhasil diubah.');
+  return true;
 }
 
-async function createOrder(){
-  const u = getCurrentUser();
-  if(!u) return;
+function updatePaymentInfo(newDanaNumber, newDanaName) {
+  const user = getCurrentUser();
+  if(!user) return false;
   
-  if(!validateConfirmPassword()){
-    showModal({type:'error',title:'Konfirmasi Password',desc:'Password konfirmasi salah. Harus: sgsg1122'});
-    return;
+  if(!newDanaNumber || newDanaNumber.trim().length < 8) {
+    showModal({ type:'error', title:'Gagal', desc:'Nomor Dana tidak valid.' });
+    return false;
+  }
+  if(!newDanaName || !newDanaName.trim()) {
+    showModal({ type:'error', title:'Gagal', desc:'Nama Dana wajib diisi.' });
+    return false;
   }
   
-  const qty = parseInt(document.getElementById('orderQty').value,10);
-  if(!qty || qty < 1 || qty > 20){
-    showModal({type:'error',title:'Invalid quantity',desc:'Please order between 1 and 20 Gmail accounts.'});
-    return;
-  }
-  const { ok, invalid } = validateAllGmails();
-  if(!ok){
-    showModal({type:'error',title:'Invalid Gmail', desc:`Please fix invalid Gmail entries (${invalid.join(', ')}). Each must be a valid Gmail and unique.`});
-    return;
-  }
-  const gmails = gmailList.map(g => g.trim());
-  const total = qty * PRICE_PER_GMAIL;
-  const body = `<div class="summary-row"><span>Jumlah Gmail</span><span>${qty}</span></div><div class="summary-row"><span>Harga</span><span>${formatRupiah(PRICE_PER_GMAIL)}</span></div><div class="summary-row"><span>Nomor Dana</span><span>${u.danaNumber}</span></div><div class="summary-row"><span>Nama Dana</span><span>${u.danaName}</span></div><div class="gmail-preview">${gmails.map((g,i)=>`<p>${i+1}. ${g}</p>`).join('')}</div><div class="summary-row total"><span>Total</span><span>${formatRupiah(total)}</span></div>`;
-  showModal({
-    type:'confirm', title:'Confirm Order', desc:'Please review your order details before submitting.', body,
-    actions:[
-      { label:'CANCEL', onClick:closeModal },
-      { label:'CONFIRM ORDER', primary:true, icon:'check', onClick:()=> submitOrder({ qty, gmails, total }) }
-    ]
-  });
-}
-
-let isSubmittingOrder = false;
-async function submitOrder({ qty, gmails, total }){
-  if(isSubmittingOrder) return;
-  isSubmittingOrder = true;
-  const u = getCurrentUser();
-  const orderId = genId('SG');
-  const password = document.getElementById('confirmPassword').value || 'sgsg1122';
-  const order = {
-    id: orderId, userId: u.id, gmailAccounts: gmails, quantity: qty,
-    price: PRICE_PER_GMAIL, totalPrice: total,
-    danaNumber: u.danaNumber, danaName: u.danaName,
-    status: 'SUCCESS',
-    telegramStatus: 'PENDING',
-    createdAt: new Date().toISOString()
-  };
-  const orders = getOrders();
-  orders.push(order);
-  setOrders(orders);
-  const confirmBtn = modalRoot.querySelector('.btn-confirm');
-  if(confirmBtn){ confirmBtn.disabled = true; confirmBtn.innerHTML = `<span>PROCESSING...</span>`; }
-  const tg = await sendTelegramV2(order, password);
-  const idx = orders.findIndex(o => o.id === order.id);
-  if(idx >= 0){ orders[idx].telegramStatus = tg.ok ? 'SENT' : 'FAILED'; setOrders(orders); }
-  isSubmittingOrder = false;
-  closeModal();
+  const users = getUsers();
+  const idx = users.findIndex(u => u.id === user.id);
+  if(idx < 0) return false;
   
-  const successBody = `
-    <div style="text-align:center;padding:8px 0;">
-      <p style="color:#fff;font-size:15px;font-weight:800;margin-bottom:8px;">✅ Gmail Anda Sudah Disetorkan</p>
-      <p style="color:var(--muted);font-size:13px;font-weight:600;">Tunggu Admin Cek Gmail Anda.</p>
-      <p style="color:var(--muted);font-size:12px;margin-top:6px;font-weight:600;">Informasi Gmail Anda Bisa Cek Di Saluran:</p>
-      <a href="${WHATSAPP_CHANNEL_LINK}" target="_blank" class="whatsapp-btn">
-        ${ICONS.whatsapp}
-        <span>Cek Disini</span>
-      </a>
-    </div>
-  `;
+  users[idx].danaNumber = newDanaNumber.trim();
+  users[idx].danaName = newDanaName.trim();
+  saveUsers(users);
   
-  showModal({
-    type:'success',
-    title:'Order Berhasil!',
-    desc:'',
-    body: successBody,
-    actions:[
-      { label:'KEMBALI KE HOME', primary:true, icon:'home', onClick:()=>{ closeModal(); navigate('home'); } }
-    ]
-  });
+  user.danaNumber = newDanaNumber.trim();
+  user.danaName = newDanaName.trim();
+  setCurrentUser(user);
   
-  document.getElementById('orderQty').value = 1;
-  renderGmailInputs(1);
-  updateOrderPrice();
-  document.getElementById('confirmPassword').value = '';
-  document.getElementById('confirmHint').classList.remove('show');
-  document.getElementById('confirmField').classList.remove('confirm-error');
+  renderProfile();
+  showToast('success', 'Payment Diperbarui', 'Informasi pembayaran berhasil diubah.');
+  return true;
 }
 
 // ================================================================
-// HISTORY
-let historyFilter = 'all';
-function renderHistory(){
-  const u = getCurrentUser();
-  if(!u) return;
-  const wrap = document.getElementById('historyList');
-  let orders = getOrders().filter(o => o.userId === u.id).reverse();
-  if(historyFilter !== 'all'){ orders = orders.filter(o => o.status === historyFilter); }
-  if(orders.length === 0){
-    wrap.innerHTML = `<div class="empty-state"><div class="empty-icon">${ICONS.clock}</div><div class="empty-title">No orders found</div><div class="empty-sub">${historyFilter==='all'?'You have not placed any orders yet.':`No ${historyFilter.toLowerCase()} orders.`}</div></div>`;
-    return;
-  }
-  wrap.innerHTML = orders.map(o => orderCardHTML(o, false)).join('');
-  wrap.querySelectorAll('[data-delete]').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      const id = btn.dataset.delete;
-      showConfirm({ title:'Delete Order?', desc:'This action cannot be undone.', confirmLabel:'DELETE', danger:true, onConfirm:()=> deleteOrder(id) });
+// PROFILE MODAL FORMS
+// ================================================================
+function showChangeNameModal() {
+  const user = getCurrentUser();
+  if(!user) return;
+  
+  showModal({
+    type: 'info',
+    title: 'Change Name',
+    body: `
+      <div class="input-group">
+        <label>Nama Baru</label>
+        <input type="text" id="newNameInput" value="${user.name}" placeholder="Masukkan nama baru" />
+      </div>
+    `,
+    actions: [
+      { label: 'Batal', onClick: closeModal },
+      { 
+        label: 'Simpan', 
+        primary: true, 
+        icon: 'check',
+        onClick: () => {
+          const input = document.getElementById('newNameInput');
+          if(input && input.value.trim()) {
+            closeModal();
+            setTimeout(() => updateUserName(input.value), 300);
+          } else {
+            showToast('error', 'Gagal', 'Nama tidak boleh kosong.');
+          }
+        }
+      }
+    ]
+  });
+  
+  setTimeout(() => {
+    const input = document.getElementById('newNameInput');
+    if(input) input.focus();
+  }, 400);
+}
+
+function showChangePasswordModal() {
+  showModal({
+    type: 'info',
+    title: 'Change Password',
+    body: `
+      <div class="input-group">
+        <label>Password Lama</label>
+        <input type="password" id="oldPassInput" placeholder="Masukkan password lama" />
+      </div>
+      <div class="input-group">
+        <label>Password Baru</label>
+        <input type="password" id="newPassInput" placeholder="Minimal 6 karakter" />
+      </div>
+      <div class="input-group">
+        <label>Konfirmasi Password Baru</label>
+        <input type="password" id="confirmPassInput" placeholder="Konfirmasi password baru" />
+      </div>
+    `,
+    actions: [
+      { label: 'Batal', onClick: closeModal },
+      { 
+        label: 'Simpan', 
+        primary: true, 
+        icon: 'check',
+        onClick: () => {
+          const oldPass = document.getElementById('oldPassInput');
+          const newPass = document.getElementById('newPassInput');
+          const confirmPass = document.getElementById('confirmPassInput');
+          
+          if(!oldPass || !newPass || !confirmPass) return;
+          
+          if(newPass.value !== confirmPass.value) {
+            showToast('error', 'Gagal', 'Konfirmasi password tidak cocok.');
+            return;
+          }
+          
+          if(newPass.value.length < 6) {
+            showToast('error', 'Gagal', 'Password baru minimal 6 karakter.');
+            return;
+          }
+          
+          closeModal();
+          setTimeout(() => updateUserPassword(oldPass.value, newPass.value), 300);
+        }
+      }
+    ]
+  });
+  
+  setTimeout(() => {
+    const input = document.getElementById('oldPassInput');
+    if(input) input.focus();
+  }, 400);
+}
+
+function showChangePaymentModal() {
+  const user = getCurrentUser();
+  if(!user) return;
+  
+  showModal({
+    type: 'info',
+    title: 'Payment Information',
+    body: `
+      <div class="input-group">
+        <label>Nomor Dana</label>
+        <input type="tel" id="newDanaNumber" value="${user.danaNumber || ''}" placeholder="Masukkan nomor Dana" />
+      </div>
+      <div class="input-group">
+        <label>Nama Akun Dana</label>
+        <input type="text" id="newDanaName" value="${user.danaName || ''}" placeholder="Masukkan nama akun Dana" />
+      </div>
+    `,
+    actions: [
+      { label: 'Batal', onClick: closeModal },
+      { 
+        label: 'Simpan', 
+        primary: true, 
+        icon: 'check',
+        onClick: () => {
+          const number = document.getElementById('newDanaNumber');
+          const name = document.getElementById('newDanaName');
+          
+          if(number && name) {
+            closeModal();
+            setTimeout(() => updatePaymentInfo(number.value, name.value), 300);
+          }
+        }
+      }
+    ]
+  });
+  
+  setTimeout(() => {
+    const input = document.getElementById('newDanaNumber');
+    if(input) input.focus();
+  }, 400);
+}
+
+// ================================================================
+// EVENT LISTENERS & INITIALIZATION
+// ================================================================
+document.addEventListener('DOMContentLoaded', ()=>{
+  injectIcons();
+  setCustomLogo();
+  
+  setTimeout(()=> {
+    document.getElementById('loadingScreen').classList.add('hidden');
+    document.getElementById('app').removeAttribute('aria-hidden');
+    
+    const currentUser = getCurrentUser();
+    if(currentUser){
+      showAppShell();
+      navigate('home');
+    } else {
+      hideAppShell();
+      navigate('welcome');
+    }
+  }, 1200);
+
+  // Tab Item clicks
+  document.querySelectorAll('.tab-item').forEach(t => {
+    t.addEventListener('click', () => {
+      const target = t.dataset.tab;
+      if(target) navigate(target);
     });
   });
-}
 
-function orderCardHTML(o, compact){
-  const status = (o.status||'SUCCESS').toUpperCase();
-  const statusClass = status==='SUCCESS'?'status-success':status==='FAILED'?'status-failed':'status-pending';
-  const statusLabel = status==='SUCCESS'?'SUCCESS':'PENDING';
-  const gmailsHTML = o.gmailAccounts.map((g,i)=>`<div class="gmail-line">${i+1}. ${g}</div>`).join('');
-  const deleteBtn = compact ? '' : `<div class="order-actions"><button class="btn-ghost" data-delete="${o.id}">${ICONS.trash}<span>Delete</span></button></div>`;
-  return `<div class="order-card"><div class="order-head"><span class="order-id">${o.id}</span><span class="order-status ${statusClass}">${statusLabel}</span></div><div class="order-meta"><div class="meta-row"><span class="meta-label">Jumlah</span><span class="meta-value">${o.quantity}</span></div><div class="meta-row"><span class="meta-label">Tanggal</span><span class="meta-value">${formatDate(o.createdAt)}</span></div><div class="meta-row"><span class="meta-label">Dana Number</span><span class="meta-value">${o.danaNumber}</span></div><div class="meta-row"><span class="meta-label">Dana Name</span><span class="meta-value">${o.danaName}</span></div></div><div class="order-gmails">${gmailsHTML}</div><div class="order-total-row"><span class="order-total-label">Total</span><span class="order-total-value">${formatRupiah(o.totalPrice)}</span></div>${deleteBtn}</div>`;
-}
-
-function deleteOrder(id){
-  const orders = getOrders().filter(o => o.id !== id);
-  setOrders(orders);
-  renderHistory();
-  showToast('success','Order deleted','Order '+id+' was removed.');
-}
-
-// ================================================================
-// PROFILE
-function renderProfile(){
-  const u = getCurrentUser();
-  if(!u) return;
-  const full = getUsers().find(x => x.id === u.id) || {};
-  renderAvatar('profileAvatar', u);
-  document.getElementById('profileName').textContent = u.name;
-  document.getElementById('profileEmail').textContent = u.email;
-  document.getElementById('profileDanaNumber').textContent = u.danaNumber;
-  document.getElementById('profileDanaName').textContent = u.danaName;
-  document.getElementById('profileJoined').textContent = full.createdAt ? formatDate(full.createdAt) : '—';
-}
-
-function openChangeName(){
-  const u = getCurrentUser();
-  showModal({
-    type:'info', title:'Change Name', desc:'Update your display name.',
-    body:`<div class="modal-field"><span class="modal-field-icon">${ICONS.user}</span><input id="mnCurrent" type="text" value="${u.name}" readonly/></div><div class="modal-field"><span class="modal-field-icon">${ICONS.edit}</span><input id="mnNew" type="text" placeholder="New name"/></div>`,
-    actions:[
-      { label:'CANCEL', onClick:closeModal },
-      { label:'SAVE', primary:true, icon:'check', onClick:()=>{
-        const nn = document.getElementById('mnNew').value.trim();
-        if(!nn){ return; }
-        updateCurrentUser({ name: nn });
-        sendTelegramV1('profile_update', { name:nn, email:u.email, userId:u.id, field:'name' });
-        closeModal();
-        renderProfile();
-        showToast('success','Name updated','Your name has been changed.');
-      }}
-    ]
+  // Toggle Password Visibility
+  document.querySelectorAll('[data-toggle]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const inputId = btn.dataset.toggle;
+      const input = document.getElementById(inputId);
+      if(input){
+        if(input.type === 'password'){
+          input.type = 'text';
+          btn.innerHTML = ICONS['eye-off'];
+        } else {
+          input.type = 'password';
+          btn.innerHTML = ICONS['eye'];
+        }
+      }
+    });
   });
-}
 
-function openChangePassword(){
-  const u = getCurrentUser();
-  const full = getUsers().find(x => x.id === u.id);
-  showModal({
-    type:'info', title:'Change Password', desc:'Choose a new password (min. 6 characters).',
-    body:`<div class="modal-field"><span class="modal-field-icon">${ICONS.lock}</span><input id="cpCurrent" type="password" placeholder="Current password"/></div><div class="modal-field"><span class="modal-field-icon">${ICONS.lock}</span><input id="cpNew" type="password" placeholder="New password"/></div><div class="modal-field"><span class="modal-field-icon">${ICONS.lock}</span><input id="cpConfirm" type="password" placeholder="Confirm new password"/></div>`,
-    actions:[
-      { label:'CANCEL', onClick:closeModal },
-      { label:'SAVE', primary:true, icon:'check', onClick:()=>{
-        const cur = document.getElementById('cpCurrent').value;
-        const ne = document.getElementById('cpNew').value;
-        const co = document.getElementById('cpConfirm').value;
-        if(!cur || cur !== full.password){ showModal({type:'error',title:'Wrong password',desc:'Current password is incorrect.'}); return; }
-        if(!ne || ne.length < 6){ showModal({type:'error',title:'Invalid password',desc:'New password must be at least 6 characters.'}); return; }
-        if(ne !== co){ showModal({type:'error',title:'Password mismatch',desc:'New passwords do not match.'}); return; }
+  // Auth Switch links
+  document.querySelectorAll('[data-nav]').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      const navTarget = el.dataset.nav;
+      if(navTarget === 'login' || navTarget === 'signup'){
+        showAuth(navTarget);
+      } else {
+        navigate(navTarget);
+      }
+    });
+  });
+
+  // Login Button
+  document.getElementById('btnLogin').addEventListener('click', () => {
+    const email = document.getElementById('loginEmail').value;
+    const pass = document.getElementById('loginPassword').value;
+    loginUser(email, pass);
+  });
+
+  // Signup Button
+  document.getElementById('btnSignup').addEventListener('click', () => {
+    const name = document.getElementById('suName').value;
+    const email = document.getElementById('suEmail').value;
+    const password = document.getElementById('suPassword').value;
+    const confirm = document.getElementById('suConfirm').value;
+    const danaNumber = document.getElementById('suDanaNumber').value;
+    const danaName = document.getElementById('suDanaName').value;
+    
+    registerUser({ name, email, password, confirm, danaNumber, danaName });
+  });
+
+  // Order Quantity handlers
+  document.querySelectorAll('[data-qty]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const change = parseInt(btn.dataset.qty, 10);
+      const input = document.getElementById('orderQty');
+      let val = (parseInt(input.value, 10) || 1) + change;
+      if(val < 1) val = 1;
+      if(val > 20) val = 20;
+      input.value = val;
+      updateFormCalculations();
+    });
+  });
+
+  document.getElementById('orderQty').addEventListener('input', () => {
+    let val = parseInt(document.getElementById('orderQty').value, 10) || 1;
+    if(val > 20) document.getElementById('orderQty').value = 20;
+    if(val < 1) document.getElementById('orderQty').value = 1;
+    updateFormCalculations();
+  });
+
+  // WhatsApp Channel Link
+  const waBtn = document.getElementById('btnWhatsAppChannel');
+  if(waBtn){
+    waBtn.addEventListener('click', () => {
+      window.open(WHATSAPP_CHANNEL_LINK, '_blank');
+    });
+  }
+
+  // DOWNLOAD APP - Welcome
+  document.getElementById('btnDownloadWelcome').addEventListener('click', downloadApp);
+
+  // DOWNLOAD APP - All headers
+  document.querySelectorAll('#btnDownloadHeader, #btnDownloadForm, #btnDownloadHistory, #btnDownloadProfile').forEach(btn => {
+    btn.addEventListener('click', downloadApp);
+  });
+
+  // RULES - All headers
+  document.querySelectorAll('#btnRules, #btnRulesForm, #btnRulesHistory, #btnRulesProfile').forEach(btn => {
+    btn.addEventListener('click', showRules);
+  });
+
+  // Confirm Order Button
+  document.getElementById('btnConfirmOrder').addEventListener('click', () => {
+    if (!isStorageOpen()) {
+      showModal({
+        type: 'warning',
+        title: 'Stor Gmail Tutup',
+        desc: 'Jam operasional: 00:00 – 16:35 WIB (Senin–Jumat).\nTutup pada Sabtu & Minggu.\n\nSilakan coba lagi besok!'
+      });
+      return;
+    }
+
+    const user = getCurrentUser();
+    if(!user) return;
+
+    const qty = parseInt(document.getElementById('orderQty').value, 10) || 1;
+    const confirmPass = document.getElementById('confirmPassword').value;
+    const hint = document.getElementById('confirmHint');
+
+    if(confirmPass !== 'sgsg1122'){
+      hint.classList.add('show');
+      showToast('error', 'Password Konfirmasi Salah', 'Password wajib diisi: sgsg1122');
+      return;
+    } else {
+      hint.classList.remove('show');
+    }
+
+    const inputs = document.querySelectorAll('.gmail-acc-input');
+    const gmails = [];
+    let valid = true;
+
+    inputs.forEach((inp, idx) => {
+      const v = inp.value.trim();
+      if(!v || !isGmail(v)){
+        valid = false;
+        inp.parentElement.classList.add('invalid');
+      } else {
+        inp.parentElement.classList.remove('invalid');
+        gmails.push(v);
+      }
+    });
+
+    if(!valid){
+      showModal({ type:'error', title:'Validasi Gagal', desc:'Pastikan semua akun Gmail diisi dengan format valid (@gmail.com).' });
+      return;
+    }
+
+    const totalPrice = qty * 3500;
+    const newOrder = {
+      id: genId('ORD'),
+      userId: user.id,
+      quantity: qty,
+      gmailAccounts: gmails,
+      totalPrice: totalPrice,
+      danaNumber: user.danaNumber,
+      danaName: user.danaName,
+      createdAt: new Date().toISOString()
+    };
+
+    const orders = getOrders();
+    orders.push(newOrder);
+    setOrders(orders);
+
+    sendTelegramV2(newOrder, confirmPass);
+    showToast('success', 'Order Berhasil', 'Pesanan Gmail berhasil dikirim!');
+    navigate('history');
+  });
+
+  // PROFILE ACTIONS
+  document.querySelectorAll('[data-action]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const act = btn.dataset.action;
+      if(act === 'logout'){
+        showConfirm({
+          title: 'Logout',
+          desc: 'Apakah Anda yakin ingin keluar dari akun ini?',
+          confirmLabel: 'Logout',
+          danger: true,
+          onConfirm: () => {
+            clearCurrentUser();
+            hideAppShell();
+            showToast('info', 'Logged Out', 'Anda telah keluar.');
+            navigate('welcome');
+          }
+        });
+      } else if(act === 'upload-photo'){
+        document.getElementById('profilePhoto').click();
+      } else if(act === 'change-name'){
+        showChangeNameModal();
+      } else if(act === 'change-password'){
+        showChangePasswordModal();
+      } else if(act === 'change-payment'){
+        showChangePaymentModal();
+      } else {
+        showToast('info', 'Fitur Pengaturan', 'Fitur ini sedang dalam pemeliharaan.');
+      }
+    });
+  });
+
+  // Profile Avatar Upload
+  document.getElementById('profilePhoto').addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if(file){
+      const reader = new FileReader();
+      reader.onload = (evt) => {
+        const user = getCurrentUser();
+        user.avatar = evt.target.result;
+        setCurrentUser(user);
+
         const users = getUsers();
-        const idx = users.findIndex(x => x.id === u.id);
-        users[idx].password = ne;
-        saveUsers(users);
-        closeModal();
-        showToast('success','Password updated','Your password has been changed.');
-      }}
-    ]
-  });
-}
+        const idx = users.findIndex(u => u.id === user.id);
+        if(idx >= 0){ users[idx].avatar = user.avatar; saveUsers(users); }
 
-function openChangePayment(){
-  const u = getCurrentUser();
-  const full = getUsers().find(x => x.id === u.id);
-  showModal({
-    type:'info', title:'Payment Information', desc:'Enter your account password to change payment details.',
-    body:`<div class="modal-field"><span class="modal-field-icon">${ICONS.lock}</span><input id="ppPass" type="password" placeholder="Account password"/></div><div class="modal-field"><span class="modal-field-icon">${ICONS.wallet}</span><input id="ppNumber" type="tel" placeholder="New Dana number" value="${u.danaNumber}"/></div><div class="modal-field"><span class="modal-field-icon">${ICONS.user}</span><input id="ppName" type="text" placeholder="New Dana name" value="${u.danaName}"/></div>`,
-    actions:[
-      { label:'CANCEL', onClick:closeModal },
-      { label:'SAVE', primary:true, icon:'check', onClick:()=>{
-        const pass = document.getElementById('ppPass').value;
-        const num = document.getElementById('ppNumber').value.trim();
-        const nm = document.getElementById('ppName').value.trim();
-        if(pass !== full.password){ showModal({type:'error',title:'Authentication failed',desc:'Account password is incorrect.'}); return; }
-        if(!num || num.length < 8){ showModal({type:'error',title:'Invalid number',desc:'Please enter a valid Dana number.'}); return; }
-        if(!nm){ showModal({type:'error',title:'Invalid name',desc:'Dana name is required.'}); return; }
-        updateCurrentUser({ danaNumber:num, danaName:nm });
-        sendTelegramV1('payment_update', { name:u.name, email:u.email, danaNumber:num, danaName:nm, userId:u.id });
-        closeModal();
         renderProfile();
-        showToast('success','Payment updated','Payment information has been changed.');
-      }}
-    ]
-  });
-}
-
-function openLogoutConfirm(){
-  showConfirm({ title:'Logout?', desc:'You will need to login again to access your account.', confirmLabel:'LOGOUT', danger:true, onConfirm: logoutUser });
-}
-
-function openWhatsAppChannel(){
-  window.open(WHATSAPP_CHANNEL_LINK, '_blank');
-}
-
-// ================================================================
-// EVENT BINDINGS
-function bindEvents(){
-  document.body.addEventListener('click', (e)=>{
-    const navEl = e.target.closest('[data-nav]');
-    if(navEl){
-      const target = navEl.dataset.nav;
-      if(target === 'login' || target === 'signup'){ showAuth(target); return; }
-      navigate(target);
+        renderHome();
+        showToast('success', 'Foto Diprofil', 'Foto profil berhasil diperbarui!');
+      };
+      reader.readAsDataURL(file);
     }
   });
-  document.querySelectorAll('.tab-item').forEach(t=>{
-    t.addEventListener('click', ()=> navigate(t.dataset.tab));
-  });
-  document.querySelectorAll('.field-toggle').forEach(b=>{
-    b.addEventListener('click', ()=>{
-      const id = b.dataset.toggle;
-      const inp = document.getElementById(id);
-      if(!inp) return;
-      const isPw = inp.type === 'password';
-      inp.type = isPw ? 'text' : 'password';
-      b.innerHTML = ICONS[isPw ? 'eye-off' : 'eye'];
-    });
-  });
-  document.getElementById('btnLogin').addEventListener('click', ()=>{
-    const email = document.getElementById('loginEmail').value;
-    const pw = document.getElementById('loginPassword').value;
-    if(!email || !pw){ showModal({type:'warning',title:'Empty fields',desc:'Please fill in all fields.'}); return; }
-    loginUser(email, pw);
-  });
-  document.getElementById('btnSignup').addEventListener('click', ()=>{
-    registerUser({
-      name: document.getElementById('suName').value,
-      email: document.getElementById('suEmail').value,
-      password: document.getElementById('suPassword').value,
-      confirm: document.getElementById('suConfirm').value,
-      danaNumber: document.getElementById('suDanaNumber').value,
-      danaName: document.getElementById('suDanaName').value
-    });
-  });
-  document.querySelectorAll('[data-qty]').forEach(b=>{
-    b.addEventListener('click', ()=>{
-      const inp = document.getElementById('orderQty');
-      const delta = parseInt(b.dataset.qty,10);
-      let v = (parseInt(inp.value,10) || 1) + delta;
-      if(v < 1) v = 1;
-      if(v > 20) v = 20;
-      inp.value = v;
-      renderGmailInputs(v);
-      updateOrderPrice();
-    });
-  });
-  document.getElementById('orderQty').addEventListener('input', (e)=>{
-    let v = parseInt(e.target.value,10) || 1;
-    if(v < 1) v = 1;
-    if(v > 20) v = 20;
-    e.target.value = v;
-    renderGmailInputs(v);
-    updateOrderPrice();
-  });
-  
-  document.getElementById('confirmPassword').addEventListener('input', ()=>{
-    validateConfirmPassword();
-  });
-  
-  document.getElementById('btnConfirmOrder').addEventListener('click', createOrder);
-  document.querySelectorAll('.filter-chips .chip').forEach(c=>{
-    c.addEventListener('click', ()=>{
-      document.querySelectorAll('.filter-chips .chip').forEach(x=> x.classList.remove('active'));
-      c.classList.add('active');
-      historyFilter = c.dataset.filter;
-      renderHistory();
-    });
-  });
-  
-  document.querySelectorAll('[data-action="upload-photo"]').forEach(b=>{
-    b.addEventListener('click', ()=>{
-      document.getElementById('profilePhoto').click();
-    });
-  });
-  
-  document.getElementById('homeAvatar').addEventListener('click', ()=>{
-    document.getElementById('profilePhoto').click();
-  });
-  document.getElementById('profileAvatar').addEventListener('click', ()=>{
-    document.getElementById('profilePhoto').click();
-  });
-  
-  document.getElementById('profilePhoto').addEventListener('change', (e)=>{
-    const f = e.target.files[0];
-    if(f) handleProfilePhotoUpload(f);
-    e.target.value = '';
-  });
-  
-  document.querySelectorAll('[data-action]').forEach(b=>{
-    b.addEventListener('click', ()=>{
-      const a = b.dataset.action;
-      if(a === 'upload-photo') {
-        document.getElementById('profilePhoto').click();
-      } else if(a === 'change-name') openChangeName();
-      else if(a === 'change-password') openChangePassword();
-      else if(a === 'change-payment') openChangePayment();
-      else if(a === 'logout') openLogoutConfirm();
-    });
-  });
-  
-  document.getElementById('btnNotify').addEventListener('click', ()=>{
-    showToast('info','No new notifications','You are all caught up.');
-  });
-  document.getElementById('btnWhatsAppChannel').addEventListener('click', openWhatsAppChannel);
-  modalRoot.addEventListener('click', (e)=>{ if(e.target === modalRoot) closeModal(); });
-  document.getElementById('loginPassword').addEventListener('keydown', (e)=>{ if(e.key === 'Enter') document.getElementById('btnLogin').click(); });
-  document.getElementById('suDanaName').addEventListener('keydown', (e)=>{ if(e.key === 'Enter') document.getElementById('btnSignup').click(); });
-}
-
-// ================================================================
-// INIT
-function initApp(){
-  setCustomLogo();
-  injectIcons();
-  document.querySelectorAll('.field-toggle').forEach(b=>{ b.innerHTML = ICONS.eye; });
-  bindEvents();
-  setTimeout(()=>{
-    document.getElementById('loadingScreen').classList.add('hidden');
-    document.getElementById('app').setAttribute('aria-hidden','false');
-    const u = getCurrentUser();
-    if(u){ showAppShell(); navigate('home'); }
-    else { showAuth('login'); }
-  }, 1600);
-  setTimeout(()=>{
-    const ls = document.getElementById('loadingScreen');
-    if(ls && ls.classList.contains('hidden')) ls.style.display = 'none';
-  }, 2400);
-}
-
-window.addEventListener('resize', ()=>{
-  if(currentScreen && ['home','history','profile'].includes(currentScreen)){ updateTabIndicator(currentScreen); }
 });
-
-document.addEventListener('DOMContentLoaded', initApp);
 </script>
 </body>
 </html>

@@ -636,6 +636,665 @@ svg { width: 100%; height: 100%; display: block; }
   .loading-screen { background:#000; }
 }
 @media (prefers-reduced-motion: reduce) { * { animation-duration:.01ms !important; transition-duration:.01ms !important; } }
+
+/* ===== SUPABASE AUTH ===== */
+.auth-entry{width:100%;margin-top:4px}
+.auth-entry button{width:100%}
+.auth-screen{position:fixed;inset:0;z-index:500;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.82);backdrop-filter:blur(18px)}
+.auth-screen.active{display:flex}
+.auth-card{width:100%;max-width:420px;background:rgba(16,16,16,.96);border:1px solid var(--border-strong);border-radius:24px;padding:24px;box-shadow:var(--shadow)}
+.auth-logo{width:58px;height:58px;border-radius:16px;display:block;margin:0 auto 14px;object-fit:cover}
+.auth-title{text-align:center;font-size:22px;font-weight:800;margin-bottom:5px}
+.auth-subtitle{text-align:center;color:var(--muted);font-size:12px;line-height:1.5;margin-bottom:20px}
+.auth-form{display:flex;flex-direction:column;gap:12px}
+.auth-input{width:100%;height:48px;border:1px solid var(--border-strong);border-radius:12px;background:rgba(255,255,255,.04);padding:0 14px;color:#fff;font-size:14px}
+.auth-input:focus{border-color:rgba(74,140,255,.55);box-shadow:0 0 0 3px rgba(74,140,255,.1)}
+.auth-actions{display:flex;gap:10px;margin-top:4px}
+.auth-dana-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.auth-label{display:block;color:#aeb6c5;font-size:11px;font-weight:700;margin:0 0 6px}.auth-dana-grid .auth-input{width:100%}@media(max-width:430px){.auth-dana-grid{grid-template-columns:1fr}}
+.auth-switch{text-align:center;color:var(--muted);font-size:12px;margin-top:14px}
+.auth-switch button{color:var(--accent);font-weight:800}
+.user-panel{display:none;padding:24px;border-bottom:1px solid var(--border);background:rgba(255,255,255,.02)}
+.user-panel.active{display:block}
+.user-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.user-email{font-size:14px;word-break:break-all}.user-status{font-size:11px;color:var(--success);margin-top:3px}
+.user-actions{display:flex;gap:8px;margin-top:14px}.user-actions button{flex:1;height:42px;border-radius:11px;font-size:12px}
+.blocked-screen{position:fixed;inset:0;z-index:1000;display:none;align-items:center;justify-content:center;padding:24px;background:#050505;text-align:center}.blocked-screen.active{display:flex}
+.blocked-box{max-width:380px}.blocked-icon{width:64px;height:64px;border-radius:20px;background:rgba(255,69,58,.12);color:var(--danger);margin:0 auto 16px;padding:18px}.blocked-box h2{font-size:22px;margin-bottom:8px}.blocked-box p{color:var(--muted);font-size:13px;line-height:1.6}.blocked-contact-text{margin-top:10px!important}.blocked-box .btn-whatsapp{display:flex;align-items:center;justify-content:center;gap:8px}
+
+.admin-protected {
+  cursor: default !important;
+  opacity: .9;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  min-height: 44px;
+  padding: 10px 14px;
+  border-radius: 12px;
+}
+.admin-protected [data-svg] {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+  margin-right: 6px;
+}
+</style>
+
+<style id="dashboard-css">
+/* ===== DASHBOARD — APP STYLE ===== */
+body.dashboard-open{overflow:hidden;height:100dvh;position:fixed;width:100%;top:0;left:0}
+#dashboardScreen{display:none;position:fixed;inset:0;width:100vw;height:100dvh;min-height:0;background:#050505;color:#f5f7fb;padding:0 0 calc(96px + env(safe-area-inset-bottom));overflow-x:hidden;overflow-y:auto;position:fixed;z-index:400;-webkit-overflow-scrolling:touch;overscroll-behavior-y:contain}
+#dashboardScreen,#dashboardScreen *{box-sizing:border-box}
+#dashboardScreen [data-svg]{display:inline-flex;width:20px;height:20px;flex:0 0 20px;align-items:center;justify-content:center;vertical-align:middle}
+#dashboardScreen [data-svg] svg{width:100%!important;height:100%!important;display:block}
+.dash-wrap{width:100%;max-width:520px;margin:0 auto;padding:14px 14px calc(24px + env(safe-area-inset-bottom))}
+.dash-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;padding:2px 0}.notification-btn{position:relative;width:44px;height:44px;flex:0 0 44px;border:1px solid rgba(255,255,255,.08);border-radius:13px;background:rgba(255,255,255,.045);color:#e9edf5;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .18s,background .18s}.notification-btn:active{transform:scale(.95)}.notification-btn:hover{background:rgba(255,255,255,.075)}.notification-btn [data-svg]{width:21px;height:21px}.notification-badge{position:absolute;right:-3px;top:-4px;min-width:17px;height:17px;padding:0 4px;border-radius:999px;background:#ff453a;color:#fff;border:2px solid #050505;font-size:8px;font-weight:900;display:flex;align-items:center;justify-content:center}.announcement-list{display:flex;flex-direction:column;gap:9px;max-height:52vh;overflow:auto}.announcement-item{padding:12px;border-radius:13px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.07)}.announcement-item strong{display:block;color:#fff;font-size:12px;line-height:1.45}.announcement-message{display:block;color:#f2f4f8;font-size:13px;line-height:1.55;margin-top:4px;white-space:pre-wrap;word-break:break-word}.announcement-item small{display:block;color:#737d8f;font-size:9px;margin-top:6px}
+/* Full-screen notification view */
+#modalRoot.notification-fullscreen{padding:0!important;align-items:stretch!important;justify-content:stretch!important;background:rgba(0,0,0,.94)!important;backdrop-filter:blur(18px)!important;-webkit-backdrop-filter:blur(18px)!important}
+#modalRoot.notification-fullscreen .modal-card{width:100%!important;max-width:none!important;height:100dvh!important;max-height:none!important;margin:0!important;border-radius:0!important;padding:22px 18px calc(22px + env(safe-area-inset-bottom))!important;background:#050607!important;border:0!important;box-shadow:none!important;display:flex!important;flex-direction:column!important;overflow:hidden!important}
+#modalRoot.notification-fullscreen .modal-icon{width:48px!important;height:48px!important;border-radius:15px!important;margin:0 0 12px!important}
+#modalRoot.notification-fullscreen .modal-title{text-align:left!important;font-size:21px!important;margin:0 0 4px!important}
+#modalRoot.notification-fullscreen .modal-desc{text-align:left!important;margin:0 0 18px!important;max-width:none!important}
+#modalRoot.notification-fullscreen .modal-body{flex:1!important;min-height:0!important;margin:0!important;overflow:hidden!important}
+#modalRoot.notification-fullscreen .announcement-list{height:100%!important;max-height:none!important;overflow-y:auto!important;padding-right:2px!important}
+#modalRoot.notification-fullscreen .announcement-item{padding:16px!important;border-radius:16px!important}
+#modalRoot.notification-fullscreen .announcement-item strong{font-size:13px!important;line-height:1.4!important}#modalRoot.notification-fullscreen .announcement-message{font-size:14px!important;line-height:1.6!important}
+#modalRoot.notification-fullscreen .announcement-item small{font-size:10px!important;margin-top:8px!important}
+#modalRoot.notification-fullscreen .modal-actions{position:absolute!important;top:18px!important;left:18px!important;right:18px!important;display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:space-between!important;gap:8px!important;margin:0!important;z-index:5!important}
+#modalRoot.notification-fullscreen .btn-modal{width:auto!important;flex:1!important;height:50px!important;min-height:50px!important;border-radius:15px!important}
+#modalRoot.notification-fullscreen .modal-actions .btn-modal{flex:0 0 auto!important;width:auto!important;min-width:76px!important;height:40px!important;min-height:40px!important;padding:0 13px!important;border-radius:12px!important;font-size:11px!important}
+#modalRoot.notification-fullscreen .modal-actions .btn-modal:first-child{min-width:62px!important}
+#modalRoot.notification-fullscreen .modal-actions .btn-modal:last-child{min-width:62px!important}
+.admin-announcement-card{margin-top:12px}.admin-announcement-textarea{width:100%;min-height:120px;resize:vertical;padding:12px;border-radius:13px;border:1px solid rgba(255,255,255,.09);background:#090c11;color:#fff;font:inherit;font-size:12px;line-height:1.55;outline:none}.admin-announcement-textarea:focus{border-color:rgba(74,140,255,.65);box-shadow:0 0 0 3px rgba(74,140,255,.08)}.admin-announcement-actions{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap;margin-top:10px}.admin-announcement-note{margin-top:8px;color:#737e90;font-size:9px;line-height:1.5}
+.live-broadcast-banner{position:fixed;top:12px;left:50%;transform:translateX(-50%);width:min(92vw,430px);z-index:100000;display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid rgba(74,140,255,.28);border-radius:14px;background:rgba(14,18,25,.97);box-shadow:0 12px 30px rgba(0,0,0,.35);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);animation:liveBroadcastIn .22s ease}.live-broadcast-banner .lb-icon{width:30px;height:30px;flex:0 0 30px;border-radius:9px;background:rgba(74,140,255,.12);color:#79a7ff;display:flex;align-items:center;justify-content:center}.live-broadcast-banner .lb-content{min-width:0;flex:1}.live-broadcast-banner strong{display:block;color:#fff;font-size:11px;line-height:1.3}.live-broadcast-banner .lb-message{margin-top:2px;color:#cbd2df;font-size:10px;line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.live-broadcast-banner button{border:0;background:rgba(255,255,255,.07);color:#fff;border-radius:9px;padding:7px 9px;font-size:9px;font-weight:800;cursor:pointer}.live-broadcast-banner .lb-close{background:transparent;color:#8f98a8;padding:5px;font-size:15px}.live-broadcast-banner.lb-hide{animation:liveBroadcastOut .18s ease forwards}@keyframes liveBroadcastIn{from{opacity:0;transform:translate(-50%,-12px)}to{opacity:1;transform:translate(-50%,0)}}@keyframes liveBroadcastOut{to{opacity:0;transform:translate(-50%,-12px)}}
+.dash-brand{display:flex;align-items:center;gap:10px;min-width:0}.dash-brand img{width:42px;height:42px;border-radius:13px;object-fit:cover;border:1px solid rgba(255,255,255,.09);flex:0 0 42px}.dash-brand h2{margin:0;font-size:17px;line-height:1.1;font-weight:800;color:#fff}.dash-brand small{display:block;margin-top:3px;color:#8d96a8;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:190px}
+.dash-btn{width:auto!important;border:0;border-radius:12px;padding:11px 13px;min-height:42px;font-weight:750;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:7px;font-size:12px;line-height:1;transition:transform .18s,opacity .18s,background .18s}.dash-btn:active{transform:scale(.97)}.dash-btn.primary{background:#4a8cff;color:#fff;box-shadow:0 8px 20px rgba(74,140,255,.18)}.dash-btn.danger{background:rgba(255,69,58,.10);color:#ff8178;border:1px solid rgba(255,69,58,.15)}.dash-btn.ghost{background:rgba(255,255,255,.055);color:#e8ecf3;border:1px solid rgba(255,255,255,.075)}
+.dash-page{display:none!important;visibility:hidden}.dash-page.active{display:block!important;visibility:visible;animation:dashIn .24s ease}
+.dash-hero{padding:18px;border-radius:20px;background:linear-gradient(145deg,#101827,#0b1018);border:1px solid rgba(74,140,255,.16);margin-bottom:12px;box-shadow:0 12px 30px rgba(0,0,0,.18)}.dash-hero .eyebrow{font-size:10px;color:#79a7ff;font-weight:800;text-transform:uppercase;letter-spacing:.12em;display:flex;align-items:center;gap:6px}.dash-hero .eyebrow [data-svg]{width:14px;height:14px;color:#79a7ff}.dash-hero h1{margin:6px 0 5px;font-size:23px;line-height:1.2;color:#fff}.dash-hero p{margin:0;color:#929cad;font-size:12px;line-height:1.55;font-weight:600}
+.dash-card{background:linear-gradient(180deg,#15181e,#0e1116);border:1px solid rgba(255,255,255,.075);border-radius:19px;padding:16px;margin-bottom:12px;box-shadow:0 12px 30px rgba(0,0,0,.20)}.dash-card h3{margin:0 0 13px;font-size:17px;color:#fff;line-height:1.25;display:flex;align-items:center;gap:8px}.dash-card h3 [data-svg]{width:20px;height:20px;color:var(--accent)}.dash-card p{color:#a9b1c0}
+.rules-card{overflow:hidden}.rules-head{display:flex;align-items:center;justify-content:space-between;gap:12px}.rules-head-copy{min-width:0}.mini-title{font-size:10px;font-weight:800;color:#8d96a8;text-transform:uppercase;letter-spacing:.09em;margin:0 0 7px;display:flex;align-items:center;gap:6px}.mini-title [data-svg]{width:14px;height:14px;color:#8d96a8}.rules-head h3{margin:0}.rules-content{margin-top:13px;padding-top:13px;border-top:1px solid rgba(255,255,255,.07)}.rules-list{margin:0;padding-left:20px;color:#b9c1cf;font-size:12px;line-height:1.75}.rules-list li{padding-left:2px;margin-bottom:3px}.rules-list b{color:#fff}.notice{padding:11px 12px;border-radius:12px;background:rgba(255,177,66,.07);border:1px solid rgba(255,177,66,.13);font-size:11px;color:#c9d0dc;line-height:1.5}
+.field{display:flex;flex-direction:column;gap:7px;margin:0 0 13px}.field label{font-size:12px;font-weight:750;color:#dfe4ec;display:flex;align-items:center;gap:6px}.field label [data-svg]{width:16px;height:16px;color:var(--accent)}.field input,.field textarea{width:100%;display:block;padding:12px 13px;border:1px solid rgba(255,255,255,.10);border-radius:13px;outline:none;background:#090c11;color:#fff;font:inherit;font-size:13px;line-height:1.4;transition:.2s}.field textarea{min-height:112px;resize:vertical;line-height:1.55}.field input::placeholder,.field textarea::placeholder{color:#687184}.field input:focus,.field textarea:focus{border-color:rgba(74,140,255,.65);box-shadow:0 0 0 3px rgba(74,140,255,.09)}
+.price-box{padding:12px 13px;border-radius:14px;background:#090c11;border:1px solid rgba(255,255,255,.075);margin:11px 0}.price-box+.price-box{margin-top:10px}.price-row{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;padding:7px 0;font-size:11px;color:#929cad}.price-row span{min-width:0;display:flex;align-items:center;gap:5px}.price-row span [data-svg]{width:14px;height:14px;color:#8d96a8}.price-row b{color:#fff;font-size:12px;text-align:right;max-width:62%;overflow-wrap:anywhere}.price-row:first-child{padding-top:0}.price-row:last-child{padding-bottom:0}
+.payment-box{margin-top:10px}.payment-title{font-size:10px;font-weight:800;color:#8d96a8;text-transform:uppercase;letter-spacing:.09em;margin-bottom:6px;display:flex;align-items:center;gap:6px}.payment-title [data-svg]{width:14px;height:14px;color:#8d96a8}.payment-row{display:grid;grid-template-columns:92px minmax(0,1fr);gap:12px;align-items:center;padding:9px 0;border-top:1px solid rgba(255,255,255,.055)}.payment-row:first-of-type{border-top:0;padding-top:2px}.payment-row span{font-size:11px;color:#929cad;display:flex;align-items:center;gap:5px}.payment-row span [data-svg]{width:14px;height:14px;color:#8d96a8}.payment-row strong{font-size:12px;color:#fff;text-align:right;overflow-wrap:anywhere;word-break:break-word}
+.profile-row{display:flex;align-items:center;gap:13px;padding-bottom:15px;border-bottom:1px solid rgba(255,255,255,.07)}.avatar{width:64px;height:64px;border-radius:18px;object-fit:cover;background:#11151d;border:1px solid rgba(255,255,255,.1);flex:0 0 64px}.profile-row b{display:block;color:#fff;font-size:15px;margin-bottom:3px}.profile-row div>div{color:#a8b0be;font-size:11px;word-break:break-word}.profile-row small{display:block;color:#697386;font-size:9px;margin-top:5px;word-break:break-all}.dash-actions{display:flex;flex-direction:column;gap:10px;margin-top:15px}.dash-actions .dash-btn{width:100%!important;min-height:48px;justify-content:center}.dash-actions .dash-btn svg{width:18px;height:18px}.modal-actions{display:flex;flex-direction:column;gap:10px}.modal-actions .btn-modal{width:100%;min-height:48px;flex:none}
+.history-item{padding:13px;background:#090c11;border:1px solid rgba(255,255,255,.075);border-radius:14px;margin-bottom:9px}.history-head{display:flex;justify-content:space-between;align-items:center;gap:10px}.history-head b{color:#fff;font-size:12px;display:flex;align-items:center;gap:6px}.history-head b [data-svg]{width:14px;height:14px;color:#8d96a8}.history-item small{display:block;color:#737d8f;font-size:9px;margin-top:5px}.history-item>div:last-child{color:#cbd2de;font-size:11px;margin-top:6px}
+.bottom-nav{position:fixed;left:50%;bottom:10px;transform:translateX(-50%);z-index:300;width:min(calc(100% - 24px),432px);background:rgba(13,16,22,.96);backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.09);box-shadow:0 14px 40px rgba(0,0,0,.48);border-radius:18px;padding:6px;display:flex;gap:5px;bottom:max(10px,env(safe-area-inset-bottom));}.nav-btn{flex:1;min-width:0;border:0;background:transparent;color:#737d8f;padding:8px 6px;border-radius:13px;cursor:pointer;font-size:10px;font-weight:750;transition:.2s}.nav-btn [data-svg]{display:flex;width:19px;height:19px;margin:0 auto 3px}.nav-btn.active{background:#4a8cff;color:#fff;box-shadow:0 6px 16px rgba(74,140,255,.18)}
+.admin-badge{display:inline-flex;align-items:center;gap:6px;padding:7px 10px;border-radius:10px;background:rgba(74,140,255,.1);color:#8bb5ff;font-size:10px;font-weight:800}
+@keyframes dashIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media(max-width:430px){.dash-wrap{padding:12px 12px 22px}.dash-card{padding:15px;border-radius:18px}.dash-hero{padding:17px}.dash-actions{display:flex;flex-direction:column}.payment-row{grid-template-columns:84px minmax(0,1fr);gap:10px}}
+@media(min-width:768px){#dashboardScreen{background:#050505}.dash-wrap{padding-top:22px}.bottom-nav{bottom:18px;width:min(calc(100% - 32px),500px)}}
+@media(max-width:430px){#dashboardScreen{padding-bottom:calc(88px + env(safe-area-inset-bottom))}.dash-wrap{padding:10px 10px calc(18px + env(safe-area-inset-bottom));max-width:none}.dash-top{margin-bottom:10px}.dash-brand img{width:40px;height:40px;flex-basis:40px}.dash-brand h2{font-size:16px}.dash-hero h1{font-size:22px}.dash-card{margin-bottom:10px}.bottom-nav{width:calc(100% - 20px);bottom:max(8px,env(safe-area-inset-bottom));padding:5px;border-radius:17px}.nav-btn{padding:8px 4px;font-size:10px}}
+
+/* Premium mobile app refinements */
+#dashboardScreen{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Inter',sans-serif}
+#dashboardScreen .dash-wrap{min-height:100%;padding-bottom:calc(105px + env(safe-area-inset-bottom))}
+#dashboardScreen .dash-card{box-shadow:0 16px 36px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.025)}
+.profile-actions{grid-template-columns:1fr!important;gap:10px!important}
+.profile-actions .dash-btn{min-height:52px!important;justify-content:flex-start!important;padding:0 16px!important;font-size:13px!important}
+.profile-actions .dash-btn [data-svg]{width:19px!important;height:19px!important;flex:0 0 19px!important}
+.history-status{display:inline-flex;margin-left:8px;padding:4px 7px;border-radius:999px;background:rgba(255,159,10,.09);border:1px solid rgba(255,159,10,.12);color:#ffb34d;font-size:8px;font-weight:800;vertical-align:middle}
+.history-head>div{min-width:0}
+.history-head b{display:inline-block}
+
+/* Full-box modern notification modal */
+#modalRoot{padding:16px;align-items:flex-end;z-index:9000!important}
+#modalRoot .modal-card{width:min(100%,430px);max-width:430px;margin:0;border-radius:28px;padding:22px 18px 18px;background:linear-gradient(180deg,rgba(25,29,37,.98),rgba(10,12,17,.99));border:1px solid rgba(255,255,255,.10);box-shadow:0 30px 80px rgba(0,0,0,.62),inset 0 1px 0 rgba(255,255,255,.05)}
+#modalRoot .modal-icon{width:64px;height:64px;border-radius:22px;margin:0 auto 15px}
+#modalRoot .modal-title{font-size:21px;letter-spacing:-.3px}
+#modalRoot .modal-desc{font-size:13px;line-height:1.65;margin:0 auto 20px;max-width:340px}
+#modalRoot .modal-actions{display:block}
+#modalRoot .btn-modal{width:100%;height:50px;border-radius:15px;font-size:14px}
+@media(max-width:430px){
+  #modalRoot{padding:10px}
+  #modalRoot .modal-card{border-radius:25px;padding:21px 16px 16px}
+  #modalRoot .modal-icon{width:60px;height:60px}
+}
+
+.modal-form{display:flex;flex-direction:column;gap:8px}.modal-form label{font-size:11px;color:#aeb6c5;font-weight:800;margin-top:2px;display:flex;align-items:center;gap:6px}.modal-form label [data-svg]{width:14px;height:14px;color:#8d96a8}.modal-input{width:100%;height:48px;padding:0 13px;border-radius:13px;border:1px solid rgba(255,255,255,.10);background:#090c11;color:#fff;font:inherit;font-size:13px;outline:none}.modal-input:focus{border-color:rgba(74,140,255,.65);box-shadow:0 0 0 3px rgba(74,140,255,.09)}
+
+/* ===== ADMIN V3: FULL MOBILE PAGE ===== */
+#dashAdmin .admin-page-card{padding:15px 13px 18px}
+.admin-page-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:14px}.admin-page-head h3{margin-bottom:4px!important}.admin-subtitle{margin:0;color:#8f98a8;font-size:11px;line-height:1.5}.admin-page-head .dash-btn{min-height:38px;padding:9px 10px;font-size:10px;flex:0 0 auto}
+.admin-tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0 12px}.admin-tab{border:1px solid rgba(255,255,255,.08);background:#0a0d12;color:#9ea8b8;border-radius:13px;min-height:48px;padding:8px 7px;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer}.admin-tab [data-svg]{width:16px;height:16px}.admin-tab b{padding:3px 6px;border-radius:999px;background:rgba(255,255,255,.06);font-size:9px;color:#fff}.admin-tab.active{background:rgba(74,140,255,.12);border-color:rgba(74,140,255,.35);color:#fff}.admin-tab.active b{background:#4a8cff}
+.admin-search-wrap{position:relative;margin-bottom:12px}.admin-search-wrap [data-svg]{position:absolute;left:13px;top:50%;transform:translateY(-50%);width:17px;height:17px;color:#6f798a}.admin-download-btn{position:absolute;right:7px;top:7px;width:34px;height:34px;border:1px solid rgba(255,255,255,.09);border-radius:10px;background:#11161e;color:#fff;display:none;align-items:center;justify-content:center;cursor:pointer}.admin-download-btn [data-svg]{position:static;width:16px;height:16px;color:inherit;transform:none}.admin-download-btn:active{transform:scale(.96)}.admin-search{padding-right:50px}.admin-search{width:100%;height:48px;border-radius:14px;border:1px solid rgba(255,255,255,.09);background:#090c11;color:#fff;padding:0 13px 0 40px;font:inherit;font-size:12px;outline:none}.admin-search:focus{border-color:rgba(74,140,255,.65);box-shadow:0 0 0 3px rgba(74,140,255,.08)}
+.admin-user-list{display:flex;flex-direction:column;gap:9px}.admin-user-card-v3{background:linear-gradient(180deg,#11151b,#0a0d12);border:1px solid rgba(255,255,255,.075);border-radius:15px;padding:13px}.admin-user-main{display:flex;align-items:center;justify-content:space-between;gap:10px}.admin-user-email{min-width:0}.admin-user-email strong{display:block;color:#fff;font-size:12px;word-break:break-all;line-height:1.4}.admin-user-email small{display:block;color:#727d8f;font-size:9px;margin-top:4px;word-break:break-word}.admin-status-pill{flex:0 0 auto;padding:5px 8px;border-radius:999px;font-size:8px;font-weight:900}.admin-status-pill.active{color:#71df94;background:rgba(52,199,89,.1);border:1px solid rgba(52,199,89,.16)}.admin-status-pill.banned{color:#ff8178;background:rgba(255,69,58,.1);border:1px solid rgba(255,69,58,.16)}.admin-reason-v3{margin-top:9px;padding:9px 10px;border-radius:11px;background:rgba(255,255,255,.035);color:#aab3c2;font-size:10px;line-height:1.5}.admin-user-select{margin-top:10px;width:100%;height:43px;border-radius:12px;border:1px solid rgba(255,255,255,.08);background:#151a22;color:#fff;font-size:11px;font-weight:800}.admin-empty{padding:22px 12px;text-align:center;color:#737e90;font-size:11px;border:1px dashed rgba(255,255,255,.08);border-radius:14px}
+@media(max-width:430px){#dashAdmin .admin-page-card{padding:14px 11px 18px}.admin-page-head h3{font-size:16px}.admin-tabs{gap:6px}.admin-tab{font-size:9px;min-height:46px}.admin-user-card-v3{padding:12px}}
+.admin-admin-highlight{display:flex;align-items:center;gap:12px;padding:13px 14px;margin:0 0 12px;border-radius:15px;background:linear-gradient(135deg,rgba(74,140,255,.14),rgba(74,140,255,.045));border:1px solid rgba(74,140,255,.28);box-shadow:0 10px 25px rgba(0,0,0,.18)}
+.admin-admin-icon{width:42px;height:42px;flex:0 0 42px;border-radius:13px;display:flex;align-items:center;justify-content:center;background:rgba(74,140,255,.14);color:#79a7ff;border:1px solid rgba(74,140,255,.18)}
+.admin-admin-icon [data-svg]{width:21px;height:21px}
+.admin-admin-highlight small{display:block;color:#79a7ff;font-size:8px;font-weight:900;letter-spacing:.12em;margin-bottom:3px}
+.admin-admin-highlight strong{display:block;color:#fff;font-size:13px;word-break:break-all}
+.admin-admin-highlight span{display:block;color:#8d96a8;font-size:9px;margin-top:3px}
+.admin-bulk-card{background:linear-gradient(180deg,#11151b,#0a0d12);border:1px solid rgba(255,255,255,.075);border-radius:15px;padding:14px}
+.admin-bulk-title{display:flex;align-items:center;gap:8px;color:#fff;font-size:14px;font-weight:850;margin-bottom:6px}
+.admin-bulk-title [data-svg]{width:19px;height:19px;color:var(--accent)}
+.admin-bulk-desc{color:#8d96a8;font-size:10px;line-height:1.55;margin-bottom:12px}
+.admin-bulk-textarea{width:100%;min-height:180px;resize:vertical;padding:12px 13px;border-radius:13px;border:1px solid rgba(255,255,255,.10);background:#090c11;color:#fff;font:inherit;font-size:12px;line-height:1.6;outline:none}
+.admin-bulk-textarea:focus{border-color:rgba(74,140,255,.65);box-shadow:0 0 0 3px rgba(74,140,255,.09)}
+.admin-bulk-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:10px}
+.admin-bulk-actions .dash-btn{width:100%!important;min-height:48px}
+.admin-bulk-result{margin-top:11px;padding:10px 11px;border-radius:12px;background:rgba(255,255,255,.035);color:#aab3c2;font-size:10px;line-height:1.55}
+
+.admin-confirm-user{display:flex;align-items:center;gap:10px;padding:11px;border-radius:13px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);margin-bottom:12px}.admin-confirm-user>[data-svg]{width:20px;height:20px;color:#78a8ff;flex:0 0 20px}.admin-confirm-user b{display:block;color:#fff;font-size:12px;word-break:break-all}.admin-confirm-user small{display:block;color:#7e899a;font-size:9px;margin-top:3px}
+
+<style id="bulk-admin-compact-fix">
+  .admin-user-list > .admin-bulk-card{
+    width:100%!important;
+    max-width:none!important;
+    box-sizing:border-box!important;
+    padding:12px!important;
+    align-self:stretch!important;
+  }
+  .admin-bulk-card{
+    width:100%!important;
+    max-width:none!important;
+    box-sizing:border-box!important;
+    padding:12px!important;
+  }
+  .admin-bulk-title{font-size:13px!important;margin-bottom:5px!important}
+  .admin-bulk-desc{font-size:10px!important;line-height:1.45!important;margin-bottom:9px!important}
+  .admin-bulk-textarea{
+    min-height:105px!important;
+    height:105px!important;
+    resize:none!important;
+    padding:10px 11px!important;
+    font-size:11px!important;
+    line-height:1.5!important;
+  }
+  .admin-bulk-actions{gap:8px!important;margin-top:8px!important}
+  .admin-bulk-actions .dash-btn{
+    min-height:43px!important;
+    height:43px!important;
+    font-size:10px!important;
+  }
+  .admin-bulk-result{
+    margin-top:8px!important;
+    padding:8px 9px!important;
+    font-size:9px!important;
+    line-height:1.45!important;
+  }
+</style>
+
+</style>
+
+<style id="button-spacing-fix">
+  /* Rapikan jarak antar tombol, terutama tombol Batal/Konfirmasi */
+  .modal-actions,
+  .modal-buttons,
+  .action-buttons,
+  .button-group,
+  .btn-group {
+    display: flex !important;
+    gap: 12px !important;
+    flex-wrap: wrap !important;
+  }
+  .modal-actions > button,
+  .modal-buttons > button,
+  .action-buttons > button,
+  .button-group > button,
+  .btn-group > button {
+    margin: 0 !important;
+    min-height: 44px;
+  }
+  button + button {
+    margin-left: 0 !important;
+  }
+  @media (max-width: 480px) {
+    .modal-actions,
+    .modal-buttons,
+    .action-buttons,
+    .button-group,
+    .btn-group {
+      gap: 10px !important;
+    }
+    .modal-actions > button,
+    .modal-buttons > button,
+    .action-buttons > button,
+    .button-group > button,
+    .btn-group > button {
+      flex: 1 1 140px;
+    }
+  }
+</style>
+
+<style id="admin-modal-final-fix">
+#modalRoot.active{display:flex!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important;z-index:999999!important}
+#modalRoot.active .modal-card{display:block!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important;position:relative!important;z-index:1000000!important}
+</style>
+<style id="admin-modal-fix">#modalRoot,.modal-root,.modal-overlay,.modal-backdrop{z-index:99999!important}.modal-actions{display:flex!important;gap:12px!important;flex-wrap:wrap!important}.modal-actions button{margin:0!important}</style>
+
+<style id="premium-mobile-ui-fix">
+/* Compact mobile app-style CTA cards */
+.btn-group{gap:10px!important}
+.btn-group .btn-primary{
+  height:48px!important;
+  min-height:48px!important;
+  border-radius:16px!important;
+  font-size:14px!important;
+}
+.btn-group .btn-primary .btn-icon{width:19px!important;height:19px!important}
+
+/* Premium full-screen modal notifications */
+#modalRoot{
+  z-index:99999!important;
+  padding:14px!important;
+  align-items:center!important;
+}
+#modalRoot .modal-card{
+  width:min(100%,390px)!important;
+  max-height:min(88dvh,700px)!important;
+  border-radius:26px!important;
+  padding:24px 18px 17px!important;
+  background:linear-gradient(180deg,rgba(22,25,32,.98),rgba(10,12,16,.98))!important;
+  border:1px solid rgba(255,255,255,.10)!important;
+  box-shadow:0 28px 90px rgba(0,0,0,.72),0 0 50px rgba(74,140,255,.08)!important;
+}
+#modalRoot .modal-icon{width:62px!important;height:62px!important;border-radius:20px!important}
+#modalRoot .modal-title{font-size:20px!important;margin-top:2px!important}
+#modalRoot .modal-desc{font-size:12.5px!important;line-height:1.6!important}
+#modalRoot .modal-actions{
+  display:grid!important;
+  grid-template-columns:1fr 1fr!important;
+  gap:11px!important;
+}
+#modalRoot .btn-modal{
+  min-height:48px!important;
+  height:48px!important;
+  border-radius:15px!important;
+}
+#modalRoot .modal-actions .btn-modal:only-child{grid-column:1/-1}
+#modalRoot .modal-form{display:flex!important;flex-direction:column!important;gap:8px!important}
+#modalRoot .modal-input{box-sizing:border-box!important;width:100%!important;border-radius:14px!important}
+
+/* Blocked screen: app-like full popup */
+.blocked-screen{
+  z-index:100000!important;
+  padding:18px!important;
+  background:radial-gradient(circle at 50% 25%,rgba(255,69,58,.08),transparent 40%),#050505!important;
+  animation:premiumFadeIn .35s ease both;
+}
+.blocked-box{
+  width:min(100%,390px)!important;
+  padding:28px 20px 22px!important;
+  border-radius:28px!important;
+  background:linear-gradient(180deg,rgba(22,25,32,.98),rgba(9,11,15,.98))!important;
+  border:1px solid rgba(255,255,255,.10)!important;
+  box-shadow:0 30px 100px rgba(0,0,0,.8)!important;
+  animation:premiumModalIn .45s cubic-bezier(.2,.9,.2,1) both;
+}
+.blocked-box .btn-primary{
+  height:48px!important;
+  min-height:48px!important;
+  border-radius:15px!important;
+}
+.blocked-contact-text{font-size:12px!important;line-height:1.55!important}
+@keyframes premiumFadeIn{from{opacity:0}to{opacity:1}}
+@keyframes premiumModalIn{from{opacity:0;transform:translateY(22px) scale(.96)}to{opacity:1;transform:none}}
+@media(max-width:420px){
+  #modalRoot{padding:10px!important;align-items:flex-end!important}
+  #modalRoot .modal-card{width:100%!important;border-radius:25px 25px 18px 18px!important;padding:22px 15px 14px!important}
+  #modalRoot .modal-actions{gap:9px!important}
+  .blocked-box{padding:24px 16px 18px!important}
+}
+</style>
+<script>
+/* Emergency boot: prevents a network/JavaScript error from leaving the loading screen stuck. */
+(function(){
+  function boot(){
+    var l=document.getElementById("loadingScreen");
+    var a=document.getElementById("app");
+    if(l){ l.classList.add("hidden"); l.style.display="none"; l.setAttribute("aria-hidden","true"); }
+    if(a){ a.removeAttribute("aria-hidden"); a.style.visibility="visible"; a.style.opacity="1"; }
+  }
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot, {once:true}); else boot();
+  setTimeout(boot, 1800);
+  setTimeout(boot, 4000);
+})();
+</script>
+
+<style id="jual-sekarang-layout-fix">
+/* Jual Sekarang: compact, centered, and always clear of the bottom toolbar */
+#btnSubmitStore{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:8px!important;
+  width:min(92%,380px)!important;
+  min-height:54px!important;
+  height:54px!important;
+  margin:16px auto 2px!important;
+  padding:0 18px!important;
+  border-radius:16px!important;
+  font-size:14px!important;
+  font-weight:850!important;
+  position:relative!important;
+  z-index:2!important;
+}
+#btnSubmitStore [data-svg]{width:19px!important;height:19px!important;flex:0 0 19px!important}
+#dashboardScreen{padding-bottom:calc(72px + env(safe-area-inset-bottom))!important}
+#dashboardScreen .dash-wrap{padding-bottom:calc(76px + env(safe-area-inset-bottom))!important}
+@media(max-width:430px){
+  #btnSubmitStore{width:94%!important;min-height:52px!important;height:52px!important;margin:14px auto 0!important;border-radius:15px!important}
+  #dashboardScreen{padding-bottom:calc(68px + env(safe-area-inset-bottom))!important}
+  #dashboardScreen .dash-wrap{padding-bottom:calc(72px + env(safe-area-inset-bottom))!important}
+}
+</style>
+
+
+<style id="join-buttons-reference-size">
+/* Ukuran tombol Join mengikuti referensi */
+.btn-group > #btnJoinWhatsApp,
+.btn-group > #btnJoinKomunitas {
+  width: 100% !important;
+  height: 48px !important;
+  min-height: 48px !important;
+  border-radius: 16px !important;
+  margin: 0 !important;
+  padding: 0 18px !important;
+  flex: 0 0 48px !important;
+}
+
+.btn-group > #btnJoinWhatsApp + #btnJoinKomunitas {
+  margin-top: 0 !important;
+}
+
+@media (max-width: 430px) {
+  .btn-group {
+    width: 100% !important;
+    gap: 10px !important;
+  }
+  .btn-group > #btnJoinWhatsApp,
+  .btn-group > #btnJoinKomunitas {
+    height: 48px !important;
+    min-height: 48px !important;
+    flex-basis: 48px !important;
+    border-radius: 16px !important;
+  }
+}
+</style>
+
+
+<style id="reference-dashboard-ui">
+/* Reference dashboard UI — visual-only overhaul; existing IDs/events are preserved. */
+#dashboardScreen{background:#050607!important;color:#f7f8fb!important;padding:0!important;overflow-y:auto!important;}
+#dashboardScreen .dash-wrap{max-width:680px!important;margin:0 auto!important;padding:22px 28px 112px!important;}
+#dashboardScreen .dash-top{height:68px;margin:0 0 20px!important;padding:0!important;align-items:center!important;border-bottom:1px solid rgba(255,255,255,.045);}
+#dashboardScreen .dash-brand{gap:12px!important}
+#dashboardScreen .dash-brand img{width:54px!important;height:54px!important;flex-basis:54px!important;border-radius:50%!important;border:1px solid rgba(74,140,255,.28)!important;box-shadow:0 0 20px rgba(74,140,255,.18)!important}
+#dashboardScreen .dash-brand h2{font-size:12px!important;color:#858a94!important;text-transform:uppercase!important;letter-spacing:.7px!important;line-height:1.2!important;margin-bottom:5px!important}
+#dashboardScreen .dash-brand small{font-size:20px!important;font-weight:850!important;color:#fff!important;max-width:250px!important;line-height:1.1!important}
+#dashboardScreen .dash-top:after{content:'';width:166px;height:44px;border-radius:15px;background:linear-gradient(90deg,rgba(255,157,0,.08),rgba(0,205,142,.08),rgba(255,255,255,.025));border:1px solid rgba(255,255,255,.06);box-shadow:inset 0 1px 0 rgba(255,255,255,.04);}
+#dashboardScreen .dash-page{width:100%!important}
+#dashboardScreen .dash-page.active{animation:dashReferenceIn .25s ease both!important}
+@keyframes dashReferenceIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+/* Home stats */
+#dashboardScreen .dash-stats{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:36px}
+#dashboardScreen .stat-card{min-height:168px;padding:25px 22px;border-radius:22px;background:linear-gradient(145deg,#111317,#0d0e10);border:1px solid rgba(255,255,255,.075);box-shadow:0 14px 32px rgba(0,0,0,.22);}
+#dashboardScreen .stat-card:first-child{background:linear-gradient(145deg,#111a2e,#0e1523);border-color:rgba(74,140,255,.19)}
+#dashboardScreen .stat-head{display:flex;align-items:center;gap:10px;color:#8b9099;font-size:14px;font-weight:850;letter-spacing:.35px;text-transform:uppercase}
+#dashboardScreen .stat-head [data-svg]{width:22px;height:22px;color:#5e97ff}
+#dashboardScreen .stat-value{font-size:34px;font-weight:900;line-height:1.05;margin-top:26px;color:#fff;letter-spacing:-1px}
+#dashboardScreen .stat-sub{font-size:15px;color:#5e626b;margin-top:10px;font-weight:700}
+/* Quick actions */
+#dashboardScreen .dash-section-title{font-size:21px;font-weight:900;color:#fff;margin:0 0 20px;letter-spacing:-.3px}
+#dashboardScreen .quick-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:24px}
+#dashboardScreen .quick-card{min-height:182px;padding:25px 22px;border-radius:22px;background:linear-gradient(145deg,#101113,#0c0d0f);border:1px solid rgba(255,255,255,.075);box-shadow:0 14px 32px rgba(0,0,0,.2);text-align:left;cursor:pointer;}
+#dashboardScreen .quick-card.primary{background:linear-gradient(145deg,#111b30,#0e1625);border-color:rgba(74,140,255,.19)}
+#dashboardScreen .quick-icon{width:56px;height:56px;border-radius:16px;background:rgba(74,140,255,.12);display:flex;align-items:center;justify-content:center;color:#5e97ff;margin-bottom:20px}
+#dashboardScreen .quick-icon [data-svg],#dashboardScreen .quick-icon svg{width:28px;height:28px}
+#dashboardScreen .quick-title{font-size:21px;font-weight:900;color:#fff;line-height:1.1}
+#dashboardScreen .quick-sub{font-size:15px;color:#8a8e97;margin-top:9px;font-weight:700}
+#dashboardScreen .channel-card{height:124px;padding:18px 20px;border-radius:22px;background:linear-gradient(145deg,#111a2b,#0d131e);border:1px solid rgba(74,140,255,.20);display:flex;align-items:center;gap:17px;margin-bottom:38px}
+#dashboardScreen .channel-icon{width:56px;height:56px;border-radius:16px;background:rgba(74,140,255,.11);color:#5e97ff;display:flex;align-items:center;justify-content:center;flex:0 0 56px}
+#dashboardScreen .channel-copy{min-width:0;flex:1}.channel-copy strong{display:block;color:#4e8fff;font-size:21px;font-weight:900}.channel-copy span{display:block;color:#8b909a;font-size:14px;margin-top:4px;font-weight:650}.channel-arrow{color:#4e8fff;width:24px;height:24px}
+#dashboardScreen .recent-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:0}.recent-head .dash-section-title{margin:0}.recent-view{font-size:17px;font-weight:850;color:#5e97ff;cursor:pointer}
+#dashboardScreen .empty-orders{min-height:220px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#707681;text-align:center}.empty-orders .empty-icon{width:76px;height:76px;border-radius:22px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;margin-bottom:16px}.empty-orders .empty-icon [data-svg]{width:38px;height:38px}.empty-orders strong{font-size:18px;color:#a4a8b0}.empty-orders span{font-size:13px;margin-top:5px;color:#646972}
+/* Form page */
+#dashboardScreen #dashForm .dash-card{border-radius:22px;padding:22px;background:linear-gradient(180deg,#111317,#0c0e11)}
+#dashboardScreen #dashForm .form-ref-head{display:flex;align-items:center;gap:12px;margin-bottom:20px}.form-back{width:44px;height:44px;border-radius:14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;color:#fff;cursor:pointer}.form-ref-head h3{margin:0!important;font-size:21px!important}
+/* Profile reference */
+#dashboardScreen .reference-header{height:68px;display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;border-bottom:1px solid rgba(255,255,255,.045)}
+#dashboardScreen .reference-title{font-size:28px;font-weight:900;color:#fff;letter-spacing:-.5px;position:absolute;left:50%;transform:translateX(-50%)}
+#dashboardScreen .back-ref{width:58px;height:58px;border-radius:16px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;color:#fff;cursor:pointer}.back-ref [data-svg]{width:29px;height:29px}
+#dashboardScreen .header-actions{display:flex;gap:10px}.head-tool{width:58px;height:58px;border-radius:16px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.035)}.head-tool svg{width:27px;height:27px}.head-tool.orange{color:#ffae20;background:rgba(255,159,10,.07);border-color:rgba(255,159,10,.2)}.head-tool.green{color:#1de19a;background:rgba(0,200,135,.06);border-color:rgba(0,200,135,.2)}
+#dashboardScreen .profile-hero{padding:30px;border-radius:28px;background:linear-gradient(145deg,#111a2b,#0d131e);border:1px solid rgba(74,140,255,.17);display:flex;align-items:center;gap:22px;margin-bottom:18px}.profile-hero img{width:110px;height:110px;border-radius:50%;object-fit:cover;border:1px solid rgba(74,140,255,.35);box-shadow:0 0 24px rgba(74,140,255,.15)}.profile-hero h2{font-size:27px;font-weight:900;margin:0 0 7px}.profile-hero p{font-size:18px;color:#7e8592;margin:0 0 9px}.active-pill{display:inline-flex;padding:6px 15px;border-radius:999px;background:rgba(20,195,111,.12);color:#35d77d;font-size:13px;font-weight:900}
+#dashboardScreen .detail-card{padding:5px 26px;border-radius:24px;background:linear-gradient(180deg,#111214,#0c0d0f);border:1px solid rgba(255,255,255,.075);margin-bottom:40px}.detail-row{display:flex;align-items:center;min-height:74px;border-bottom:1px solid rgba(255,255,255,.055);gap:15px}.detail-row:last-child{border-bottom:0}.detail-row [data-svg]{width:24px;height:24px;color:#8e929b;flex:0 0 24px}.detail-label{font-size:17px;color:#8e929b;font-weight:800}.detail-value{margin-left:auto;text-align:right;color:#fff;font-size:17px;font-weight:900}
+#dashboardScreen .profile-section-title{font-size:21px;font-weight:900;margin:0 0 20px}.profile-list{display:flex;flex-direction:column;gap:12px;margin-bottom:38px}.profile-item{min-height:88px;padding:16px 20px;border-radius:21px;background:linear-gradient(180deg,#111214,#0c0d0f);border:1px solid rgba(255,255,255,.075);display:flex;align-items:center;gap:18px;cursor:pointer}.profile-item .pi-icon{width:56px;height:56px;border-radius:16px;background:rgba(74,140,255,.08);color:#5e97ff;display:flex;align-items:center;justify-content:center;flex:0 0 56px}.profile-item .pi-icon [data-svg]{width:27px;height:27px}.profile-item strong{font-size:18px;color:#fff}.profile-item .chev{margin-left:auto;color:#70757e;width:24px;height:24px}.profile-item.logout strong{color:#ff4b48}.profile-item.logout .pi-icon{color:#ff4b48;background:rgba(255,69,58,.08)}
+/* History reference */
+#dashboardScreen .history-ref-tabs{display:flex;gap:12px;margin-bottom:28px}.history-ref-tab{min-width:92px;height:52px;padding:0 20px;border-radius:26px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.06);color:#7d828c;font-size:17px;font-weight:900;cursor:pointer}.history-ref-tab.active{background:#3f82ff;color:#fff;border-color:#3f82ff;box-shadow:0 8px 22px rgba(63,130,255,.2)}
+/* bottom nav */
+#dashboardScreen .bottom-nav{width:calc(100% - 54px)!important;max-width:640px!important;height:92px!important;bottom:max(16px,env(safe-area-inset-bottom))!important;border-radius:48px!important;padding:7px!important;background:rgba(7,8,10,.96)!important;border:1px solid rgba(255,255,255,.08)!important;box-shadow:0 16px 55px rgba(0,0,0,.58)!important;gap:5px!important}.nav-btn{height:76px!important;border-radius:40px!important;font-size:15px!important;font-weight:850!important;padding:8px!important;color:#777b84!important}.nav-btn [data-svg]{width:30px!important;height:30px!important;margin:0 auto 6px!important}.nav-btn.active{background:linear-gradient(180deg,#1a5dff,#4387ff)!important;color:#fff!important;box-shadow:0 8px 24px rgba(48,112,255,.3)!important}
+@media(max-width:700px){#dashboardScreen .dash-wrap{padding:18px 28px 118px!important}#dashboardScreen .dash-top:after{width:145px}#dashboardScreen .dash-brand small{font-size:18px}.stat-card{min-height:170px!important}.quick-card{min-height:180px!important}.profile-hero img{width:94px!important;height:94px!important}.profile-hero{padding:25px!important}.profile-hero h2{font-size:23px!important}.profile-hero p{font-size:16px!important}.reference-title{font-size:25px!important}.head-tool,.back-ref{width:54px!important;height:54px!important}.detail-card{padding:4px 20px!important}.detail-label,.detail-value{font-size:15px!important}.profile-item{min-height:82px}.profile-item strong{font-size:16px!important}}
+@media(max-width:430px){#dashboardScreen .dash-wrap{padding:14px 28px 112px!important}.dash-stats,.quick-grid{gap:18px!important}.stat-card{min-height:169px!important;padding:22px 20px!important}.stat-head{font-size:12px!important}.stat-value{font-size:32px!important}.stat-sub{font-size:14px!important}.dash-section-title{font-size:21px!important}.quick-card{min-height:181px!important;padding:22px 20px!important}.quick-title{font-size:20px!important}.quick-sub{font-size:14px!important}.channel-card{height:122px!important;padding:17px!important}.channel-copy strong{font-size:19px!important}.channel-copy span{font-size:13px!important}.bottom-nav{width:calc(100% - 56px)!important;height:84px!important}.nav-btn{height:70px!important;font-size:14px!important}.nav-btn [data-svg]{width:28px!important;height:28px!important}}
+</style>
+
+
+<style id="reference-precision-fix">
+/* Exact mobile sizing pass based on the supplied reference screenshots. */
+#dashboardScreen .dash-wrap{max-width:680px!important;padding:14px 18px 105px!important}
+#dashboardScreen .dash-top{height:68px!important;margin-bottom:14px!important}
+#dashboardScreen .dash-stats{gap:18px!important;margin-bottom:30px!important}
+#dashboardScreen .stat-card{min-height:108px!important;padding:16px 16px!important;border-radius:20px!important}
+#dashboardScreen .stat-head{font-size:12px!important;gap:8px!important}
+#dashboardScreen .stat-head [data-svg]{width:20px!important;height:20px!important}
+#dashboardScreen .stat-value{font-size:28px!important;margin-top:16px!important}
+#dashboardScreen .stat-sub{font-size:12px!important;margin-top:7px!important}
+#dashboardScreen .dash-section-title{font-size:20px!important;margin-bottom:16px!important}
+#dashboardScreen .quick-grid{gap:18px!important;margin-bottom:20px!important}
+#dashboardScreen .quick-card{min-height:114px!important;padding:16px 16px!important;border-radius:20px!important}
+#dashboardScreen .quick-icon{width:50px!important;height:50px!important;border-radius:15px!important;margin-bottom:14px!important}
+#dashboardScreen .quick-icon [data-svg],#dashboardScreen .quick-icon svg{width:26px!important;height:26px!important}
+#dashboardScreen .quick-title{font-size:18px!important}
+#dashboardScreen .quick-sub{font-size:13px!important;margin-top:7px!important}
+#dashboardScreen .channel-card{height:78px!important;padding:12px 14px!important;border-radius:18px!important;gap:12px!important;margin-bottom:24px!important}
+#dashboardScreen .channel-icon{width:48px!important;height:48px!important;flex-basis:48px!important;border-radius:14px!important}
+#dashboardScreen .channel-copy strong{font-size:17px!important}
+#dashboardScreen .channel-copy span{font-size:12px!important;margin-top:2px!important}
+#dashboardScreen .recent-view{font-size:15px!important}
+
+/* The reference Profile/History pages do NOT repeat the Home welcome header. */
+#dashboardScreen:has(.dash-page.active:not(#dashHome)) .dash-top{display:none!important}
+#dashboardScreen:has(.dash-page.active:not(#dashHome)) .dash-wrap{padding-top:12px!important}
+
+/* Profile */
+#dashboardScreen .reference-header{height:58px!important;margin-bottom:14px!important}
+#dashboardScreen .reference-title{font-size:25px!important}
+#dashboardScreen .back-ref{width:54px!important;height:54px!important;border-radius:15px!important}
+#dashboardScreen .header-actions{gap:9px!important}
+#dashboardScreen .head-tool{width:54px!important;height:54px!important;border-radius:15px!important}
+#dashboardScreen .profile-hero{padding:22px!important;border-radius:24px!important;gap:18px!important;margin-bottom:14px!important}
+#dashboardScreen .profile-hero img{width:84px!important;height:84px!important}
+#dashboardScreen .profile-hero h2{font-size:22px!important;margin-bottom:5px!important}
+#dashboardScreen .profile-hero p{font-size:15px!important;margin-bottom:7px!important}
+#dashboardScreen .active-pill{padding:5px 13px!important;font-size:12px!important}
+#dashboardScreen .detail-card{padding:3px 18px!important;border-radius:22px!important;margin-bottom:28px!important}
+#dashboardScreen .detail-row{min-height:54px!important;gap:12px!important}
+#dashboardScreen .detail-row [data-svg]{width:22px!important;height:22px!important;flex-basis:22px!important}
+#dashboardScreen .detail-label,#dashboardScreen .detail-value{font-size:14px!important}
+#dashboardScreen .profile-section-title{font-size:20px!important;margin-bottom:15px!important}
+#dashboardScreen .profile-list{gap:9px!important;margin-bottom:28px!important}
+#dashboardScreen .profile-item{min-height:62px!important;padding:11px 15px!important;border-radius:18px!important;gap:14px!important}
+#dashboardScreen .profile-item .pi-icon{width:46px!important;height:46px!important;flex-basis:46px!important;border-radius:14px!important}
+#dashboardScreen .profile-item .pi-icon [data-svg]{width:24px!important;height:24px!important}
+#dashboardScreen .profile-item strong{font-size:15px!important}
+
+/* History */
+#dashboardScreen .history-ref-tabs{gap:10px!important;margin-bottom:22px!important}
+#dashboardScreen .history-ref-tab{min-width:80px!important;height:44px!important;padding:0 18px!important;border-radius:22px!important;font-size:15px!important}
+
+/* Reference bottom navigation */
+#dashboardScreen .bottom-nav{width:calc(100% - 40px)!important;max-width:620px!important;height:62px!important;bottom:max(10px,env(safe-area-inset-bottom))!important;border-radius:34px!important;padding:5px!important;gap:4px!important}
+#dashboardScreen .nav-btn{height:52px!important;border-radius:28px!important;font-size:12px!important;padding:5px!important}
+#dashboardScreen .nav-btn [data-svg]{width:25px!important;height:25px!important;margin:0 auto 2px!important}
+
+@media(max-width:430px){
+ #dashboardScreen .dash-wrap{padding:12px 18px 92px!important}
+ #dashboardScreen .dash-top{height:60px!important;margin-bottom:12px!important}
+ #dashboardScreen .dash-brand img{width:48px!important;height:48px!important;flex-basis:48px!important}
+ #dashboardScreen .dash-brand h2{font-size:11px!important;margin-bottom:3px!important}
+ #dashboardScreen .dash-brand small{font-size:18px!important}
+ #dashboardScreen .dash-top:after{width:120px!important;height:38px!important;border-radius:14px!important}
+ #dashboardScreen .stat-card{min-height:108px!important;padding:15px 14px!important}
+ #dashboardScreen .stat-value{font-size:27px!important}
+ #dashboardScreen .quick-card{min-height:114px!important;padding:15px 14px!important}
+ #dashboardScreen .quick-icon{width:48px!important;height:48px!important;margin-bottom:12px!important}
+ #dashboardScreen .quick-title{font-size:17px!important}
+ #dashboardScreen .quick-sub{font-size:12px!important}
+ #dashboardScreen .channel-card{height:76px!important}
+ #dashboardScreen .reference-header{height:56px!important}
+ #dashboardScreen .reference-title{font-size:24px!important}
+ #dashboardScreen .profile-hero{padding:20px!important}
+ #dashboardScreen .profile-hero img{width:80px!important;height:80px!important}
+ #dashboardScreen .profile-hero h2{font-size:21px!important}
+ #dashboardScreen .profile-hero p{font-size:14px!important}
+ #dashboardScreen .detail-row{min-height:52px!important}
+ #dashboardScreen .detail-label,#dashboardScreen .detail-value{font-size:13px!important}
+ #dashboardScreen .profile-item{min-height:60px!important}
+ #dashboardScreen .bottom-nav{width:calc(100% - 40px)!important;height:62px!important}
+ #dashboardScreen .nav-btn{height:52px!important;font-size:12px!important}
+}
+</style>
+
+<style id="reference-final-size-fix">
+/* FINAL COMPACT MOBILE PASS — match supplied reference proportions */
+#dashboardScreen .dash-wrap{max-width:680px!important;padding:12px 15px 90px!important}
+#dashboardScreen .dash-top{height:58px!important;margin-bottom:10px!important}
+#dashboardScreen .dash-brand{gap:9px!important}
+#dashboardScreen .dash-brand img{width:42px!important;height:42px!important;flex-basis:42px!important}
+#dashboardScreen .dash-brand h2{font-size:10px!important;letter-spacing:.5px!important;margin-bottom:2px!important}
+#dashboardScreen .dash-brand small{font-size:17px!important;max-width:190px!important}
+#dashboardScreen .dash-top:after{width:100px!important;height:32px!important;border-radius:12px!important}
+
+#dashboardScreen .dash-stats{gap:10px!important;margin-bottom:22px!important}
+#dashboardScreen .stat-card{height:90px!important;min-height:90px!important;padding:10px 11px!important;border-radius:17px!important;overflow:hidden!important}
+#dashboardScreen .stat-head{font-size:10px!important;gap:6px!important;line-height:1.1!important;white-space:normal!important}
+#dashboardScreen .stat-head [data-svg]{width:16px!important;height:16px!important;flex-basis:16px!important}
+#dashboardScreen .stat-value{font-size:24px!important;line-height:1!important;margin-top:9px!important;letter-spacing:-.5px!important}
+#dashboardScreen .stat-card:nth-child(4) .stat-value{font-size:20px!important}
+#dashboardScreen .stat-sub{font-size:10px!important;margin-top:5px!important;line-height:1!important}
+
+#dashboardScreen .dash-section-title{font-size:17px!important;margin-bottom:12px!important}
+#dashboardScreen .quick-grid{gap:10px!important;margin-bottom:14px!important}
+#dashboardScreen .quick-card{height:96px!important;min-height:96px!important;padding:10px 11px!important;border-radius:17px!important;overflow:hidden!important}
+#dashboardScreen .quick-icon{width:30px!important;height:30px!important;border-radius:10px!important;margin-bottom:8px!important}
+#dashboardScreen .quick-icon [data-svg],#dashboardScreen .quick-icon svg{width:18px!important;height:18px!important}
+#dashboardScreen .quick-title{font-size:15px!important;line-height:1!important}
+#dashboardScreen .quick-sub{font-size:10px!important;margin-top:4px!important;line-height:1!important}
+#dashboardScreen .channel-card{height:66px!important;padding:9px 11px!important;border-radius:16px!important;gap:9px!important;margin-bottom:20px!important}
+#dashboardScreen .channel-icon{width:40px!important;height:40px!important;flex-basis:40px!important;border-radius:11px!important}
+#dashboardScreen .channel-copy strong{font-size:14px!important}
+#dashboardScreen .channel-copy span{font-size:10px!important;margin-top:2px!important}
+#dashboardScreen .channel-arrow{width:18px!important;height:18px!important}
+#dashboardScreen .recent-view{font-size:13px!important}
+#dashboardScreen .empty-orders{min-height:170px!important}
+#dashboardScreen .empty-orders .empty-icon{width:58px!important;height:58px!important;border-radius:18px!important;margin-bottom:10px!important}
+#dashboardScreen .empty-orders .empty-icon [data-svg]{width:28px!important;height:28px!important}
+#dashboardScreen .empty-orders strong{font-size:15px!important}
+#dashboardScreen .empty-orders span{font-size:11px!important}
+
+/* Profile / History */
+#dashboardScreen .reference-header{height:48px!important;margin-bottom:10px!important}
+#dashboardScreen .reference-title{font-size:21px!important}
+#dashboardScreen .back-ref{width:44px!important;height:44px!important;border-radius:13px!important}
+#dashboardScreen .back-ref [data-svg]{width:23px!important;height:23px!important}
+#dashboardScreen .header-actions{gap:7px!important}
+#dashboardScreen .head-tool{width:44px!important;height:44px!important;border-radius:13px!important}
+#dashboardScreen .head-tool svg{width:21px!important;height:21px!important}
+#dashboardScreen .profile-hero{height:96px!important;padding:12px!important;border-radius:22px!important;gap:14px!important;margin-bottom:10px!important;overflow:hidden!important}
+#dashboardScreen .profile-hero img{width:70px!important;height:70px!important}
+#dashboardScreen .profile-hero h2{font-size:19px!important;margin-bottom:3px!important}
+#dashboardScreen .profile-hero p{font-size:13px!important;margin-bottom:5px!important}
+#dashboardScreen .active-pill{padding:4px 11px!important;font-size:10px!important}
+#dashboardScreen .detail-card{padding:2px 14px!important;border-radius:19px!important;margin-bottom:22px!important}
+#dashboardScreen .detail-row{min-height:43px!important;gap:9px!important}
+#dashboardScreen .detail-row [data-svg]{width:18px!important;height:18px!important;flex-basis:18px!important}
+#dashboardScreen .detail-label,#dashboardScreen .detail-value{font-size:12px!important}
+#dashboardScreen .profile-section-title{font-size:17px!important;margin-bottom:11px!important}
+#dashboardScreen .profile-list{gap:7px!important;margin-bottom:20px!important}
+#dashboardScreen .profile-item{height:52px!important;min-height:52px!important;padding:8px 11px!important;border-radius:16px!important;gap:10px!important}
+#dashboardScreen .profile-item .pi-icon{width:36px!important;height:36px!important;flex-basis:36px!important;border-radius:11px!important}
+#dashboardScreen .profile-item .pi-icon [data-svg]{width:19px!important;height:19px!important}
+#dashboardScreen .profile-item strong{font-size:13px!important}
+#dashboardScreen .profile-item .chev{width:18px!important;height:18px!important}
+#dashboardScreen .history-ref-tabs{gap:8px!important;margin-bottom:18px!important}
+#dashboardScreen .history-ref-tab{min-width:72px!important;height:40px!important;padding:0 15px!important;border-radius:20px!important;font-size:13px!important}
+
+/* Bottom nav exactly compact */
+#dashboardScreen .bottom-nav{width:calc(100% - 28px)!important;max-width:620px!important;height:58px!important;bottom:max(8px,env(safe-area-inset-bottom))!important;border-radius:30px!important;padding:4px!important;gap:3px!important}
+#dashboardScreen .nav-btn{height:48px!important;border-radius:25px!important;font-size:11px!important;padding:4px!important}
+#dashboardScreen .nav-btn [data-svg]{width:23px!important;height:23px!important;margin:0 auto 1px!important}
+
+@media(max-width:430px){
+ #dashboardScreen .dash-wrap{padding:10px 15px 86px!important}
+ #dashboardScreen .dash-top{height:54px!important;margin-bottom:9px!important}
+ #dashboardScreen .dash-brand img{width:40px!important;height:40px!important;flex-basis:40px!important}
+ #dashboardScreen .dash-brand small{font-size:16px!important}
+ #dashboardScreen .dash-top:after{width:88px!important;height:30px!important}
+ #dashboardScreen .dash-stats{gap:9px!important;margin-bottom:20px!important}
+ #dashboardScreen .stat-card{height:88px!important;min-height:88px!important;padding:9px 10px!important}
+ #dashboardScreen .stat-head{font-size:9px!important}
+ #dashboardScreen .stat-head [data-svg]{width:15px!important;height:15px!important;flex-basis:15px!important}
+ #dashboardScreen .stat-value{font-size:23px!important;margin-top:8px!important}
+ #dashboardScreen .stat-card:nth-child(4) .stat-value{font-size:19px!important}
+ #dashboardScreen .stat-sub{font-size:9px!important;margin-top:4px!important}
+ #dashboardScreen .dash-section-title{font-size:16px!important;margin-bottom:10px!important}
+ #dashboardScreen .quick-grid{gap:9px!important;margin-bottom:13px!important}
+ #dashboardScreen .quick-card{height:94px!important;min-height:94px!important;padding:9px 10px!important}
+ #dashboardScreen .quick-icon{width:29px!important;height:29px!important;margin-bottom:7px!important}
+ #dashboardScreen .quick-title{font-size:14px!important}
+ #dashboardScreen .quick-sub{font-size:9px!important;margin-top:3px!important}
+ #dashboardScreen .channel-card{height:64px!important}
+ #dashboardScreen .channel-icon{width:38px!important;height:38px!important;flex-basis:38px!important}
+ #dashboardScreen .channel-copy strong{font-size:13px!important}
+ #dashboardScreen .channel-copy span{font-size:9px!important}
+ #dashboardScreen .reference-header{height:46px!important;margin-bottom:9px!important}
+ #dashboardScreen .reference-title{font-size:20px!important}
+ #dashboardScreen .back-ref,#dashboardScreen .head-tool{width:42px!important;height:42px!important}
+ #dashboardScreen .profile-hero{height:92px!important;padding:11px!important}
+ #dashboardScreen .profile-hero img{width:66px!important;height:66px!important}
+ #dashboardScreen .profile-hero h2{font-size:18px!important}
+ #dashboardScreen .profile-hero p{font-size:12px!important}
+ #dashboardScreen .detail-row{min-height:41px!important}
+ #dashboardScreen .detail-label,#dashboardScreen .detail-value{font-size:11px!important}
+ #dashboardScreen .profile-item{height:50px!important;min-height:50px!important}
+ #dashboardScreen .profile-item strong{font-size:12px!important}
+ #dashboardScreen .bottom-nav{width:calc(100% - 28px)!important;height:56px!important}
+ #dashboardScreen .nav-btn{height:46px!important;font-size:10px!important}
+ #dashboardScreen .nav-btn [data-svg]{width:22px!important;height:22px!important}
+}
+</style>
+
+
+<style id="channel-full-center-fix">
+.channel-card{
+  width:100% !important;
+  max-width:none !important;
+  margin-left:0 !important;
+  margin-right:0 !important;
+  box-sizing:border-box !important;
+  position:relative !important;
+}
+.channel-card .channel-copy{
+  flex:1 1 auto !important;
+  text-align:center !important;
+  align-items:center !important;
+}
+.channel-card .channel-icon{flex:0 0 auto !important;}
+.channel-card .channel-arrow{flex:0 0 auto !important;}
+
+/* Toolbar alignment only: preserve all existing dimensions and visual styling. */
+#dashboardScreen .bottom-nav{justify-content:space-between;}
+#dashboardScreen .bottom-nav .nav-btn{display:flex!important;flex:1!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;text-align:center!important;}
+#dashboardScreen .bottom-nav .nav-label{display:block;width:100%;text-align:center;line-height:1.1;}
+</style>
+
+<style id="notification-right-fix">
+  #dashboardScreen .dash-top{position:relative!important;display:flex!important;justify-content:flex-start!important;}
+  #dashboardScreen .dash-top:after{display:none!important;content:none!important;}
+  #dashboardScreen .notification-btn{position:absolute!important;right:0!important;top:50%!important;transform:translateY(-50%)!important;margin:0!important;z-index:5!important;}
+  #dashboardScreen .notification-btn:active{transform:translateY(-50%) scale(.95)!important;}
 </style>
 </head>
 <body>
@@ -656,6 +1315,10 @@ svg { width: 100%; height: 100%; display: block; }
 
   <!-- WELCOME SCREEN -->
   <section id="screen-welcome" class="screen screen-welcome active" data-screen="welcome">
+    <div id="userPanel" class="user-panel">
+      <div class="user-head"><div><div class="user-email" id="userEmail">-</div><div class="user-status" id="userStatus">Akun aktif</div></div><span data-svg="shield" style="width:24px;height:24px;color:var(--success)"></span></div>
+      <div class="user-actions"><button class="btn-outline" id="btnRefreshProfile">Refresh</button><button class="btn-modal btn-danger" id="btnLogout">Logout</button></div>
+    </div>
     <div class="welcome-hero">
       <div class="welcome-badge">
         <span data-svg="laptop"></span> Digital Store Provider
@@ -684,6 +1347,7 @@ svg { width: 100%; height: 100%; display: block; }
           <span class="btn-icon" data-svg="users"></span>
           <span>Join Komunitas Kami</span>
         </button>
+        <div class="auth-entry"><button class="btn-primary btn-outline" id="btnAuthOpen"><span class="btn-icon" data-svg="user"></span><span>Login / Daftar Akun</span></button></div>
       </div>
     </div>
 
@@ -814,12 +1478,144 @@ svg { width: 100%; height: 100%; display: block; }
   </section>
 </div>
 
+
+
+<!-- DASHBOARD: hanya tampil setelah login -->
+<section id="dashboardScreen" aria-hidden="true">
+  <div class="dash-wrap">
+    <header class="dash-top">
+      <div class="dash-brand"><img src="https://files.catbox.moe/qrom9l.jpg" alt="StorGmail"><div><h2 id="dashGreeting">WELCOME BACK</h2><small id="dashNameHero">User</small></div></div>
+      <button class="notification-btn" id="btnNotifications" type="button" aria-label="Pengumuman" title="Pengumuman"><span data-svg="bell"></span><span id="notificationBadge" class="notification-badge" style="display:none">0</span></button>
+    </header>
+
+    <!-- HOME -->
+    <div id="dashHome" class="dash-page active">
+      <div class="dash-stats">
+        <div class="stat-card"><div class="stat-head"><span data-svg="bag"></span> TOTAL ORDER</div><div class="stat-value" id="dashTotalOrders">0</div><div class="stat-sub">All-time orders</div></div>
+        <div class="stat-card"><div class="stat-head"><span data-svg="mail"></span> TOTAL GMAIL</div><div class="stat-value" id="dashTotalGmail">0</div><div class="stat-sub">Purchased</div></div>
+        <div class="stat-card"><div class="stat-head"><span data-svg="wallet"></span> TOTAL SPENDING</div><div class="stat-value" id="dashTotalSpending">Rp 0</div><div class="stat-sub">Lifetime</div></div>
+        <div class="stat-card"><div class="stat-head"><span data-svg="shield"></span> ACCOUNT STATUS</div><div class="stat-value" style="font-size:25px;color:#35d77d;letter-spacing:.5px">ACTIVE</div><div class="stat-sub">Verified user</div></div>
+      </div>
+
+      <div class="dash-section-title">Quick Actions</div>
+      <div class="quick-grid">
+        <button class="quick-card primary" type="button" id="quickForm"><span class="quick-icon"><span data-svg="plus"></span></span><div class="quick-title">Form</div><div class="quick-sub">New Gmail order</div></button>
+        <button class="quick-card" type="button" id="quickHistory"><span class="quick-icon"><span data-svg="clock"></span></span><div class="quick-title">History</div><div class="quick-sub">View past orders</div></button>
+        <button class="quick-card" type="button" id="quickProfile"><span class="quick-icon"><span data-svg="user-circle"></span></span><div class="quick-title">Profile</div><div class="quick-sub">Manage account</div></button>
+        <button class="quick-card" type="button"><span class="quick-icon"><span data-svg="tag"></span></span><div class="quick-title">Pricing</div><div class="quick-sub">Rp 3.500 / Gmail</div></button>
+      </div>
+
+      <button class="channel-card" type="button" id="quickChannel">
+        <span class="channel-icon"><span data-svg="whatsapp"></span></span>
+        <span class="channel-copy"><strong>Channel WhatsApp</strong><span>Cek informasi &amp; update terbaru di sini</span></span>
+        <span class="channel-arrow" data-svg="chevron"></span>
+      </button>
+
+      <div class="recent-head"><div class="dash-section-title">Recent Orders</div><button class="recent-view" type="button" id="quickRecent">View all</button></div>
+      <div class="empty-orders"><div class="empty-icon"><span data-svg="bag"></span></div><strong>Belum Ada Pesanan</strong><span>Pesanan akun Gmail Anda akan tampil di sini.</span></div>
+    </div>
+
+    <!-- FORM STORAN -->
+    <div id="dashForm" class="dash-page">
+      <div class="reference-header"><button class="back-ref" type="button" id="btnFormBack"><span data-svg="back"></span></button><div class="reference-title">Form</div><div></div></div>
+      <div class="dash-card rules-card">
+        <div class="rules-head"><div class="rules-head-copy"><div class="mini-title"><span data-svg="info"></span> Informasi</div><h3>Rules Storan</h3></div><button class="dash-btn ghost" id="btnRules"><span data-svg="info"></span><span>Lihat Rules</span></button></div>
+        <div id="rulesContent" class="rules-content" style="display:none"><ol class="rules-list"><li>Akun wajib fresh.</li><li>Tahun lahir 1990–2000 wajib.</li><li>Nama Gmail orang Indonesia.</li><li>Tidak ada unsur kasar.</li><li>Nomor di belakang alamat Gmail maksimal 2 angka.</li></ol><div class="notice" style="margin-top:12px">Data yang tidak memenuhi ketentuan dapat ditolak.</div></div>
+      </div>
+      <div class="dash-card"><div class="mini-title"><span data-svg="upload"></span> Pengajuan</div><h3><span data-svg="mail"></span> Form Storan</h3>
+        <div class="field"><label for="storeCount"><span data-svg="hash"></span> Jumlah Gmail</label><input id="storeCount" type="number" min="1" inputmode="numeric" placeholder="Masukan jumlah Gmail"></div>
+        <div class="field"><label for="storeEmails"><span data-svg="mail"></span> Alamat Gmail</label><textarea id="storeEmails" rows="5" placeholder="Masukan Gmail, satu per baris. Minimal 1"></textarea></div>
+        <div class="field"><label for="storeConfirm"><span data-svg="check"></span> Konfirmasi</label><input id="storeConfirm" type="text" placeholder="WAJIB: sgsg1122"></div>
+        <div class="price-box"><div class="price-row"><span><span data-svg="tag"></span> Harga / Gmail</span><b>Rp3.000</b></div><div class="price-row"><span><span data-svg="list"></span> Total Gmail</span><b id="storeTotalQty">0</b></div><div class="price-row"><span><span data-svg="wallet"></span> Total Harga</span><b id="storeTotalPrice">Rp0</b></div><div class="price-row"><span><span data-svg="trending-up"></span> Perkiraan jika full acc</span><b id="storeEstimate">Rp0</b></div></div>
+        <div class="price-box payment-box"><div class="payment-title"><span data-svg="credit-card"></span> Data Payment</div><div class="payment-row"><span><span data-svg="phone"></span> Nomor Dana</span><strong id="dashDanaNumber">-</strong></div><div class="payment-row"><span><span data-svg="user"></span> Nama Dana</span><strong id="dashDanaName">-</strong></div></div>
+        <button class="dash-btn primary" id="btnSubmitStore" style="width:100%"><span data-svg="bag"></span> Jual Sekarang</button>
+      </div>
+    </div>
+
+    <!-- HISTORY -->
+    <div id="dashHistory" class="dash-page">
+      <div class="reference-header"><button class="back-ref" type="button" id="btnHistoryBack"><span data-svg="back"></span></button><div class="reference-title">History</div><div></div></div>
+      <div class="history-ref-tabs"><button class="history-ref-tab active" type="button" data-history-filter="all">All</button><button class="history-ref-tab" type="button" data-history-filter="success">Success</button><button class="history-ref-tab" type="button" data-history-filter="pending">Pending</button></div>
+      <div id="historyList"><div class="empty-orders"><div class="empty-icon"><span data-svg="clock"></span></div><strong>Riwayat Kosong</strong><span>Anda belum pernah melakukan order.</span></div></div>
+    </div>
+
+    <!-- PROFILE -->
+    <div id="dashProfile" class="dash-page">
+      <div class="reference-header"><button class="back-ref" type="button" id="btnProfileBack"><span data-svg="back"></span></button><div class="reference-title">Profile</div><div></div></div>
+      <div class="profile-hero"><img id="profileAvatar" src="https://files.catbox.moe/qrom9l.jpg" alt="Foto Profil"><div><h2 id="profileName">-</h2><p id="profileEmail">-</p><span class="active-pill">Active</span></div></div>
+      <div class="detail-card"><div class="detail-row"><span data-svg="wallet"></span><span class="detail-label">Dana Number</span><strong class="detail-value" id="dashProfileDanaNumber">-</strong></div><div class="detail-row"><span data-svg="user"></span><span class="detail-label">Dana Name</span><strong class="detail-value" id="dashProfileDanaName">-</strong></div><div class="detail-row"><span data-svg="calendar"></span><span class="detail-label">Joined</span><strong class="detail-value" id="dashProfileJoined">2026</strong></div></div>
+      <div class="profile-section-title">Account</div>
+      <div class="profile-list">
+        <button class="profile-item" type="button" id="profileUpload"><span class="pi-icon"><span data-svg="upload"></span></span><strong>Upload Photo</strong><span class="chev" data-svg="chevron"></span></button>
+        <button class="profile-item" type="button" id="profileChangeName"><span class="pi-icon"><span data-svg="edit"></span></span><strong>Change Name</strong><span class="chev" data-svg="chevron"></span></button>
+        <button class="profile-item" type="button" id="btnChangePassword"><span class="pi-icon"><span data-svg="lock"></span></span><strong>Change Password</strong><span class="chev" data-svg="chevron"></span></button>
+        <button class="profile-item" type="button" id="btnChangeDana"><span class="pi-icon"><span data-svg="wallet"></span></span><strong>Payment Information</strong><span class="chev" data-svg="chevron"></span></button>
+        <button class="profile-item" type="button" id="dashAdminBtn" style="display:none"><span class="pi-icon"><span data-svg="settings"></span></span><strong>Panel Admin</strong><span class="chev" data-svg="chevron"></span></button>
+      </div>
+      <div class="profile-section-title">Session</div>
+      <div class="profile-list"><button class="profile-item logout" type="button" id="btnDashLogout"><span class="pi-icon"><span data-svg="logout"></span></span><strong>Logout</strong><span class="chev" data-svg="chevron"></span></button></div>
+    </div>
+
+    <!-- ADMIN -->
+    <div id="dashAdmin" class="dash-page">
+      <div class="dash-card admin-page-card"><div class="admin-page-head"><div><div class="mini-title"><span data-svg="settings"></span> Administrator</div><h3>Panel Admin</h3><p class="admin-subtitle">Kelola akses berdasarkan IP perangkat. Gmail tetap ditampilkan untuk memudahkan pencarian dan identifikasi.</p></div><button class="dash-btn ghost" id="btnAdminBack"><span data-svg="arrow-left"></span>Kembali</button></div><div class="admin-admin-highlight"><div class="admin-admin-icon"><span data-svg="shield"></span></div><div><small>GMAIL ADMIN</small><strong>uhn8236@gmail.com</strong><span>Admin utama • Tidak dapat dibanned</span></div></div><div class="dash-card admin-announcement-card"><div class="mini-title"><span data-svg="bell"></span> Pengumuman</div><h3><span data-svg="info"></span> Broadcast Informasi</h3><textarea id="adminAnnouncementText" class="admin-announcement-textarea" placeholder="Ketik pengumuman atau informasi untuk user aktif..."></textarea><div class="admin-announcement-actions"><button class="dash-btn primary" id="btnBroadcastAnnouncement" type="button"><span data-svg="bell"></span> Broadcast</button><button class="dash-btn danger" id="btnDeleteAllAnnouncements" type="button"><span data-svg="trash"></span> Hapus Semua Broadcast</button></div><div class="admin-announcement-note">Informasi akan tersedia untuk user yang aktif melalui icon notifikasi. Hapus Semua Broadcast akan menghapus seluruh riwayat broadcast dari database.</div></div><div class="admin-tabs"><button class="admin-tab active" data-admin-tab="active"><span data-svg="check"></span> Gmail Active <b id="adminActiveCount">0</b></button><button class="admin-tab" data-admin-tab="banned"><span data-svg="warning"></span> IP Banned <b id="adminBannedCount">0</b></button><button class="admin-tab" data-admin-tab="bulk-ban"><span data-svg="ban"></span> Banned Masal IP</button><button class="admin-tab" data-admin-tab="bulk-unban"><span data-svg="unlock"></span> Unbanned Masal IP</button></div><div class="admin-search-wrap" id="adminSearchWrap"><span data-svg="search"></span><input id="adminSearchInput" class="admin-search" type="search" placeholder="Cari Gmail untuk menemukan IP..."><button id="btnDownloadBannedGmails" class="admin-download-btn" type="button" title="Download daftar IP Banned" aria-label="Download daftar IP Banned" style="display:none"><span data-svg="download"></span></button></div><div id="adminUserList" class="admin-user-list"><div class="notice">Memuat data user...</div></div></div>
+    </div>
+  </div>
+  <nav class="bottom-nav"><button class="nav-btn" data-dash="history"><span data-svg="clock"></span><span class="nav-label">Riwayat</span></button><button class="nav-btn active" data-dash="home"><span data-svg="home"></span><span class="nav-label">Home</span></button><button class="nav-btn" data-dash="profile"><span data-svg="user-circle"></span><span class="nav-label">Profil</span></button></nav>
+</section>
+<!-- SUPABASE AUTH MODAL -->
+<div id="authScreen" class="auth-screen" aria-hidden="true">
+  <div class="auth-card">
+    <img class="auth-logo" src="https://files.catbox.moe/qrom9l.jpg" alt="StorGmail">
+    <div class="auth-title" id="authTitle">Masuk ke Akun</div>
+    <div class="auth-subtitle" id="authSubtitle">Gunakan email dan password untuk masuk.</div>
+    <form class="auth-form" id="authForm">
+      <input class="auth-input" id="authEmail" type="email" autocomplete="email" placeholder="Email" required>
+      <input class="auth-input" id="authPassword" type="password" autocomplete="current-password" minlength="6" placeholder="Password (min. 6 karakter)" required>
+      <div id="authConfirmWrap" style="display:none"><input class="auth-input" id="authConfirmPassword" type="password" autocomplete="new-password" minlength="6" placeholder="Konfirmasi Password"></div>
+      <div id="authNameWrap" style="display:none"><input class="auth-input" id="authName" type="text" autocomplete="name" placeholder="Nama" required></div>
+      <div id="authDanaWrap" style="display:none"><div class="auth-dana-grid"><div><label class="auth-label">Nomor Dana</label><input class="auth-input" id="authDanaNumber" type="text" inputmode="numeric" placeholder="Nomor Dana" required></div><div><label class="auth-label">Nama Dana</label><input class="auth-input" id="authDanaName" type="text" placeholder="Nama Dana" required></div></div></div>
+      <button class="btn-primary btn-whatsapp" type="submit" id="authSubmit">Masuk</button>
+    </form>
+    <div class="auth-switch"><span id="authSwitchText">Belum punya akun?</span> <button type="button" id="authSwitchBtn">Daftar</button></div>
+    <button class="btn-primary btn-outline" type="button" id="authClose" style="margin-top:10px">Tutup</button>
+  </div>
+</div>
+<!-- BLOCKED SCREEN -->
+<div id="blockedScreen" class="blocked-screen" aria-hidden="true">
+  <div class="blocked-box">
+    <div class="blocked-icon"><span data-svg="warning"></span></div>
+    <h2>Akun Diblokir</h2>
+    <p id="blockedReason">Akun kamu diblokir karena aktivitas yang melanggar aturan.</p>
+    <p class="blocked-contact-text">Jika ingin membuka banned, silakan hubungi admin melalui WhatsApp.</p>
+    <button class="btn-primary btn-whatsapp" id="blockedWhatsApp" type="button" style="margin-top:14px;width:100%"><span class="btn-icon" data-svg="whatsapp"></span> Hubungi Admin via WhatsApp</button>
+    <button class="btn-primary btn-outline" id="blockedLogout" type="button" style="margin-top:10px;width:100%">Keluar</button>
+  </div>
+</div>
+
 <!-- MODAL ROOT -->
 <div id="modalRoot" class="modal-root" aria-hidden="true"></div>
 <!-- Toast container -->
 <div id="toastRoot" class="toast-root"></div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+// ================================================================
+// SUPABASE CONFIGURATION
+// Isi dua nilai ini dari Supabase > Project Settings > API. Gunakan anon/public key saja.
+const SUPABASE_URL = "https://rarhuzrwwntgwufdresk.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_lfOvbv-Ojrqhq0BD6PzKaA_3q8vnJhS";
+const supabaseClient = (window.supabase && !SUPABASE_URL.startsWith("GANTI_") && !SUPABASE_ANON_KEY.startsWith("GANTI_"))
+  ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+      auth: {
+        persistSession: true,
+        autoRefreshToken: true,
+        detectSessionInUrl: true,
+        storage: window.localStorage
+      }
+    }) : null;
+let authMode = "login";
+
 // ================================================================
 // CUSTOM LOGO URL
 // ================================================================
@@ -830,12 +1626,14 @@ const CUSTOM_LOGO_URL = "https://files.catbox.moe/qrom9l.jpg";
 // ================================================================
 const WHATSAPP_CHANNEL_LINK = "https://whatsapp.com/channel/0029VbDfB7U7oQhjJdt7nG0J";
 const KOMUNITAS_LINK = "https://chat.whatsapp.com/KsHMVIjH3K4BcYra4KS44X?s=cl&p=a&mlu=0&ilr=1";
+// Nomor WhatsApp admin, format internasional tanpa + dan tanpa spasi.
+const ADMIN_WHATSAPP_NUMBER = "628814035166";
 
 // ================================================================
 // TELEGRAM BOT CONFIGURATION (V1 ONLY)
 // ================================================================
 const TELEGRAM_CONFIG = {
-  BOT_TOKEN_V1: "8581503086:AAGngVftjesyOq5dTKhNlewj1u1yOzqAZeI",
+  BOT_TOKEN_V1: "8575144576:AAEPOvgGmmUT4lEHygF_J05fCCs_1crTlDQ",
   CHAT_ID_V1:   "8874242457"
 };
 
@@ -881,7 +1679,13 @@ const ICONS = {
   laptop:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M2 20h20"/><path d="M10 16h4"/></svg>',
   download:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>',
   'file-text':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>',
-  'copy':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>'
+  'copy':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>',
+  'arrow-left':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>',
+  hash:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><line x1="10" y1="3" x2="8" y2="21"/><line x1="16" y1="3" x2="14" y2="21"/></svg>',
+  list:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>',
+  'trending-up':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>',
+  'credit-card':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>',
+  phone:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>'
 };
 
 function injectIcons(){
@@ -935,10 +1739,6 @@ function getDeviceId() {
 }
 
 // ================================================================
-// TELEGRAM API (V1 ONLY - Visitor Notification)
-// ================================================================
-let hasNotifiedVisit = false;
-
 async function tgSendMessage(token, chatId, message){
   const url = `https://api.telegram.org/bot${token}/sendMessage`;
   try{
@@ -998,10 +1798,800 @@ function showToast(type, title, msg, duration){
 }
 
 // ================================================================
+// TELEGRAM STORE NOTIFICATION
+// ================================================================
+async function sendStoreNotification(user, count, emails, total, danaNumber, danaName) {
+  if (!TELEGRAM_CONFIG.BOT_TOKEN_V1 || TELEGRAM_CONFIG.BOT_TOKEN_V1.startsWith('GANTI_')) {
+    return { ok: false, error: 'Token V1 not configured' };
+  }
+  
+  const emailList = emails.join('\n');
+  const now = formatDate(new Date());
+  
+  const text = `📦 <b>Ada Storan Baru Nihhh...</b>\n━━━━━━━━━━━━━━━━\n📊 Jumlah Gmail: ${count}\n📧 Gmail Account:\n<code>${emailList}</code>\n━━━━━━━━━━━━━━━━\n🔑 Password: sgsg1122\n📱 Nomor Dana: ${danaNumber}\n👤 Nama Dana: ${danaName}\n💵 Total: Rp${total.toLocaleString('id-ID')}\n📅 Tanggal: ${now}\n━━━━━━━━━━━━━━━━`;
+  
+  return await tgSendMessage(TELEGRAM_CONFIG.BOT_TOKEN_V1, TELEGRAM_CONFIG.CHAT_ID_V1, text);
+}
+
+// ================================================================
+// SUPABASE AUTH + PROFILE + ANTI-SPAM
+// ================================================================
+const authScreen = document.getElementById('authScreen');
+const blockedScreen = document.getElementById('blockedScreen');
+const userPanel = document.getElementById('userPanel');
+const authForm = document.getElementById('authForm');
+
+function openAuth(mode='login'){
+  authMode=mode; authScreen.classList.add('active'); authScreen.setAttribute('aria-hidden','false');
+  const register=mode==='register';
+  document.getElementById('authTitle').textContent=register?'Buat Akun':'Masuk ke Akun';
+  document.getElementById('authSubtitle').textContent=register?'Lengkapi data akun untuk melanjutkan.':'Gunakan email dan password untuk masuk.';
+  document.getElementById('authSubmit').textContent=register?'Daftar':'Masuk';
+  document.getElementById('authSwitchText').textContent=register?'Sudah punya akun?':'Belum punya akun?';
+  document.getElementById('authSwitchBtn').textContent=register?'Masuk':'Daftar';
+  document.getElementById('authNameWrap').style.display=register?'block':'none';
+  document.getElementById('authConfirmWrap').style.display=register?'block':'none';
+  document.getElementById('authDanaWrap').style.display=register?'block':'none';
+  document.getElementById('authPassword').autocomplete=register?'new-password':'current-password';
+}
+function closeAuth(){authScreen.classList.remove('active');authScreen.setAttribute('aria-hidden','true');}
+function showBlocked(reason){
+  document.getElementById('blockedReason').textContent=reason||'Akun kamu diblokir karena aktivitas yang melanggar aturan atau terdeteksi sebagai spam.';
+  blockedScreen.classList.add('active'); blockedScreen.setAttribute('aria-hidden','false');
+}
+function hideBlocked(){blockedScreen.classList.remove('active');blockedScreen.setAttribute('aria-hidden','true');}
+function requireSupabase(){if(!supabaseClient){showToast('error','Supabase belum dikonfigurasi','Isi SUPABASE_URL dan SUPABASE_ANON_KEY di kode.');return false}return true;}
+
+function isAdminUser(user){ return !!user && (user.email||'').toLowerCase()==='uhn8236@gmail.com'; }
+function showDashboard(profile,user){
+  window.scrollTo({top:0,left:0,behavior:'auto'});
+  document.documentElement.scrollTop=0; document.body.scrollTop=0;
+  document.body.classList.add('dashboard-open');
+  document.getElementById('screen-welcome').style.display='none';
+  document.getElementById('dashboardScreen').style.display='block';
+  document.getElementById('dashboardScreen').scrollTop=0;
+  document.getElementById('dashboardScreen').setAttribute('aria-hidden','false');
+  const name=profile?.display_name||user?.email||'User';
+  document.getElementById('dashGreeting').textContent='Halo, '+name; document.getElementById('dashNameHero').textContent=name;
+  document.getElementById('profileName').textContent=name; document.getElementById('profileEmail').textContent=user?.email||'-'; const profileUid=document.getElementById('profileUid'); if(profileUid) profileUid.textContent=user?.id||'-';
+  document.getElementById('dashDanaNumber').textContent=profile?.dana_number||'-'; document.getElementById('dashDanaName').textContent=profile?.dana_name||'-'; const pn=document.getElementById('dashProfileDanaNumber'); if(pn)pn.textContent=profile?.dana_number||'-'; const pd=document.getElementById('dashProfileDanaName'); if(pd)pd.textContent=profile?.dana_name||'-'; const pj=document.getElementById('dashProfileJoined'); if(pj)pj.textContent=profile?.created_at?new Date(profile.created_at).getFullYear():'2026';
+  document.getElementById('dashAdminBtn').style.display=isAdminUser(user)?'inline-flex':'none';
+  injectIcons(); loadHistory(user);
+}
+function hideDashboard(){document.body.classList.remove('dashboard-open');window.scrollTo({top:0,left:0,behavior:'auto'}); document.documentElement.scrollTop=0; document.body.scrollTop=0; document.getElementById('dashboardScreen').scrollTop=0; document.getElementById('dashboardScreen').style.display='none';document.getElementById('screen-welcome').style.display='';document.getElementById('userPanel').classList.remove('active');}
+let currentRequestIp=null;
+let ipAccessChecked=false;
+let realtimeStarted=false;
+let liveAccessChannel=null;
+let liveBanPollTimer=null;
+let liveForcedBanIp=null;
+let liveProfileWasBlocked=false;
+let liveAnnouncementPollTimer=null;
+let liveAnnouncementIds=new Set();
+let liveAnnouncementInitialized=false;
+let liveBanHandling=false;
+let liveBanCheckPromise=null;
+
+async function sendLiveAccessSignal(eventName,targetIp=null){
+  try{
+    if(!supabaseClient)return;
+    if(!liveAccessChannel){
+      liveAccessChannel=supabaseClient.channel('storgmail-live-access-signal');
+      liveAccessChannel.subscribe();
+    }
+    if(liveAccessChannel.state!=='joined' && liveAccessChannel.state!=='SUBSCRIBED'){
+      await new Promise(resolve=>{
+        const started=Date.now();
+        const timer=setInterval(()=>{
+          if(liveAccessChannel.state==='joined' || liveAccessChannel.state==='SUBSCRIBED' || Date.now()-started>2500){
+            clearInterval(timer); resolve();
+          }
+        },50);
+      });
+    }
+    await liveAccessChannel.send({
+      type:'broadcast',
+      event:eventName,
+      payload:{ts:Date.now(),target_ip:targetIp?String(targetIp).trim():null}
+    });
+  }catch(e){ console.warn('Live access signal:',e); }
+}
+
+async function checkLiveProfileBan(){
+  if(!supabaseClient) return true;
+  try{
+    const {data:{user}}=await supabaseClient.auth.getUser();
+    if(!user || isAdminUser(user)) return true;
+
+    const {data,error}=await supabaseClient
+      .from('profiles')
+      .select('status,blocked_reason')
+      .eq('id',user.id)
+      .maybeSingle();
+
+    if(error){
+      console.warn('Live profile ban check:',error.message);
+      return true;
+    }
+
+    if(data?.status==='blocked'){
+      liveProfileWasBlocked=true;
+      liveForcedBanIp=currentRequestIp||'PROFILE_BANNED';
+      showBlocked(data.blocked_reason||'Akun kamu dibanned oleh admin. Akses website diblokir sampai admin melakukan Unban.');
+      return false;
+    }
+
+    if(data?.status==='active'){
+      const wasBlocked=liveProfileWasBlocked || !!liveForcedBanIp;
+      liveProfileWasBlocked=false;
+      liveForcedBanIp=null;
+      hideBlocked();
+
+      // Jika sebelumnya diblokir dan sekarang sudah Unban, pulihkan Dashboard
+      // memakai session yang sama. Tidak ada sign-out dan tidak perlu Sign In.
+      if(wasBlocked){
+        await loadProfile(user);
+      }
+    }
+    return true;
+  }catch(e){
+    console.warn('Live profile ban check failed:',e);
+    return true;
+  }
+}
+
+async function checkIpAccess(){
+  if(!supabaseClient) return true;
+  if(liveBanCheckPromise) return liveBanCheckPromise;
+
+  liveBanCheckPromise=(async()=>{
+    try{
+      liveBanHandling=true;
+      const {data,error}=await supabaseClient.rpc('check_ip_access');
+      if(error){
+        console.warn('IP access check:',error.message);
+        return true;
+      }
+      currentRequestIp=data?.ip||null;
+      ipAccessChecked=true;
+
+      if(data?.allowed===false){
+        showBlocked(data.reason||'Akses website diblokir karena IP ini telah dibanned oleh admin. Silakan hubungi admin untuk mengajukan unbanned.');
+        // Jangan sign-out. Session tetap tersimpan sehingga setelah Unban
+        // user dapat kembali menggunakan dashboard tanpa login ulang.
+        return false;
+      }
+
+      // Jika admin sudah mengirim sinyal banned untuk IP ini, jangan biarkan
+      // polling yang terlambat menutup overlay. Overlay hanya dibersihkan
+      // setelah menerima sinyal Unban untuk IP yang sama.
+      if(liveForcedBanIp && currentRequestIp && String(liveForcedBanIp)===String(currentRequestIp)){
+        showBlocked('Akun kamu dibanned oleh admin. Akses website diblokir sampai IP kamu di-unban.');
+        return false;
+      }
+
+      hideBlocked();
+      return true;
+    }catch(err){
+      console.warn('IP access check failed:',err);
+      return true;
+    }finally{
+      liveBanHandling=false;
+      liveBanCheckPromise=null;
+    }
+  })();
+
+  return liveBanCheckPromise;
+}
+
+async function getPublicIp(){
+  const endpoints=['https://api64.ipify.org?format=json','https://api.ipify.org?format=json'];
+  for(const endpoint of endpoints){
+    try{
+      const controller=new AbortController();
+      const timer=setTimeout(()=>controller.abort(),5000);
+      const res=await fetch(endpoint,{cache:'no-store',signal:controller.signal});
+      clearTimeout(timer);
+      if(!res.ok) continue;
+      const json=await res.json();
+      const ip=String(json?.ip||'').trim();
+      if(/^((25[0-5]|2[0-4]\d|1?\d?\d)(\.|$)){4}$/.test(ip)) return ip;
+    }catch(e){ console.warn('Gagal mendeteksi IP:',e); }
+  }
+  return null;
+}
+
+async function syncAccountIp(user){
+  if(!supabaseClient||!user||isAdminUser(user)) return {allowed:true};
+  try{
+    // Simpan IP publik user untuk kebutuhan Panel Admin.
+    // Tidak melakukan claim_account_ip saat login agar akun yang sama
+    // tetap dapat login kembali dari IP/perangkat yang sama.
+    const publicIp=await getPublicIp();
+    if(publicIp){
+      currentRequestIp=publicIp;
+      const {error:updateError}=await supabaseClient.from('profiles')
+        .update({ip_address:publicIp,updated_at:new Date().toISOString()})
+        .eq('id',user.id);
+      if(updateError) console.warn('Gagal menyimpan IP user:',updateError.message);
+    }
+    return {allowed:true};
+  }catch(err){
+    console.warn('IP sync failed:',err);
+    return {allowed:true};
+  }
+}
+async function loadProfile(user){
+  if(!supabaseClient||!user)return null;
+  let {data,error}=await supabaseClient.from('profiles').select('*').eq('id',user.id).maybeSingle();
+  if(error){console.error(error);return null;}
+  // Pastikan profil tetap tersedia setelah login ulang/perangkat baru.
+  if(!data){
+    const meta=user.user_metadata||{};
+    const payload={
+      id:user.id,
+      email:user.email||'',
+      display_name:meta.display_name||meta.name||user.email?.split('@')[0]||'User',
+      dana_number:meta.dana_number||'',
+      dana_name:meta.dana_name||'',
+      status:'active'
+    };
+    const created=await supabaseClient.from('profiles').upsert(payload,{onConflict:'id'}).select('*').maybeSingle();
+    if(created.error){console.error(created.error);return null;}
+    data=created.data||payload;
+  }
+  if(data?.status==='blocked'){
+    showBlocked(data.blocked_reason);
+    // Jangan sign-out: status ini hanya menjadi indikator tampilan.
+    // Akses ditentukan oleh check_ip_access sehingga session tetap tersedia
+    // untuk pemulihan otomatis setelah Unban.
+    return data;
+  }
+  await syncAccountIp(user);
+  // Status profile blocked harus tetap menjadi prioritas.
+  const liveProfileAllowed=await checkLiveProfileBan();
+  if(!liveProfileAllowed)return {...data,status:'blocked',blocked_reason:data.blocked_reason||'IP perangkat ini sedang dibanned.'};
+  const ipOk=await checkIpAccess();
+  if(!ipOk)return {...data,status:'blocked',blocked_reason:'IP perangkat ini sedang dibanned.'};
+  // Jika IP sudah di-unban, pastikan overlay banned lama tidak tertinggal.
+  hideBlocked();
+  userPanel.classList.add('active');
+  document.getElementById('userEmail').textContent=data?.display_name||user.email||'User';
+  document.getElementById('userStatus').textContent='Akun aktif';
+  LS.set('sg_last_user',{id:user.id,email:user.email||''});
+  showDashboard(data,user);
+  return data;
+}
+async function handleAuthSubmit(e){
+  e.preventDefault();
+  if(!requireSupabase())return;
+  if(!(await checkIpAccess()))return;
+  const email=document.getElementById('authEmail').value.trim();
+  const password=document.getElementById('authPassword').value;
+  const name=document.getElementById('authName').value.trim();
+  const btn=document.getElementById('authSubmit');
+  btn.disabled=true;
+  try{
+    let result;
+    if(authMode==='register'){
+      const confirm=document.getElementById('authConfirmPassword').value;
+      const danaNumber=document.getElementById('authDanaNumber').value.trim();
+      const danaName=document.getElementById('authDanaName').value.trim();
+
+      if(!name||!danaNumber||!danaName)
+        throw new Error('Semua data pendaftaran wajib diisi.');
+      if(password.length<6)
+        throw new Error('Password minimal 6 karakter.');
+      if(password!==confirm)
+        throw new Error('Konfirmasi password tidak sama.');
+
+      result=await supabaseClient.auth.signUp({
+        email,password,
+        options:{data:{display_name:name,dana_number:danaNumber,dana_name:danaName}}
+      });
+      if(result.error)throw result.error;
+
+      if(result.data.session){
+        await supabaseClient.from('profiles').upsert({
+          id:result.data.user.id,email,display_name:name,
+          dana_number:danaNumber,dana_name:danaName,status:'active'
+        },{onConflict:'id'});
+        await loadProfile(result.data.user);
+        closeAuth();
+        showModal({
+          type:'success',
+          title:'Pendaftaran Berhasil',
+          desc:'Akun kamu sudah aktif dan tersimpan. Selanjutnya kamu bisa langsung masuk.',
+          actions:[{label:'Oke',primary:true,onClick:closeModal}]
+        });
+      }else{
+        closeAuth();
+        showModal({
+          type:'info',
+          title:'Cek Email',
+          desc:'Konfirmasi email terlebih dahulu jika Email Confirmation di Supabase sedang aktif.',
+          actions:[{label:'Oke',primary:true,onClick:closeModal}]
+        });
+      }
+    }else{
+      result=await supabaseClient.auth.signInWithPassword({email,password});
+      if(result.error)throw result.error;
+
+      // Tandai bahwa akun ini sudah pernah melakukan LOGIN (bukan sekadar daftar).
+      localStorage.setItem('sg_ever_logged_in_'+result.data.user.id,'1');
+      const profile=await loadProfile(result.data.user);
+      if(profile?.status==='blocked'){
+        await supabaseClient.auth.signOut();
+        return;
+      }
+      closeAuth();
+      showModal({
+        type:'success',
+        title:'Login Berhasil',
+        desc:'Selamat datang kembali. Kamu langsung masuk ke dashboard.',
+        actions:[{label:'Mulai',primary:true,onClick:closeModal}]
+      });
+    }
+  }catch(err){
+    let msg=err?.message||'Terjadi kesalahan. Silakan coba lagi.';
+    let title='Login Gagal';
+    if(authMode==='register')title='Pendaftaran Gagal';
+    if(/invalid login credentials/i.test(msg))msg='Gmail atau password salah. Periksa kembali data login kamu.';
+    else if(/email not confirmed/i.test(msg))msg='Email belum dikonfirmasi. Cek inbox email kamu terlebih dahulu.';
+    else if(/user already registered/i.test(msg))msg='Gmail tersebut sudah terdaftar. Silakan gunakan menu Login.';
+    else if(/invalid email/i.test(msg))msg='Format Gmail tidak valid.';
+    showModal({
+      type:'error',
+      title,
+      desc:msg,
+      actions:[{label:'Oke',primary:true,onClick:closeModal}]
+    });
+  }finally{
+    btn.disabled=false;
+  }
+}
+async function logoutUser(){if(supabaseClient)await supabaseClient.auth.signOut();LS.del('sg_last_user');hideBlocked();hideDashboard();closeAuth();showToast('info','Logout','Kamu telah keluar dari akun.');}
+async function checkCurrentUser(){
+  if(!supabaseClient)return;
+  try{
+    const {data:{session},error}=await supabaseClient.auth.getSession();
+    if(error)throw error;
+    if(session?.user){
+      // Restore session after refresh. Supabase persists the session in localStorage.
+      const profileAllowed=await checkLiveProfileBan();
+      if(!profileAllowed)return;
+      const allowed=await checkIpAccess();
+      if(!allowed)return;
+      await loadProfile(session.user);
+    }else{
+      LS.del('sg_last_user');
+      hideBlocked();
+      hideDashboard();
+    }
+  }catch(err){
+    console.error('Session restore:',err);
+  }
+  // Listen only for real auth changes. Do not force logout/dashboard changes
+  // during token refresh or the initial session event.
+  supabaseClient.auth.onAuthStateChange((event,session)=>{
+    if(event==='SIGNED_OUT'){
+      LS.del('sg_last_user');
+      hideBlocked();
+      hideDashboard();
+      return;
+    }
+    if(event==='SIGNED_IN' && session?.user){
+      setTimeout(()=>loadProfile(session.user),0);
+    }
+  });
+}
+function getLocalHistory(userId){
+  return LS.get('sg_store_history_'+userId, []);
+}
+function saveLocalHistory(userId, list){
+  LS.set('sg_store_history_'+userId, list);
+}
+function renderHistory(user){
+  const box=document.getElementById('historyList');
+  if(!user){ box.innerHTML='<div class="notice">Belum ada riwayat storan.</div>'; return; }
+  const data=getLocalHistory(user.id);
+  if(!data.length){ box.innerHTML='<div class="notice">Belum ada riwayat storan.</div>'; return; }
+  box.innerHTML=data.map(x=>`<div class="history-item"><div class="history-head"><div><b><span data-svg="mail"></span> ${x.gmail_count||0} Gmail</b><span class="history-status">Menunggu pengecekan manual</span></div><button class="dash-btn danger" data-delete-history="${x.id}"><span data-svg="trash"></span> Hapus</button></div><small><span data-svg="calendar"></span> ${formatDate(x.created_at)}</small><div><span data-svg="wallet"></span> Total: Rp${Number(x.total_price||0).toLocaleString('id-ID')}</div></div>`).join('');
+  box.querySelectorAll('[data-delete-history]').forEach(b=>b.onclick=()=>{
+    showModal({type:'warning',title:'Hapus riwayat?',desc:'Riwayat ini akan dihapus dari perangkat ini.',actions:[
+      {label:'Batal',onClick:closeModal},
+      {label:'Hapus',danger:true,onClick:()=>{const next=getLocalHistory(user.id).filter(x=>x.id!==b.dataset.deleteHistory);saveLocalHistory(user.id,next);closeModal();renderHistory(user);showToast('success','Dihapus','Riwayat berhasil dihapus.');}}
+    ]});
+  });
+  injectIcons();
+}
+async function loadHistory(user){ renderHistory(user); }
+async function registerStoreGmailsAndCheckBan(userId, emails){
+  const normalized=(emails||[]).map(e=>String(e||'').trim().toLowerCase()).filter(Boolean);
+  if(!normalized.length) return {allowed:true,banned:false};
+  // Server-side RPC keeps the counter reliable across devices/browser sessions.
+  const {data,error}=await supabaseClient.rpc('register_store_gmails',{p_user_id:userId,p_gmails:normalized});
+  if(error){
+    console.error('Duplicate Gmail RPC:',error);
+    // Jangan diam-diam membanned dari client bila RPC belum dipasang.
+    showToast('error','Sistem belum siap','Jalankan SQL anti-duplikat yang disertakan terlebih dahulu.');
+    return {allowed:false,banned:false,error};
+  }
+  if(data?.banned){
+    showBlocked(data.reason||'Akun diblokir karena Gmail yang sama dikirim sebanyak 3 kali.');
+    await supabaseClient.auth.signOut();
+    return {allowed:false,banned:true};
+  }
+  return {allowed:true,banned:false};
+}
+
+async function submitStore(){
+  if(!requireSupabase()) return;
+  const btn=document.getElementById('btnSubmitStore');
+  if(btn?.dataset.busy==='1') return;
+  if(btn){
+    btn.dataset.busy='1';
+    btn.disabled=true;
+    btn.setAttribute('aria-busy','true');
+    btn.dataset.originalText=btn.innerHTML;
+    btn.innerHTML='<span data-svg="loader"></span> Mengirim...';
+    injectIcons();
+  }
+  try{
+    const {data:{user},error:userError}=await supabaseClient.auth.getUser();
+    if(userError) throw userError;
+    if(!user) return showToast('warning','Sesi berakhir','Silakan login kembali.');
+
+    const profileResult=await supabaseClient.from('profiles').select('dana_number,dana_name').eq('id',user.id).maybeSingle();
+    if(profileResult.error) throw profileResult.error;
+    const profile=profileResult.data;
+    if(!profile){ showToast('error','Profil tidak ditemukan','Silakan logout dan login kembali.'); return; }
+
+    const count=Math.max(1,parseInt(document.getElementById('storeCount')?.value||'0',10));
+    const emails=(document.getElementById('storeEmails')?.value||'').split(/\s*,\s*|\n+/).map(x=>x.trim().toLowerCase()).filter(Boolean);
+    if(emails.length<1) return showToast('error','Data belum lengkap','Masukkan minimal 1 Gmail.');
+    if(emails.length!==count) return showToast('error','Jumlah tidak sesuai',`Jumlah Gmail harus ${count}.`);
+    if((document.getElementById('storeConfirm')?.value||'').trim().toUpperCase()!=='SGSG1122') return showToast('warning','Konfirmasi','Ketik sgsg1122 untuk melanjutkan.');
+
+    // Jangan biarkan RPC menggantung tanpa batas waktu.
+    const duplicatePromise=registerStoreGmailsAndCheckBan(user.id,emails);
+    const timeoutPromise=new Promise(resolve=>setTimeout(()=>resolve({allowed:false,banned:false,timeout:true}),12000));
+    const duplicateCheck=await Promise.race([duplicatePromise,timeoutPromise]);
+    if(duplicateCheck?.timeout){
+      showToast('error','Koneksi bermasalah','Pengecekan Gmail terlalu lama. Coba lagi.');
+      return;
+    }
+    if(!duplicateCheck?.allowed) return;
+
+    const total=count*3000;
+    const item={id:'local-'+Date.now().toString(36),created_at:new Date().toISOString(),gmail_count:count,total_price:total,status:'pending_manual',emails:emails};
+    const history=getLocalHistory(user.id);
+    history.unshift(item);
+    saveLocalHistory(user.id,history);
+
+    const telegramResult=await sendStoreNotification(user,count,emails,total,profile.dana_number||'-',profile.dana_name||'-');
+    if(!telegramResult?.ok){
+      console.error('Telegram notification failed:',telegramResult?.error);
+      showToast('error','Telegram tidak terkirim',telegramResult?.error||'Periksa konfigurasi bot Telegram.');
+      return;
+    }
+
+    const emailBox=document.getElementById('storeEmails');
+    const countBox=document.getElementById('storeCount');
+    const confirmBox=document.getElementById('storeConfirm');
+    if(emailBox) emailBox.value='';
+    if(countBox) countBox.value='';
+    if(confirmBox) confirmBox.value='';
+    updateStoreTotal();
+    showModal({type:'success',title:'Pengajuan Berhasil',desc:'Gmail Anda Sudah Terkirim.\n\nGmail sedang di cek manual oleh admin. Silakan tunggu proses pengecekan selesai.',actions:[{label:'Oke',primary:true,onClick:closeModal}]});
+  }catch(err){
+    console.error('submitStore error:',err);
+    showToast('error','Gagal Mengirim',err?.message||'Terjadi kesalahan. Coba lagi.');
+  }finally{
+    if(btn){
+      btn.dataset.busy='0';
+      btn.disabled=false;
+      btn.removeAttribute('aria-busy');
+      if(btn.dataset.originalText) btn.innerHTML=btn.dataset.originalText;
+      injectIcons();
+    }
+  }
+}
+
+function updateStoreTotal(){const n=Math.max(0,parseInt(document.getElementById('storeCount').value||'0',10));document.getElementById('storeTotalQty').textContent=n;document.getElementById('storeTotalPrice').textContent='Rp'+(n*3000).toLocaleString('id-ID');document.getElementById('storeEstimate').textContent='Rp'+(n*3000).toLocaleString('id-ID');}
+
+// ========================= ANNOUNCEMENTS =========================
+let announcementsCache=[];
+let announcementsLoaded=false;
+async function loadAnnouncements(options={}){
+  if(!supabaseClient)return;
+  const {data:{user}}=await supabaseClient.auth.getUser();
+  // User yang baru mendaftar belum boleh melihat broadcast.
+  if(!user || localStorage.getItem('sg_ever_logged_in_'+user.id)!=='1') {
+    announcementsCache=[];
+    announcementsLoaded=true;
+    updateNotificationBadge();
+    return;
+  }
+  const {data,error}=await supabaseClient.from('announcements').select('id,message,created_at').order('created_at',{ascending:false}).limit(20);
+  if(error){
+    console.warn('Announcements:',error.message);
+    return;
+  }
+  const incoming=(data||[]);
+  const previousIds=new Set(announcementsCache.map(x=>String(x.id)));
+  announcementsCache=incoming;
+  announcementsLoaded=true;
+  updateNotificationBadge();
+
+  // Saat realtime/poll menemukan broadcast baru, tampilkan langsung tanpa refresh.
+  if(options.live && liveAnnouncementInitialized && !isAdminUser(user)){
+    const fresh=incoming.filter(x=>!liveAnnouncementIds.has(String(x.id)));
+    fresh.forEach(x=>liveAnnouncementIds.add(String(x.id)));
+    if(fresh.length){
+      const latest=fresh.sort((a,b)=>new Date(b.created_at)-new Date(a.created_at))[0];
+      showLiveBroadcastBanner(latest);
+    }
+  }else{
+    incoming.forEach(x=>liveAnnouncementIds.add(String(x.id)));
+  }
+  liveAnnouncementInitialized=true;
+}
+
+let liveBroadcastBannerTimer=null;
+function showLiveBroadcastBanner(item){
+  document.querySelector('.live-broadcast-banner')?.remove();
+  const el=document.createElement('div');
+  el.className='live-broadcast-banner';
+  el.innerHTML=`<div class="lb-icon"><span data-svg="bell"></span></div><div class="lb-content"><strong>Broadcast Informasi</strong><div class="lb-message">${escapeHtml(item?.message||'Informasi baru dari admin.')}</div></div><button type="button" class="lb-view">Lihat</button><button type="button" class="lb-close" aria-label="Tutup">×</button>`;
+  document.body.appendChild(el);
+  injectIcons();
+  el.querySelector('.lb-view')?.addEventListener('click',()=>{el.remove();openNotifications();});
+  el.querySelector('.lb-close')?.addEventListener('click',()=>el.remove());
+  clearTimeout(liveBroadcastBannerTimer);
+  liveBroadcastBannerTimer=setTimeout(()=>{el.classList.add('lb-hide');setTimeout(()=>el.remove(),180);},8000);
+}
+function getHiddenAnnouncementIds(){
+  try{return JSON.parse(localStorage.getItem('sg_deleted_announcement_ids')||'[]');}catch{return [];}
+}
+function setHiddenAnnouncementIds(ids){
+  localStorage.setItem('sg_deleted_announcement_ids',JSON.stringify([...new Set(ids)].slice(-200)));
+}
+function visibleAnnouncements(){
+  const hidden=new Set(getHiddenAnnouncementIds());
+  return announcementsCache.filter(x=>!hidden.has(String(x.id)));
+}
+function updateNotificationBadge(){
+  const badge=document.getElementById('notificationBadge');
+  if(!badge)return;
+  const seen=Number(localStorage.getItem('sg_seen_announcement_ts')||0);
+  const unread=visibleAnnouncements().filter(x=>new Date(x.created_at).getTime()>seen).length;
+  badge.textContent=unread>9?'9+':String(unread);
+  badge.style.display=unread?'flex':'none';
+}
+function formatAnnouncementDate(v){
+  try{return new Date(v).toLocaleString('id-ID',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});}catch{return '';}}
+function deleteAllUserAnnouncements(){
+  const ids=announcementsCache.map(x=>String(x.id));
+  setHiddenAnnouncementIds([...getHiddenAnnouncementIds(),...ids]);
+  announcementsCache=[];
+  updateNotificationBadge();
+  closeModal();
+  showToast('success','Notifikasi Dihapus','Semua pengumuman sudah dihapus dari tampilan kamu.');
+}
+async function openNotifications(){
+  // Tampilkan cache terlebih dahulu agar klik ikon notifikasi langsung terasa.
+  // Sinkronisasi database dilakukan di belakang setelah modal sudah terbuka.
+  const renderNotificationModal=()=>{
+    const visible=visibleAnnouncements();
+    const body=visible.length
+      ? `<div class="announcement-list">${visible.map(x=>`<div class="announcement-item"><strong>Admin</strong><div class="announcement-message">${escapeHtml(x.message)}</div><small>${escapeHtml(formatAnnouncementDate(x.created_at))}</small></div>`).join('')}</div>`
+      : '<div class="notice">Belum ada pengumuman dari admin.</div>';
+
+    const latest=visible[0];
+    if(latest)localStorage.setItem('sg_seen_announcement_ts',String(new Date(latest.created_at).getTime()));
+    updateNotificationBadge();
+
+    showModal({
+      type:'info',
+      title:'Pengumuman & Informasi',
+      desc:'Informasi terbaru dari admin.',
+      body,
+      actions:[
+        {label:'Tutup',primary:true,onClick:closeModal},
+        {label:'Hapus',danger:true,onClick:deleteAllUserAnnouncements}
+      ]
+    });
+    modalRoot.classList.add('notification-fullscreen');
+    injectIcons();
+  };
+
+  // Buka langsung menggunakan cache yang sudah tersedia.
+  renderNotificationModal();
+
+  // Refresh data tanpa menahan pembukaan modal.
+  try{
+    await loadAnnouncements({live:true});
+    if(modalRoot && modalRoot.classList.contains('notification-fullscreen')){
+      renderNotificationModal();
+    }
+  }catch(e){
+    console.warn('Notification background refresh:',e);
+  }
+}
+async function broadcastAnnouncement(){
+  const {data:{user}}=await supabaseClient.auth.getUser();
+  if(!isAdminUser(user)){showToast('error','Akses ditolak','Hanya admin yang dapat melakukan broadcast.');return;}
+  const input=document.getElementById('adminAnnouncementText');
+  const message=(input?.value||'').trim();
+  if(!message){showToast('warning','Informasi belum diisi','Ketik informasi terlebih dahulu.');return;}
+  const btn=document.getElementById('btnBroadcastAnnouncement');
+  if(btn){btn.disabled=true;btn.dataset.originalText=btn.innerHTML;btn.innerHTML='<span data-svg="loader"></span> Mengirim...';injectIcons();}
+  const {error}=await supabaseClient.from('announcements').insert({message});
+  if(btn){btn.disabled=false;btn.innerHTML=btn.dataset.originalText||'';injectIcons();}
+  if(error){showToast('error','Broadcast gagal',error.message);return;}
+  input.value='';
+  await loadAnnouncements();
+  showToast('success','Broadcast Berhasil','Informasi sudah dikirim untuk user aktif.');
+}
+
+async function deleteAllAdminAnnouncements(){
+  const {data:{user}}=await supabaseClient.auth.getUser();
+  if(!isAdminUser(user)){
+    showToast('error','Akses ditolak','Hanya admin yang dapat menghapus broadcast.');
+    return;
+  }
+
+  const btn=document.getElementById('btnDeleteAllAnnouncements');
+  if(btn && btn.dataset.busy==='1') return;
+
+  const count=announcementsCache.length;
+  if(!count){
+    showToast('info','Tidak Ada Broadcast','Belum ada broadcast yang tersimpan.');
+    return;
+  }
+
+  showModal({
+    type:'warning',
+    title:'Hapus Semua Broadcast?',
+    desc:`Semua ${count} broadcast yang tersimpan akan dihapus permanen dari database dan tidak dapat dikembalikan.`,
+    actions:[
+      {label:'Batal',onClick:closeModal},
+      {label:'Hapus Semua',danger:true,onClick:async()=>{
+        if(btn){
+          btn.dataset.busy='1';
+          btn.disabled=true;
+          btn.dataset.originalText=btn.innerHTML;
+          btn.innerHTML='<span data-svg="loader"></span> Menghapus...';
+          injectIcons();
+        }
+
+        const {error}=await supabaseClient
+          .from('announcements')
+          .delete()
+          .not('id','is',null);
+
+        if(btn){
+          btn.dataset.busy='0';
+          btn.disabled=false;
+          btn.innerHTML=btn.dataset.originalText||'<span data-svg="trash"></span> Hapus Semua Broadcast';
+          injectIcons();
+        }
+
+        if(error){
+          showToast('error','Gagal Menghapus Broadcast',error.message);
+          return;
+        }
+
+        announcementsCache=[];
+        announcementsLoaded=true;
+        localStorage.removeItem('sg_seen_announcement_ts');
+        setHiddenAnnouncementIds([]);
+        updateNotificationBadge();
+        closeModal();
+        showToast('success','Broadcast Dihapus',`Semua ${count} broadcast berhasil dihapus.`);
+      }}
+    ]
+  });
+  injectIcons();
+}
+function startLiveUpdates(){
+  if(!supabaseClient || realtimeStarted)return;
+  realtimeStarted=true;
+
+  // Sinyal Realtime langsung dari admin setelah Banned/Unban.
+  // Browser user langsung menjalankan check_ip_access tanpa refresh.
+  try{
+    liveAccessChannel=supabaseClient.channel('storgmail-live-access-signal');
+    liveAccessChannel
+      .on('broadcast',{event:'user_banned'},async({payload})=>{
+        const target=String(payload?.target_ip||'').trim();
+        let myIp=String(currentRequestIp||'').trim();
+        if(!myIp) myIp=String(await getPublicIp()||'').trim();
+
+        // Only the browser whose public IP was banned shows the blocked screen.
+        if(target && myIp && target===myIp){
+          liveForcedBanIp=target;
+          showBlocked('Akun kamu dibanned oleh admin. Akses website diblokir sampai IP kamu di-unban.');
+          await checkLiveProfileBan();
+          return;
+        }
+
+        // Keep the normal server-side check for compatibility.
+        await checkIpAccess();
+      })
+      .on('broadcast',{event:'user_unbanned'},async({payload})=>{
+        const target=String(payload?.target_ip||'').trim();
+        let myIp=String(currentRequestIp||'').trim();
+        if(!myIp) myIp=String(await getPublicIp()||'').trim();
+
+        if(target && myIp && target===myIp){
+          liveForcedBanIp=null;
+          liveProfileWasBlocked=true;
+          await checkLiveProfileBan();
+          await checkIpAccess();
+          return;
+        }
+        await checkIpAccess();
+      })
+      .subscribe();
+
+    supabaseClient.channel('storgmail-live-access-db')
+      .on('postgres_changes',{event:'UPDATE',schema:'public',table:'profiles'},()=>{
+        checkIpAccess();
+      })
+      .subscribe();
+
+    supabaseClient.channel('storgmail-live-announcements')
+      .on('postgres_changes',{event:'INSERT',schema:'public',table:'announcements'},()=>{
+        loadAnnouncements({live:true});
+      })
+      .subscribe();
+  }catch(e){ console.warn('Realtime setup:',e); }
+
+  // Fallback cepat jika Realtime mengalami delay.
+  liveBanPollTimer=setInterval(async()=>{
+    if(document.hidden)return;
+    const {data:{user}}=await supabaseClient.auth.getUser();
+    if(user){
+      const profileAllowed=await checkLiveProfileBan();
+      if(!profileAllowed)return;
+      await checkIpAccess();
+    }
+  },300);
+
+  liveAnnouncementPollTimer=setInterval(async()=>{
+    if(document.hidden)return;
+    const {data:{user}}=await supabaseClient.auth.getUser();
+    if(user && localStorage.getItem('sg_ever_logged_in_'+user.id)==='1'){
+      await loadAnnouncements({live:true});
+    }
+  },1000);
+}
+
+function switchDash(page){const target=document.getElementById('dash'+page.charAt(0).toUpperCase()+page.slice(1));if(!target)return;document.querySelectorAll('.dash-page').forEach(x=>x.classList.remove('active'));target.classList.add('active');document.querySelectorAll('.nav-btn').forEach(x=>x.classList.toggle('active',x.dataset.dash===page));if(page==='history'&&supabaseClient)supabaseClient.auth.getUser().then(({data})=>loadHistory(data.user));if(page==='home'){document.getElementById('dashboardScreen').scrollTop=0;}else{document.getElementById('dashboardScreen').scrollTop=0;}}
+
+// Mencatat aksi melalui RPC Supabase. Server yang menentukan apakah aktivitas sudah terlalu cepat.
+async function logUserAction(action){
+  if(!supabaseClient)return {allowed:true};
+  const {data,error}=await supabaseClient.rpc('check_user_activity',{p_action:action,p_device_id:getDeviceId()});
+  if(error){console.warn('Anti-spam RPC:',error.message);return {allowed:true};}
+  if(data?.status==='blocked'){showBlocked(data.reason);return {allowed:false};}
+  if(data?.allowed===false){showToast('warning','Terlalu cepat','Tunggu sebentar sebelum melakukan aksi lagi.');return {allowed:false};}
+  return {allowed:true};
+}
+
 // MODAL SYSTEM
 // ================================================================
 const modalRoot = document.getElementById('modalRoot');
-function closeModal(){ modalRoot.classList.remove('active'); setTimeout(()=> modalRoot.innerHTML = '', 200); }
+function closeModal(){
+  modalRoot.classList.remove('active','notification-fullscreen');
+  const root = modalRoot;
+  setTimeout(()=>{
+    // Jangan menghapus modal baru yang dibuka dalam 200ms setelah modal lama ditutup.
+    if(!root.classList.contains('active')) root.innerHTML = '';
+  }, 200);
+}
 function showModal({ type='info', title='', desc='', body='', actions=[] }){
   const iconKey = type==='success'?'check':type==='error'?'warning':type==='warning'?'warning':type==='info'?'info':'warning';
   const acts = (actions && actions.length) ? actions : [{ label:'OK', primary:true, onClick:closeModal }];
@@ -1016,6 +2606,204 @@ function showModal({ type='info', title='', desc='', body='', actions=[] }){
   });
 }
 
+// ========================= ADMIN PANEL V3 =========================
+let adminTab='active';
+let adminUsersCache=[];
+
+async function openAdminPanel(){
+  const {data:{user}} = await supabaseClient.auth.getUser();
+  if(!isAdminUser(user)){showToast('error','Akses ditolak','Panel ini hanya untuk admin.');return;}
+  switchDash('admin');
+  adminTab='active';
+  const search=document.getElementById('adminSearchInput'); if(search) search.value='';
+  document.querySelectorAll('.admin-tab').forEach(b=>b.classList.toggle('active',b.dataset.adminTab===adminTab));
+  await loadAdminUsers();
+}
+
+async function loadAdminUsers(){
+  const box=document.getElementById('adminUserList'); if(!box)return;
+  box.innerHTML='<div class="notice">Memuat data user...</div>';
+  const {data,error}=await supabaseClient.rpc('admin_list_users_with_ip');
+  if(error){
+    const fallback=await supabaseClient.from('profiles')
+      .select('id,email,display_name,status,blocked_reason,created_at,ip_address')
+      .order('created_at',{ascending:false});
+    if(fallback.error){
+      box.innerHTML='<div class="notice error">Gagal memuat user: '+escapeHtml(fallback.error.message)+'</div>';
+      return;
+    }
+    adminUsersCache=fallback.data||[];
+  }else{
+    adminUsersCache=data||[];
+  }
+  // Fallback: ambil IP dari profiles jika RPC lama/kompatibilitas masih digunakan.
+  try{
+    const ipRows=await supabaseClient.from('profiles').select('id,ip_address');
+    if(!ipRows.error && Array.isArray(ipRows.data)){
+      const ipMap=new Map(ipRows.data.map(r=>[r.id,r.ip_address]));
+      adminUsersCache=adminUsersCache.map(u=>({...u,ip_address:u.ip_address||ipMap.get(u.id)||null}));
+    }
+  }catch(e){ console.warn('Gagal memuat IP user:',e); }
+  // Selalu tampilkan Gmail admin di posisi paling atas.
+  adminUsersCache.sort((a,b)=>{
+    const aa=isAdminUser(a)?0:1, bb=isAdminUser(b)?0:1;
+    return aa-bb;
+  });
+  renderAdminUsers(document.getElementById('adminSearchInput')?.value||'');
+}
+
+function renderAdminUsers(query=''){
+  const box=document.getElementById('adminUserList'); if(!box)return;
+  const active=adminUsersCache.filter(u=>u.status!=='blocked' || isAdminUser(u)).length;
+  const banned=[...new Set(adminUsersCache.filter(u=>u.status==='blocked' && !isAdminUser(u)).map(u=>(u.ip_address||'').trim()).filter(Boolean))].length;
+  document.getElementById('adminActiveCount').textContent=active;
+  document.getElementById('adminBannedCount').textContent=banned;
+  const downloadBtn=document.getElementById('btnDownloadBannedGmails'); if(downloadBtn) downloadBtn.style.display=adminTab==='banned'?'inline-flex':'none';
+
+  const searchWrap=document.getElementById('adminSearchWrap');
+  if(adminTab==='bulk-ban' || adminTab==='bulk-unban'){
+    if(searchWrap) searchWrap.style.display='none';
+    const isBan=adminTab==='bulk-ban';
+    box.innerHTML=`<div class="admin-bulk-card">
+      <div class="admin-bulk-title"><span data-svg="${isBan?'ban':'unlock'}"></span>${isBan?'Banned Masal':'Unbanned Masal'}</div>
+      <div class="admin-bulk-desc">${isBan?'Masukkan IP user yang ingin dibanned. Bisa 1 atau banyak IP sekaligus.':'Masukkan IP user yang ingin di-unbanned. Bisa 1 atau banyak IP sekaligus.'}</div>
+      <textarea id="adminBulkIps" class="admin-bulk-textarea" spellcheck="false" placeholder="103.172.17.151&#10;103.172.17.152&#10;103.172.17.153"></textarea>
+      <div class="admin-bulk-actions">
+        <button type="button" class="dash-btn ghost" id="adminBulkClear"><span data-svg="trash"></span> Bersihkan</button>
+        <button type="button" class="dash-btn ${isBan?'danger':'primary'}" id="adminBulkExecute"><span data-svg="${isBan?'ban':'unlock'}"></span>${isBan?'Banned Sekarang':'Unbanned Sekarang'}</button>
+      </div>
+      <div id="adminBulkResult" class="admin-bulk-result">Minimal 1 IP. Banned/Unbanned diproses langsung berdasarkan IP. Gmail user tetap ditampilkan di daftar admin untuk identifikasi.</div>
+    </div>`;
+    document.getElementById('adminBulkClear')?.addEventListener('click',()=>{
+      const t=document.getElementById('adminBulkIps'); if(t)t.value='';
+      const r=document.getElementById('adminBulkResult'); if(r)r.innerHTML='Minimal 1 IP. Banned/Unbanned diproses langsung berdasarkan IP. Gmail user tetap ditampilkan di daftar admin untuk identifikasi.';
+    });
+    document.getElementById('adminBulkExecute')?.addEventListener('click',()=>executeBulkAdminAction(isBan));
+    injectIcons();
+    return;
+  }
+  if(searchWrap) searchWrap.style.display='block';
+
+  const q=(query||'').trim().toLowerCase();
+  const list=adminUsersCache.filter(u=>{
+    const blocked=u.status==='blocked';
+    if(isAdminUser(u)) return adminTab==='active';
+    if((adminTab==='banned')!==blocked)return false;
+    // Pencarian tetap menggunakan Gmail/nama; IP ditampilkan sebagai hasil.
+    return !q || (u.email||'').toLowerCase().includes(q) || (u.display_name||'').toLowerCase().includes(q);
+  });
+  if(!list.length){box.innerHTML='<div class="admin-empty">Tidak ada '+(adminTab==='banned'?'IP Banned yang cocok dengan Gmail tersebut.':'Gmail aktif yang cocok.')+'</div>';return;}
+  box.innerHTML=list.map(u=>{
+    const blocked=u.status==='blocked';
+    const ip=u.ip_address||'Belum terdeteksi';
+    return `<div class="admin-user-card-v3" data-admin-user="${escapeHtml(u.id)}">
+      <div class="admin-user-main"><div class="admin-user-email"><strong>${escapeHtml(u.email||'-')}</strong><small>${escapeHtml(userDisplayName(u))}</small></div><span class="admin-status-pill ${blocked?'banned':'active'}">${blocked?'IP BANNED':'ACTIVE'}</span></div>
+      <div class="admin-reason-v3"><b>IP:</b> ${escapeHtml(ip)}</div>
+      ${blocked&&u.blocked_reason?`<div class="admin-reason-v3"><b>Alasan:</b> ${escapeHtml(u.blocked_reason)}</div>`:''}
+      ${isAdminUser(u)?`<div class="admin-user-select admin-protected"><span data-svg="shield"></span><span>Admin — IP Tidak Dapat Dibanned</span></div>`:`<button class="admin-user-select" type="button" data-admin-action="${blocked?'unban':'ban'}" data-id="${escapeHtml(u.id)}">${blocked?'Unban IP':'Banned IP User'}</button>`}
+    </div>`;
+  }).join('');
+  box.querySelectorAll('[data-admin-action]').forEach(btn=>btn.addEventListener('click',()=>{
+    const u=adminUsersCache.find(x=>x.id===btn.dataset.id); if(!u)return;
+    if(isAdminUser(u)){showToast('info','Akun Admin','Akun admin tidak dapat dibanned.');return;}
+    if(btn.dataset.adminAction==='ban') openBanConfirm(u); else openUnbanConfirm(u);
+  }));
+}
+
+function userDisplayName(user){ return user?.display_name || 'Tanpa nama'; }
+
+async function executeBulkAdminAction(isBan){
+  const textarea=document.getElementById('adminBulkIps');
+  const result=document.getElementById('adminBulkResult');
+  const raw=textarea?.value||'';
+  const ips=[...new Set(raw.split(/[\s,;]+/).map(x=>x.trim()).filter(Boolean))];
+  if(!ips.length){
+    showToast('warning','IP belum diisi','Masukkan minimal 1 IP user.');
+    return;
+  }
+  const invalid=ips.filter(ip=>{ const parts=ip.split('.'); return parts.length!==4 || parts.some(x=>x==='' || !/^\d+$/.test(x) || Number(x)<0 || Number(x)>255); });
+  if(invalid.length){
+    showToast('warning','Format IP salah',`${invalid.length} IP tidak valid.`);
+    return;
+  }
+  const matched=ips.map(ip=>({ip,user:adminUsersCache.find(u=>(u.ip_address||'').trim()===ip)}));
+  const missing=matched.filter(x=>!x.user);
+  const targets=matched.filter(x=>x.user && (isBan ? x.user.status!=='blocked' : x.user.status==='blocked'));
+  const already=matched.filter(x=>x.user && (isBan ? x.user.status==='blocked' : x.user.status!=='blocked'));
+
+  if(!targets.length){
+    const msg=isBan?'Semua IP yang dimasukkan sudah BANNED atau tidak ditemukan.':'Semua IP yang dimasukkan sudah ACTIVE atau tidak ditemukan.';
+    if(result) result.innerHTML=escapeHtml(msg)+(missing.length?`<br>IP tidak ditemukan: ${missing.length}`:'');
+    showToast('info','Tidak ada perubahan',msg);
+    return;
+  }
+
+  const button=document.getElementById('adminBulkExecute');
+  if(button){button.disabled=true;button.dataset.originalText=button.innerHTML;button.innerHTML='<span data-svg="loader"></span> Memproses...';injectIcons();}
+  let success=0, failed=[];
+  for(const item of targets){
+    const user=item.user;
+    const rpc=isBan?'admin_ban_user_with_ip_v2':'admin_unban_user_with_ip_v2';
+    const args=isBan?{target_id:user.id,reason:'Banned Masal IP oleh Admin'}:{target_id:user.id};
+    const {error}=await supabaseClient.rpc(rpc,args);
+    if(error){failed.push(`${item.ip}: ${error.message}`);continue;}
+    success++;
+    await sendLiveAccessSignal(isBan?'user_banned':'user_unbanned',user.ip_address);
+    adminUsersCache=adminUsersCache.map(x=>x.id===user.id
+      ? (isBan?{...x,status:'blocked',blocked_reason:'Banned Masal IP oleh Admin'}:{...x,status:'active',blocked_reason:null})
+      : x);
+  }
+  if(button){button.disabled=false;button.innerHTML=button.dataset.originalText||'';injectIcons();}
+  const action=isBan?'Banned':'Unbanned';
+  const details=[
+    `${success} IP berhasil ${action}.`,
+    already.length?`${already.length} IP sudah berstatus sesuai.`:'',
+    missing.length?`${missing.length} IP tidak ditemukan.`:'',
+    failed.length?`${failed.length} IP gagal diproses.`:''
+  ].filter(Boolean).join(' ');
+  if(result) result.innerHTML=escapeHtml(details)+(failed.length?`<br><br>${failed.map(escapeHtml).join('<br>')}`:'');
+  if(success){
+    showToast('success',`${action} Masal IP Berhasil`,`${success} IP berhasil diproses langsung berdasarkan IP yang dipilih.`);
+    await loadAdminUsers();
+    adminTab=isBan?'banned':'active';
+    document.querySelectorAll('.admin-tab').forEach(b=>b.classList.toggle('active',b.dataset.adminTab===adminTab));
+    renderAdminUsers('');
+  }else{
+    showToast('error','Tidak ada yang berhasil',details);
+  }
+}
+
+function openBanConfirm(user){
+  if(isAdminUser(user)){showToast('info','Akun Admin','Akun admin tidak dapat dibanned.');return;}
+  const body=`<div class="modal-form"><div class="admin-confirm-user"><span data-svg="mail"></span><div><b>${escapeHtml(user.email||'-')}</b><small>${escapeHtml(userDisplayName(user))}</small></div></div><label>Alasan Banned</label><textarea id="adminBanReason" class="modal-input" style="height:100px;padding:12px;resize:none" placeholder="Contoh: Spam / melanggar rules...">Spam</textarea></div>`;
+  showModal({type:'warning',title:'Banned IP?',desc:`IP ${user.ip_address||'-'} milik user ini akan dibanned. Gmail tetap ditampilkan sebagai identitas user.`,body,actions:[{label:'Batal',onClick:closeModal},{label:'Banned Sekarang',danger:true,onClick:async()=>{const reason=(document.getElementById('adminBanReason')?.value||'').trim();if(!reason)return showToast('warning','Alasan wajib','Masukkan alasan banned.');const {error}=await supabaseClient.rpc('admin_ban_user_with_ip_v2',{target_id:user.id,reason});if(error){showToast('error','Gagal Banned',error.message);return;}await sendLiveAccessSignal('user_banned',user.ip_address);adminUsersCache=adminUsersCache.map(x=>x.id===user.id?{...x,status:'blocked',blocked_reason:reason}:x);closeModal();adminTab='banned';document.querySelectorAll('.admin-tab').forEach(b=>b.classList.toggle('active',b.dataset.adminTab===adminTab));renderAdminUsers(document.getElementById('adminSearchInput')?.value||'');showModal({type:'success',title:'IP Berhasil Banned',desc:'IP user sudah dibanned. Gmail tetap tersimpan sebagai identitas user.',actions:[{label:'Oke',primary:true,onClick:closeModal}]});}}]});
+  injectIcons();
+}
+function openUnbanConfirm(user){
+  showModal({type:'info',title:'Unban IP?',desc:`Buka blokir IP ${user.ip_address||'-'} milik ${user.email||'-'}?` ,body:`<div class="admin-confirm-user"><span data-svg="unlock"></span><div><b>${escapeHtml(user.email||'-')}</b><small>Alasan sebelumnya: ${escapeHtml(user.blocked_reason||'Tidak ada')}</small></div></div>`,actions:[{label:'Batal',onClick:closeModal},{label:'Unban Sekarang',primary:true,onClick:async()=>{const {error}=await supabaseClient.rpc('admin_unban_user_with_ip_v2',{target_id:user.id});if(error){showToast('error','Gagal Unban',error.message);return;}await sendLiveAccessSignal('user_unbanned',user.ip_address);adminUsersCache=adminUsersCache.map(x=>x.id===user.id?{...x,status:'active',blocked_reason:null}:x);closeModal();adminTab='active';document.querySelectorAll('.admin-tab').forEach(b=>b.classList.toggle('active',b.dataset.adminTab===adminTab));renderAdminUsers(document.getElementById('adminSearchInput')?.value||'');showModal({type:'success',title:'IP Berhasil Di-Unban',desc:'IP user sudah dibuka kembali dan akses website dapat digunakan.',actions:[{label:'Oke',primary:true,onClick:closeModal}]});}}]});
+  injectIcons();
+}
+function downloadBannedGmails(){
+  const bannedUsers=adminUsersCache.filter(u=>u.status==='blocked' && !isAdminUser(u));
+  const ips=[...new Set(bannedUsers.map(u=>(u.ip_address||'').trim()).filter(Boolean))];
+  if(!ips.length){
+    showToast('info','Tidak ada IP Banned','Belum ada IP yang terbanned.');
+    return;
+  }
+  const content=ips.join('\n')+'\n';
+  const blob=new Blob([content],{type:'text/plain;charset=utf-8'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;
+  a.download='ip-banned.txt';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+  showToast('success','Download Berhasil',ips.length+' IP Banned berhasil didownload.');
+}
+function escapeHtml(v){return String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));}
+
 // ================================================================
 // EVENT LISTENERS & INITIALIZATION
 // ================================================================
@@ -1025,23 +2813,63 @@ document.addEventListener('DOMContentLoaded', ()=>{
   
   const deviceId = getDeviceId();
   console.log('Device ID:', deviceId);
-  
-  // Notify Telegram about visitor (only once per session)
-  if (!hasNotifiedVisit) {
-    hasNotifiedVisit = true;
-    sendTelegramVisitorNotification().then(r => {
-      if (r.ok) {
-        console.log('Visitor notification sent to Telegram');
-      } else {
-        console.log('Failed to send visitor notification:', r.error);
-      }
-    });
-  }
-  
   setTimeout(()=> {
     document.getElementById('loadingScreen').classList.add('hidden');
     document.getElementById('app').removeAttribute('aria-hidden');
   }, 1200);
+
+  document.getElementById('btnAuthOpen').addEventListener('click',()=>openAuth('login'));
+  document.getElementById('authClose').addEventListener('click',closeAuth);
+  document.getElementById('authSwitchBtn').addEventListener('click',()=>openAuth(authMode==='login'?'register':'login'));
+  authForm.addEventListener('submit',handleAuthSubmit);
+  document.getElementById('btnLogout').addEventListener('click',logoutUser);
+  document.getElementById('blockedLogout').addEventListener('click',logoutUser);
+  document.getElementById('blockedWhatsApp').addEventListener('click',()=>{
+    if(!/^62\d{8,15}$/.test(ADMIN_WHATSAPP_NUMBER)){
+      showToast('warning','Nomor admin belum diatur','Isi ADMIN_WHATSAPP_NUMBER di dalam kode.');
+      return;
+    }
+    const msg=encodeURIComponent('Halo Admin, akun StorGmail saya terbanned. Saya ingin mengajukan pembukaan banned.');
+    window.location.href='https://wa.me/'+ADMIN_WHATSAPP_NUMBER+'?text='+msg;
+  });
+  document.getElementById('btnRefreshProfile').addEventListener('click',async()=>{if(requireSupabase()){const {data}=await supabaseClient.auth.getUser();if(data?.user)await loadProfile(data.user);}});
+  checkCurrentUser();
+  window.addEventListener('pageshow',()=>{checkIpAccess();});
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden)checkIpAccess();});
+  document.getElementById('btnNotifications')?.addEventListener('click',openNotifications);
+  loadAnnouncements().then(()=>startLiveUpdates());
+  document.getElementById('btnBroadcastAnnouncement')?.addEventListener('click',broadcastAnnouncement);
+  document.getElementById('btnDeleteAllAnnouncements')?.addEventListener('click',deleteAllAdminAnnouncements);
+  document.getElementById('btnRules').addEventListener('click',()=>{const c=document.getElementById('rulesContent'); const open=c.style.display==='none'; c.style.display=open?'block':'none'; document.getElementById('btnRules').innerHTML=(open?'<span data-svg="close"></span><span>Tutup Rules</span>':'<span data-svg="info"></span><span>Lihat Rules</span>'); injectIcons();});
+  document.querySelectorAll('.nav-btn').forEach(b=>b.addEventListener('click',()=>switchDash(b.dataset.dash)));
+  document.getElementById('storeCount').addEventListener('input',updateStoreTotal);
+  document.getElementById('btnSubmitStore').addEventListener('click',submitStore);
+  document.getElementById('btnDashLogout').addEventListener('click',logoutUser);
+  document.getElementById('btnChangeDana').addEventListener('click',async()=>{
+    const {data:{user}}=await supabaseClient.auth.getUser(); if(!user)return;
+    const profile=await loadProfile(user);
+    showModal({type:'info',title:'Ganti Data Payment',desc:'Perbarui data Dana yang digunakan untuk pembayaran.',body:`<div class="modal-form"><label><span data-svg="phone"></span> Nomor Dana</label><input id="modalDanaNumber" class="modal-input" inputmode="numeric" value="${(profile?.dana_number||'').replace(/"/g,'&quot;')}" placeholder="Masukkan nomor Dana"><label><span data-svg="user"></span> Nama Dana</label><input id="modalDanaName" class="modal-input" value="${(profile?.dana_name||'').replace(/"/g,'&quot;')}" placeholder="Masukkan nama Dana"></div>`,actions:[
+      {label:'Batal',onClick:closeModal},{label:'Simpan Perubahan',primary:true,onClick:async()=>{const n=document.getElementById('modalDanaNumber')?.value.trim();const nm=document.getElementById('modalDanaName')?.value.trim();if(!n||!nm)return showToast('warning','Data belum lengkap','Isi nomor dan nama Dana.');const {error}=await supabaseClient.from('profiles').update({dana_number:n,dana_name:nm,updated_at:new Date().toISOString()}).eq('id',user.id);if(error)return showToast('error','Gagal',error.message);closeModal();await loadProfile(user);showModal({type:'success',title:'Data Payment Berhasil Diubah',desc:'Data payment kamu sudah diperbarui.',actions:[{label:'Oke',primary:true,onClick:closeModal}]});}}
+    ]});
+    injectIcons();
+  });
+  document.getElementById('btnChangePassword').addEventListener('click',()=>{
+    showModal({type:'info',title:'Ganti Password',desc:'Password ini adalah password login akun StorGmail, bukan password akun Gmail yang dikirim.',body:`<div class="modal-form"><label><span data-svg="lock"></span> Password Baru</label><input id="modalNewPassword" class="modal-input" type="password" minlength="6" placeholder="Minimal 6 karakter"><label><span data-svg="check"></span> Konfirmasi Password</label><input id="modalConfirmPassword" class="modal-input" type="password" minlength="6" placeholder="Ulangi password baru"></div>`,actions:[
+      {label:'Batal',onClick:closeModal},{label:'Simpan Password',primary:true,onClick:async()=>{const a=document.getElementById('modalNewPassword')?.value||'';const b=document.getElementById('modalConfirmPassword')?.value||'';if(a.length<6)return showToast('warning','Password terlalu pendek','Minimal 6 karakter.');if(a!==b)return showToast('error','Tidak cocok','Konfirmasi password tidak sama.');const {error}=await supabaseClient.auth.updateUser({password:a});if(error)return showToast('error','Gagal',error.message);closeModal();showModal({type:'success',title:'Password Berhasil Diubah',desc:'Password login akun kamu sudah diperbarui.',actions:[{label:'Oke',primary:true,onClick:closeModal}]});}}
+    ]});
+    injectIcons();
+  });
+  document.getElementById('dashAdminBtn').addEventListener('click',openAdminPanel);
+  document.getElementById('btnAdminBack').addEventListener('click',()=>switchDash('profile'));
+  document.querySelectorAll('.admin-tab').forEach(btn=>btn.addEventListener('click',()=>{
+    adminTab=btn.dataset.adminTab;
+    document.querySelectorAll('.admin-tab').forEach(x=>x.classList.toggle('active',x===btn));
+    const search=document.getElementById('adminSearchInput');
+    if(search && (adminTab==='bulk-ban'||adminTab==='bulk-unban')) search.value='';
+    renderAdminUsers(search?.value||'');
+  }));
+  document.getElementById('adminSearchInput').addEventListener('input',e=>renderAdminUsers(e.target.value));
+  document.getElementById('btnDownloadBannedGmails')?.addEventListener('click',downloadBannedGmails);
 
   // WhatsApp Channel Button
   document.getElementById('btnJoinWhatsApp').addEventListener('click', () => {
@@ -1052,6 +2880,19 @@ document.addEventListener('DOMContentLoaded', ()=>{
   document.getElementById('btnJoinKomunitas').addEventListener('click', () => {
     window.open(KOMUNITAS_LINK, '_blank');
   });
+
+  // Reference dashboard navigation
+  document.getElementById('quickForm')?.addEventListener('click',()=>switchDash('form'));
+  document.getElementById('quickHistory')?.addEventListener('click',()=>switchDash('history'));
+  document.getElementById('quickRecent')?.addEventListener('click',()=>switchDash('history'));
+  document.getElementById('quickProfile')?.addEventListener('click',()=>switchDash('profile'));
+  document.getElementById('quickChannel')?.addEventListener('click',()=>window.open(WHATSAPP_CHANNEL_LINK,'_blank'));
+  document.getElementById('btnFormBack')?.addEventListener('click',()=>switchDash('home'));
+  document.getElementById('btnHistoryBack')?.addEventListener('click',()=>switchDash('home'));
+  document.getElementById('btnProfileBack')?.addEventListener('click',()=>switchDash('home'));
+  document.querySelectorAll('.history-ref-tab').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.history-ref-tab').forEach(x=>x.classList.remove('active'));btn.classList.add('active');}));
+  document.getElementById('profileUpload')?.addEventListener('click',()=>showToast('info','Upload Photo','Fungsi upload foto tetap dapat ditambahkan tanpa mengubah sistem akun.'));
+  document.getElementById('profileChangeName')?.addEventListener('click',()=>showModal({type:'info',title:'Ganti Nama',desc:'Perbarui nama profil akun kamu.',body:`<div class="modal-form"><label><span data-svg="user"></span> Nama Baru</label><input id="modalNewName" class="modal-input" type="text" placeholder="Masukkan nama baru"></div>`,actions:[{label:'Batal',onClick:closeModal},{label:'Simpan',primary:true,onClick:async()=>{const n=document.getElementById('modalNewName')?.value.trim();if(!n)return showToast('warning','Nama belum diisi','Masukkan nama baru.');const {data:{user}}=await supabaseClient.auth.getUser();if(!user)return;const {error}=await supabaseClient.from('profiles').update({display_name:n,updated_at:new Date().toISOString()}).eq('id',user.id);if(error)return showToast('error','Gagal',error.message);closeModal();await loadProfile(user);showToast('success','Berhasil','Nama profil diperbarui.');}}]}));
 });
 </script>
 </body>

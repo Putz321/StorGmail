@@ -1322,6 +1322,583 @@ body.dashboard-open{overflow:hidden;height:100dvh;position:fixed;width:100%;top:
   #dashboardScreen .notification-btn{position:absolute!important;right:0!important;top:50%!important;transform:translateY(-50%)!important;margin:0!important;z-index:5!important;}
   #dashboardScreen .notification-btn:active{transform:translateY(-50%) scale(.95)!important;}
 </style>
+
+<style id="fast-elegant-animations">
+/* Animasi cepat, responsif, dan elegan — tanpa mengubah struktur/fungsi awal */
+:root{--fast-ease:cubic-bezier(.22,1,.36,1);--fast-snap:cubic-bezier(.2,.8,.2,1)}
+*{scroll-behavior:smooth}
+.screen.active{animation:screenInFast .18s var(--fast-ease) both!important}
+@keyframes screenInFast{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.logo-area{animation:logoFast .42s var(--fast-ease) both!important}
+@keyframes logoFast{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
+.loading-text,.loading-subtitle,.loading-progress{animation-duration:.45s!important;animation-timing-function:var(--fast-ease)!important}
+.welcome-section,.welcome-section.anim-1,.welcome-section.anim-2,.welcome-section.anim-3{animation-duration:.28s!important;animation-timing-function:var(--fast-ease)!important}
+.welcome-section.anim-1{animation-delay:.02s!important}.welcome-section.anim-2{animation-delay:.05s!important}.welcome-section.anim-3{animation-delay:.08s!important}
+.card,.dash-card,.dash-hero,.rules-card,.profile-card,.payment-box{transition:transform .16s var(--fast-snap),box-shadow .16s ease,border-color .16s ease,background .16s ease!important}
+button,.dash-btn,.nav-btn,.notification-btn,.btn-modal,.admin-tab{transition:transform .12s var(--fast-snap),opacity .12s ease,background .14s ease,border-color .14s ease,box-shadow .14s ease!important}
+button:active,.dash-btn:active,.nav-btn:active,.notification-btn:active,.btn-modal:active,.admin-tab:active{transform:scale(.975)!important}
+.modal-root.active,#modalRoot.active{animation:fadeFast .16s ease both!important}
+@keyframes fadeFast{from{opacity:0}to{opacity:1}}
+.modal-card,#modalRoot .modal-card{animation:modalFast .2s var(--fast-ease) both!important}
+@keyframes modalFast{from{opacity:0;transform:translateY(10px) scale(.985)}to{opacity:1;transform:none}}
+.toast{animation:toastFast .18s var(--fast-ease) both!important}
+.toast.hide{animation:toastOutFast .14s ease both!important}
+@keyframes toastFast{from{opacity:0;transform:translateY(-8px) scale(.985)}to{opacity:1;transform:none}}
+@keyframes toastOutFast{to{opacity:0;transform:translateY(-6px) scale(.99)}}
+.dash-page.active{animation:dashFast .17s var(--fast-ease) both!important}
+@keyframes dashFast{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.live-broadcast-banner{animation-duration:.18s!important;animation-timing-function:var(--fast-ease)!important}
+.live-broadcast-banner.lb-hide{animation-duration:.12s!important}
+.field input,.field textarea,.admin-search,.modal-input{transition:border-color .14s ease,box-shadow .14s ease,background .14s ease!important}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+}
+</style>
+
+<style id="ui-polish-final">
+/* ============================================================
+   PERBAIKAN TAMPILAN, ANIMASI, DAN POP UP
+   TANPA MENGUBAH KODE YANG SUDAH ADA
+   ============================================================ */
+
+/* --- ANIMASI LEBIH HALUS --- */
+.screen.active {
+  animation: screenInSoft 0.35s cubic-bezier(0.22, 1, 0.36, 1) both !important;
+}
+
+@keyframes screenInSoft {
+  0% { opacity: 0; transform: translateY(12px) scale(0.98); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.welcome-section,
+.welcome-section.anim-1,
+.welcome-section.anim-2,
+.welcome-section.anim-3 {
+  animation-duration: 0.4s !important;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+
+.welcome-section.anim-1 { animation-delay: 0.05s !important; }
+.welcome-section.anim-2 { animation-delay: 0.10s !important; }
+.welcome-section.anim-3 { animation-delay: 0.15s !important; }
+
+/* --- LOADING SCREEN LEBIH ELEGAN --- */
+.loading-screen {
+  background: radial-gradient(circle at 50% 40%, #0f0f12 0%, #050505 80%) !important;
+  transition: opacity 0.5s ease, visibility 0.5s ease !important;
+}
+
+.loading-screen.hidden {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transition: opacity 0.5s ease, visibility 0.5s ease !important;
+}
+
+.loading-logo {
+  animation: logoPulseSoft 1.8s ease-in-out infinite !important;
+  border: 2px solid rgba(74, 140, 255, 0.2) !important;
+  box-shadow: 0 0 40px rgba(74, 140, 255, 0.15) !important;
+}
+
+@keyframes logoPulseSoft {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 30px rgba(74, 140, 255, 0.12); }
+  50% { transform: scale(1.03); box-shadow: 0 0 50px rgba(74, 140, 255, 0.25); }
+}
+
+.loading-text {
+  letter-spacing: 6px !important;
+  font-size: 14px !important;
+  opacity: 0.8 !important;
+}
+
+.loading-bar {
+  width: 160px !important;
+  height: 3px !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  border-radius: 99px !important;
+  overflow: hidden !important;
+}
+
+.loading-bar span {
+  width: 45% !important;
+  background: linear-gradient(90deg, var(--accent), #6a9fff, var(--accent)) !important;
+  animation: loadingSlideSoft 1.4s ease-in-out infinite !important;
+}
+
+@keyframes loadingSlideSoft {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(320%); }
+}
+
+/* --- POP UP / MODAL LEBIH HALUS --- */
+.modal-root.active {
+  animation: modalFadeIn 0.3s cubic-bezier(0.22, 1, 0.36, 1) both !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  background: rgba(0, 0, 0, 0.75) !important;
+}
+
+@keyframes modalFadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.modal-card {
+  animation: modalSlideIn 0.35s cubic-bezier(0.22, 1, 0.36, 1) both !important;
+  border-radius: 28px !important;
+  background: rgba(18, 20, 26, 0.95) !important;
+  backdrop-filter: blur(32px) !important;
+  -webkit-backdrop-filter: blur(32px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.07) !important;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), 0 0 60px rgba(74, 140, 255, 0.05) !important;
+}
+
+@keyframes modalSlideIn {
+  0% { opacity: 0; transform: translateY(30px) scale(0.95); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.modal-icon {
+  border-radius: 20px !important;
+  width: 60px !important;
+  height: 60px !important;
+  margin: 0 auto 16px !important;
+}
+
+.modal-icon.success {
+  background: rgba(52, 199, 89, 0.12) !important;
+  color: var(--success) !important;
+  box-shadow: 0 0 30px rgba(52, 199, 89, 0.08) !important;
+}
+
+.modal-icon.error {
+  background: rgba(255, 69, 58, 0.12) !important;
+  color: var(--danger) !important;
+  box-shadow: 0 0 30px rgba(255, 69, 58, 0.08) !important;
+}
+
+.modal-icon.warning {
+  background: rgba(255, 159, 10, 0.12) !important;
+  color: var(--warning) !important;
+  box-shadow: 0 0 30px rgba(255, 159, 10, 0.08) !important;
+}
+
+.modal-icon.info {
+  background: rgba(74, 140, 255, 0.12) !important;
+  color: var(--accent) !important;
+  box-shadow: 0 0 30px rgba(74, 140, 255, 0.08) !important;
+}
+
+.modal-title {
+  font-size: 20px !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.3px !important;
+  margin-bottom: 6px !important;
+}
+
+.modal-desc {
+  color: var(--muted) !important;
+  font-size: 14px !important;
+  line-height: 1.6 !important;
+  max-width: 340px !important;
+  margin: 0 auto 18px !important;
+}
+
+.modal-actions {
+  display: flex !important;
+  gap: 12px !important;
+  flex-wrap: wrap !important;
+}
+
+.btn-modal {
+  height: 50px !important;
+  border-radius: 15px !important;
+  font-size: 14px !important;
+  font-weight: 800 !important;
+  transition: all 0.2s cubic-bezier(0.22, 1, 0.36, 1) !important;
+  flex: 1 !important;
+  min-width: 100px !important;
+}
+
+.btn-modal:active {
+  transform: scale(0.97) !important;
+}
+
+.btn-modal.btn-confirm {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2)) !important;
+  color: #fff !important;
+  box-shadow: 0 6px 24px rgba(74, 140, 255, 0.3) !important;
+}
+
+.btn-modal.btn-confirm:hover {
+  box-shadow: 0 8px 32px rgba(74, 140, 255, 0.4) !important;
+}
+
+.btn-modal.btn-danger {
+  background: linear-gradient(135deg, #ff5a52, #ff3b30) !important;
+  color: #fff !important;
+  box-shadow: 0 6px 24px rgba(255, 69, 58, 0.3) !important;
+}
+
+.btn-modal.btn-danger:hover {
+  box-shadow: 0 8px 32px rgba(255, 69, 58, 0.4) !important;
+}
+
+.btn-modal.btn-cancel {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  color: #fff !important;
+}
+
+/* --- TOAST LEBIH ELEGAN --- */
+.toast {
+  border-radius: 16px !important;
+  padding: 14px 16px !important;
+  background: rgba(18, 20, 26, 0.92) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4) !important;
+}
+
+@keyframes toastIn {
+  0% { opacity: 0; transform: translateY(-20px) scale(0.95); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes toastOut {
+  0% { opacity: 1; transform: translateY(0) scale(1); }
+  100% { opacity: 0; transform: translateY(-16px) scale(0.95); }
+}
+
+.toast-icon {
+  width: 34px !important;
+  height: 34px !important;
+  border-radius: 11px !important;
+}
+
+.toast-title {
+  font-size: 14px !important;
+  font-weight: 800 !important;
+}
+
+.toast-msg {
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  color: var(--muted) !important;
+}
+
+/* --- DASHBOARD CARD LEBIH RAPI --- */
+.dash-card {
+  border-radius: 20px !important;
+  padding: 18px !important;
+  background: linear-gradient(180deg, rgba(20, 23, 30, 0.9), rgba(12, 14, 20, 0.95)) !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+  transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+
+.dash-card:hover {
+  border-color: rgba(74, 140, 255, 0.15) !important;
+}
+
+.dash-hero {
+  border-radius: 20px !important;
+  padding: 20px !important;
+  background: linear-gradient(145deg, rgba(16, 24, 39, 0.9), rgba(11, 16, 24, 0.95)) !important;
+  border: 1px solid rgba(74, 140, 255, 0.12) !important;
+}
+
+/* --- BUTTON LEBIH RESPONSIF --- */
+.btn-primary {
+  transition: all 0.2s cubic-bezier(0.22, 1, 0.36, 1) !important;
+  height: 52px !important;
+  border-radius: 16px !important;
+  font-size: 15px !important;
+}
+
+.btn-primary:active {
+  transform: scale(0.97) !important;
+}
+
+.btn-whatsapp {
+  background: linear-gradient(135deg, #25D366, #128C7E) !important;
+  box-shadow: 0 8px 32px rgba(37, 211, 102, 0.25) !important;
+}
+
+.btn-whatsapp:hover {
+  box-shadow: 0 8px 40px rgba(37, 211, 102, 0.35) !important;
+}
+
+.btn-komunitas {
+  background: linear-gradient(135deg, #7C3AED, #5B21B6) !important;
+  box-shadow: 0 8px 32px rgba(124, 58, 237, 0.25) !important;
+}
+
+.btn-komunitas:hover {
+  box-shadow: 0 8px 40px rgba(124, 58, 237, 0.35) !important;
+}
+
+.btn-outline {
+  border: 1.5px solid rgba(255, 255, 255, 0.08) !important;
+  background: rgba(255, 255, 255, 0.03) !important;
+}
+
+.btn-outline:hover {
+  background: rgba(255, 255, 255, 0.06) !important;
+}
+
+/* --- WELCOME SCREEN LEBIH RAPI --- */
+.welcome-hero {
+  padding: 40px 24px 28px !important;
+  gap: 18px !important;
+}
+
+.welcome-title {
+  font-size: 30px !important;
+  line-height: 1.2 !important;
+}
+
+.welcome-desc {
+  font-size: 14px !important;
+  line-height: 1.6 !important;
+  color: var(--muted) !important;
+}
+
+.welcome-badge {
+  font-size: 11px !important;
+  padding: 6px 16px !important;
+  background: rgba(74, 140, 255, 0.08) !important;
+  border: 1px solid rgba(74, 140, 255, 0.15) !important;
+}
+
+.laptop-hero-card {
+  border-radius: 18px !important;
+  padding: 18px !important;
+  background: linear-gradient(135deg, rgba(20, 20, 20, 0.7), rgba(10, 10, 10, 0.85)) !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+/* --- FEATURE CARD LEBIH RAPI --- */
+.feature-card {
+  background: rgba(12, 12, 12, 0.6) !important;
+  border: 1px solid rgba(255, 255, 255, 0.04) !important;
+  border-radius: 16px !important;
+  padding: 16px !important;
+  transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+
+.feature-card:hover {
+  border-color: rgba(74, 140, 255, 0.12) !important;
+  background: rgba(16, 16, 16, 0.7) !important;
+}
+
+.feature-icon {
+  width: 44px !important;
+  height: 44px !important;
+  border-radius: 13px !important;
+  background: rgba(74, 140, 255, 0.08) !important;
+}
+
+/* --- TESTIMONI LEBIH RAPI --- */
+.testi-card {
+  background: linear-gradient(135deg, rgba(18, 18, 18, 0.85), rgba(10, 10, 10, 0.9)) !important;
+  border: 1px solid rgba(255, 255, 255, 0.04) !important;
+  border-radius: 16px !important;
+  padding: 16px !important;
+}
+
+.testi-avatar {
+  width: 38px !important;
+  height: 38px !important;
+  font-size: 14px !important;
+}
+
+/* --- BOTTOM NAV LEBIH RAPI --- */
+.bottom-nav {
+  border-radius: 20px !important;
+  padding: 6px !important;
+  background: rgba(13, 16, 22, 0.96) !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4) !important;
+}
+
+.nav-btn {
+  border-radius: 14px !important;
+  transition: all 0.2s cubic-bezier(0.22, 1, 0.36, 1) !important;
+  padding: 8px 4px !important;
+}
+
+.nav-btn.active {
+  background: linear-gradient(180deg, #1a5dff, #4387ff) !important;
+  box-shadow: 0 8px 24px rgba(48, 112, 255, 0.25) !important;
+}
+
+/* --- BLOCKED SCREEN LEBIH ELEGAN --- */
+.blocked-screen.active {
+  animation: blockedFadeIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) both !important;
+}
+
+@keyframes blockedFadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.blocked-box {
+  animation: blockedSlideIn 0.45s cubic-bezier(0.22, 1, 0.36, 1) both !important;
+  border-radius: 28px !important;
+  background: linear-gradient(180deg, rgba(22, 25, 32, 0.98), rgba(10, 12, 16, 0.98)) !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6) !important;
+  padding: 30px 24px 24px !important;
+}
+
+@keyframes blockedSlideIn {
+  0% { opacity: 0; transform: translateY(30px) scale(0.95); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.blocked-icon {
+  width: 68px !important;
+  height: 68px !important;
+  border-radius: 22px !important;
+  background: rgba(255, 69, 58, 0.1) !important;
+  color: var(--danger) !important;
+  margin: 0 auto 16px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* --- AUTH SCREEN LEBIH RAPI --- */
+.auth-screen.active {
+  animation: authFadeIn 0.3s cubic-bezier(0.22, 1, 0.36, 1) both !important;
+}
+
+@keyframes authFadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.auth-card {
+  animation: authSlideIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) both !important;
+  border-radius: 28px !important;
+  background: rgba(16, 18, 24, 0.96) !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5) !important;
+  padding: 28px 24px !important;
+}
+
+@keyframes authSlideIn {
+  0% { opacity: 0; transform: translateY(24px) scale(0.96); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.auth-logo {
+  width: 60px !important;
+  height: 60px !important;
+  border-radius: 18px !important;
+}
+
+.auth-input {
+  border-radius: 14px !important;
+  height: 50px !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+  background: rgba(255, 255, 255, 0.03) !important;
+  transition: all 0.2s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+
+.auth-input:focus {
+  border-color: rgba(74, 140, 255, 0.4) !important;
+  box-shadow: 0 0 0 4px rgba(74, 140, 255, 0.06) !important;
+}
+
+/* --- SCROLLBAR HALUS --- */
+::-webkit-scrollbar {
+  width: 4px !important;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(74, 140, 255, 0.2) !important;
+  border-radius: 99px !important;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(74, 140, 255, 0.3) !important;
+}
+
+/* --- RESPONSIVE TWEAKS --- */
+@media (max-width: 430px) {
+  .modal-card {
+    border-radius: 24px !important;
+    padding: 20px 16px !important;
+  }
+  
+  .modal-icon {
+    width: 54px !important;
+    height: 54px !important;
+  }
+  
+  .modal-title {
+    font-size: 18px !important;
+  }
+  
+  .modal-desc {
+    font-size: 13px !important;
+  }
+  
+  .btn-modal {
+    height: 46px !important;
+    font-size: 13px !important;
+  }
+  
+  .welcome-hero {
+    padding: 28px 18px 24px !important;
+  }
+  
+  .welcome-title {
+    font-size: 26px !important;
+  }
+  
+  .dash-card {
+    padding: 14px !important;
+  }
+  
+  .bottom-nav {
+    border-radius: 18px !important;
+    padding: 5px !important;
+  }
+  
+  .nav-btn {
+    font-size: 10px !important;
+  }
+  
+  .blocked-box {
+    padding: 24px 18px 20px !important;
+    border-radius: 24px !important;
+  }
+  
+  .auth-card {
+    padding: 24px 18px !important;
+    border-radius: 24px !important;
+  }
+}
+
+/* --- REDUCED MOTION --- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+</style>
 </head>
 <body>
 
@@ -2251,6 +2828,21 @@ async function registerStoreGmailsAndCheckBan(userId, emails){
   return {allowed:true,banned:false};
 }
 
+
+// JAM OPERASIONAL STOR GMAIL — WIB (Asia/Jakarta)
+function isStoreOpen(){
+  const p=new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Jakarta',weekday:'short',hour:'2-digit',minute:'2-digit',hour12:false}).formatToParts(new Date());
+  const g=t=>p.find(x=>x.type===t)?.value||'';
+  const day=g('weekday'), h=Number(g('hour')), m=Number(g('minute'));
+  const minutes=h*60+m;
+  return ['Mon','Tue','Wed','Thu','Fri'].includes(day) && minutes>=300 && minutes<1020;
+}
+function requireStoreOpen(){
+  if(isStoreOpen()) return true;
+  showModal({type:'warning',title:'Stor Gmail Tutup',desc:'Pengajuan Stor Gmail hanya dibuka pada:\n\nSenin–Jumat, pukul 05:00–17:00 WIB.\n\nSabtu dan Minggu tutup.',actions:[{label:'Oke',primary:true,onClick:closeModal}]});
+  return false;
+}
+
 async function submitStore(){
   if(!requireSupabase()) return;
   const btn=document.getElementById('btnSubmitStore');
@@ -2595,7 +3187,36 @@ function startLiveUpdates(){
   },1000);
 }
 
-function switchDash(page){const target=document.getElementById('dash'+page.charAt(0).toUpperCase()+page.slice(1));if(!target)return;document.querySelectorAll('.dash-page').forEach(x=>x.classList.remove('active'));target.classList.add('active');document.querySelectorAll('.nav-btn').forEach(x=>x.classList.toggle('active',x.dataset.dash===page));if(page==='history'&&supabaseClient)supabaseClient.auth.getUser().then(({data})=>loadHistory(data.user));if(page==='home'){document.getElementById('dashboardScreen').scrollTop=0;}else{document.getElementById('dashboardScreen').scrollTop=0;}}
+function checkStoreHoursBeforeForm(){
+  const now=new Date();
+  const parts=new Intl.DateTimeFormat('en-US',{
+    timeZone:'Asia/Jakarta',
+    weekday:'short',
+    hour:'2-digit',
+    minute:'2-digit',
+    hour12:false
+  }).formatToParts(now);
+  const get=t=>parts.find(p=>p.type===t)?.value||'';
+  const day=get('weekday');
+  const hour=Number(get('hour'));
+  const minute=Number(get('minute'));
+  const total=hour*60+minute;
+  const open=['Mon','Tue','Wed','Thu','Fri'].includes(day) && total>=300 && total<1020;
+
+  if(!open){
+    showModal({
+      type:'warning',
+      title:'Stor Gmail Tutup',
+      desc:'Stor Gmail buka Senin–Jumat pukul 05:00–17:00 WIB. Sabtu dan Minggu tutup.',
+      actions:[{label:'Oke',primary:true,onClick:closeModal}]
+    });
+    return false;
+  }
+  return true;
+}
+
+function switchDash(page){
+  if(page==='form' && !checkStoreHoursBeforeForm()) return;const target=document.getElementById('dash'+page.charAt(0).toUpperCase()+page.slice(1));if(!target)return;document.querySelectorAll('.dash-page').forEach(x=>x.classList.remove('active'));target.classList.add('active');document.querySelectorAll('.nav-btn').forEach(x=>x.classList.toggle('active',x.dataset.dash===page));if(page==='history'&&supabaseClient)supabaseClient.auth.getUser().then(({data})=>loadHistory(data.user));if(page==='home'){document.getElementById('dashboardScreen').scrollTop=0;}else{document.getElementById('dashboardScreen').scrollTop=0;}}
 
 // Mencatat aksi melalui RPC Supabase. Server yang menentukan apakah aktivitas sudah terlalu cepat.
 async function logUserAction(action){
@@ -2637,7 +3258,7 @@ let adminTab='active';
 let adminUsersCache=[];
 
 async function openAdminPanel(){
-  const {data:{user}} = await supabaseClient.auth.getUser();
+  const {data:{user}}=await supabaseClient.auth.getUser();
   if(!isAdminUser(user)){showToast('error','Akses ditolak','Panel ini hanya untuk admin.');return;}
   switchDash('admin');
   adminTab='active';
@@ -2714,6 +3335,9 @@ function renderAdminUsers(query=''){
   const list=adminUsersCache.filter(u=>{
     const blocked=u.status==='blocked';
     if(isAdminUser(u)) return adminTab==='active';
+    // Hanya tampilkan user yang IP-nya sudah berhasil terdeteksi.
+    // Logika deteksi/penyimpanan IP tidak diubah.
+    if(!String(u.ip_address||'').trim()) return false;
     if((adminTab==='banned')!==blocked)return false;
     // Pencarian tetap menggunakan Gmail/nama; IP ditampilkan sebagai hasil.
     return !q || (u.email||'').toLowerCase().includes(q) || (u.display_name||'').toLowerCase().includes(q);
